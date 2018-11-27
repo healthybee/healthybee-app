@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--app main color-->
+    <color name="colorPrimary">#454444</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#454444</color>
+
+    <!--swipe down refresh animation color-->
+    <color name="colorOrange">#FF9900</color>
+    <color name="colorGreen">#009900</color>
+    <color name="colorBlue">#000099</color>
+    <color name="colorRed">#ff0015</color>
+
+    <!--others-->
+    <color name="colorText">#202020</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGrey">#e1e1e1</color>
+    <color name="colorGreyMedium">#96989A</color>
+    <color name="colorGreyDark">#797979</color>
+    <color name="colorBackgroundGrey">#BDBFC1</color>
+
+
+    <color name="colorRipple">#e7e7e7</color>
+    <color name="colorArtBorder">#e2e2e2</color>
+    <color name="colorOverlaySoft">#1A000000</color>
+    <color name="colorOverlayDark">#33000000</color>
+    <color name="background_color">#FDC43F</color>
+    <color name="album_title">#4c4c4c</color>
+
+    <color name="color1">#ebf8f9</color>
+    <color name="color2">#abeac1</color>
+    <color name="color3">#c2a3ef</color>
+    <color name="color4">#b4d0ed</color>
+    <color name="colorLightBlue">#017dfd</color>
+
+    <color name="add_item_text_color">#511b00</color>
+
+
+
+
+    <color name="whiteNew">#fffffe</color>
+
+
+
+    <color name="colorBackgroundHighlightWhite">#8dffffff</color>
+    <color name="grayLite">#ffffff</color>
+
+
+    <color name="space_transparent">#00000000</color>
+    <color name="space_white">#ffffff</color>
+    <color name="space_orange">#FF9900</color>
+    <color name="space_default_color">#fffffe</color>
+    <color name="centre_button_color">#ffffff</color>
+    <color name="default_inactive_item_color">#9e9e9e</color>
+
+
+
+
+
+</resources>

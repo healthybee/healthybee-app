@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvTimeSlot"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:textColor="@color/colorGreyDark"
+    android:background="@drawable/button_background_white"
+    android:textSize="@dimen/text_size_12"
+    android:text="8:00 to 9:00 AM" />
+
