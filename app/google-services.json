@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "612764307164",
+    "firebase_url": "https://healthybee-5fbe9.firebaseio.com",
+    "project_id": "healthybee-5fbe9",
+    "storage_bucket": "healthybee-5fbe9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612764307164:android:7624731adeeaf68b",
+        "android_client_info": {
+          "package_name": "com.app.healthybee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612764307164-0i7s2t19nv7gv4o94u7up5nmvb3nl1e0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiH04FxG9BixdAVUtThvkQ98BaNB99ks4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
