@@ -308,19 +308,25 @@ public class FragmentProfile extends Fragment {
         ));
 
         data.add(new Data(
-                R.drawable.ic_drawer_more,
+                R.drawable.ic_refund,
                "Refer Friends",
                "Get Rs. 100.00 FREE"
         ));
 
         data.add(new Data(
-                R.drawable.ic_drawer_info,
+                R.drawable.ic_my_orders,
               "My Orders",
                 ""
         ));
         data.add(new Data(
-                R.drawable.ic_drawer_info,
+                R.drawable.ic_delivery_support,
                 "Delivery Support",
+                ""
+        ));
+
+        data.add(new Data(
+                R.drawable.ic_refund,
+                "Refund / Cancellation Policy",
                 ""
         ));
         return data;

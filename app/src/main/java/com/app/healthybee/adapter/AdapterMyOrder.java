@@ -26,7 +26,7 @@ public class AdapterMyOrder extends RecyclerView.Adapter<AdapterMyOrder.ViewHold
 
     @Override
     public AdapterMyOrder.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.raw_my_order, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.raw_my_order_new, parent, false);
         final AdapterMyOrder.ViewHolder mViewHolder = new AdapterMyOrder.ViewHolder(mView);
         /*mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,16 +42,15 @@ public class AdapterMyOrder extends RecyclerView.Adapter<AdapterMyOrder.ViewHold
         holder.ItemName.setText(Html.fromHtml(data.get(position).getItemName()));
         holder.ItemPrice.setText(Html.fromHtml(data.get(position).getItemPrice()));
         holder.ItemExpire.setText(Html.fromHtml(data.get(position).getItemDescription()));
-        holder.address.setText(Html.fromHtml(data.get(position).getAddress()));
-        holder.PauseForNextDay.setText(Html.fromHtml(data.get(position).getPauseForNextDay()));
+//        holder.address.setText(Html.fromHtml(data.get(position).getAddress()));
+//        holder.PauseForNextDay.setText(Html.fromHtml(data.get(position).getPauseForNextDay()));
 
 
         holder.address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onItemClick(v, holder.getPosition());
-
-            }
+                }
         });
 
     }
@@ -81,7 +80,7 @@ public class AdapterMyOrder extends RecyclerView.Adapter<AdapterMyOrder.ViewHold
             ItemName= (TextView) v.findViewById(R.id.tvItemName);
              ItemPrice= (TextView) v.findViewById(R.id.tvItemPrice);
             ItemExpire= (TextView) v.findViewById(R.id.tvItemExpire);
-            address= (TextView) v.findViewById(R.id.tv_add_change);
+            address= (TextView) v.findViewById(R.id.tv_change_time);
              PauseForNextDay= (TextView) v.findViewById(R.id.tv_pause_for_next_day);
 
         }

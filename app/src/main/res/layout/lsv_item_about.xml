@@ -37,6 +37,7 @@
                         android:layout_centerInParent="true"
                         android:src="@drawable/ic_drawer_recent" />
 
+
                 </RelativeLayout>
 
                 <LinearLayout
@@ -83,7 +84,13 @@
                     android:background="@android:color/darker_gray" />
 
             </RelativeLayout>
-
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_arrow_point_to_right"
+                android:layout_alignParentRight="true"/>
         </RelativeLayout>
 
     </com.balysv.materialripple.MaterialRippleLayout>

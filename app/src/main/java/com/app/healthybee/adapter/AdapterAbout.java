@@ -61,7 +61,7 @@ public class AdapterAbout extends RecyclerView.Adapter<AdapterAbout.UserViewHold
             holder.sub_title.setTextColor(ContextCompat.getColor(context, R.color.colorOrange));
         }
 
-        if (position == 3 || position == 4) {
+        if (position == 3 || position == 4||position==5) {
             holder.sub_title.setVisibility(View.GONE);
             holder.title.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
@@ -90,9 +90,6 @@ public class AdapterAbout extends RecyclerView.Adapter<AdapterAbout.UserViewHold
                 }
             }
         });
-
-
-
     }
 
     @Override

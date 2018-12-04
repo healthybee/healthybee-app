@@ -59,8 +59,8 @@ public class FragmentHome extends Fragment {
             @Override
             public void onClick(View v) {
                 mFlagDisplayList = true;
-                imageViewGrid.setImageResource(R.drawable.grid_view_gray);
-                imageViewList.setImageResource(R.drawable.list_view_dark);
+                imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
+                imageViewList.setImageResource(R.drawable.ic_listview_enable);
                 refreshFragment();
             }
         });
@@ -68,8 +68,8 @@ public class FragmentHome extends Fragment {
             @Override
             public void onClick(View v) {
                 mFlagDisplayList = false;
-                imageViewList.setImageResource(R.drawable.list_view_gray);
-                imageViewGrid.setImageResource(R.drawable.grid_view_dark);
+                imageViewList.setImageResource(R.drawable.ic_listview_disable);
+                imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
                 refreshFragment();
 
             }
