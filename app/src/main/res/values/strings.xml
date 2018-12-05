@@ -193,5 +193,6 @@
     <string name="landmark_nearby_star">Landmark Nearby*</string>
     <string name="landmark_nearby">Landmark nearby</string>
     <string name="location">Location</string>
+    <string name="change_my_timing">Change my timing</string>
 
 </resources>
