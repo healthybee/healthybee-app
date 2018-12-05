@@ -192,6 +192,6 @@
     <string name="zipcode">ZipCode</string>
     <string name="landmark_nearby_star">Landmark Nearby*</string>
     <string name="landmark_nearby">Landmark nearby</string>
-    <string name="change_my_timing">Change my timing</string>
+    <string name="location">Location</string>
 
 </resources>
