@@ -24,7 +24,7 @@ import com.app.healthybee.utils.Constant;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private RelativeLayout rlMenu, rlCart, rlProfile;
+    private RelativeLayout rlMenu, rlCart, rlProfile,rl1;
     private ImageView ivMenu, ivProfile,ivDownArrow;
     private TextView tvProfile, tvCart, tvMenu;
     private long exitTime = 0;
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        rl1=findViewById(R.id.rl1);
 
     }
 
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         rlProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                rl1.setVisibility(View.GONE);
                 ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_room_service_gray_24dp));
                 ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_orange_24dp));
                 tvProfile.setTextColor(Color.parseColor("#FF9900"));
