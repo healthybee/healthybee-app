@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.app.healthybee.R;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.fragment.FragmentCheckOut;
@@ -23,27 +24,23 @@ import com.app.healthybee.utils.Constant;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private RelativeLayout rlMenu, rlCart, rlProfile,rl1;
-    private ImageView ivMenu, ivProfile,ivDownArrow;
+    private RelativeLayout rlMenu, rlCart, rlProfile;
+    private ImageView ivMenu, ivProfile;
     private TextView tvProfile, tvCart, tvMenu;
     private long exitTime = 0;
     private int count = 0;
     private DbHelper dbHelper;
     private ArrayList<CategoryItem> list;
     private ImageView ivSearch;
+    RelativeLayout tool_header;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
+        tool_header=findViewById(R.id.rl1);
         setBottomNavigation();
-    }
-
-    private void initView() {
-        rl1=findViewById(R.id.rl1);
-
     }
 
     private void setBottomNavigation() {
@@ -59,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DbHelper(getApplicationContext());
         count = 0;
 
-        ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_room_service_orange_24dp));
-        ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_gray_24dp));
+        ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_selected));
+        ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
         tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
         tvMenu.setTextColor(Color.parseColor("#FF9900"));
+        tool_header.setVisibility(View.VISIBLE);
 
         Fragment fragment;
         fragment = new FragmentHome();
@@ -71,10 +69,11 @@ public class MainActivity extends AppCompatActivity {
         rlMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_room_service_orange_24dp));
-                ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_gray_24dp));
+                ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_selected));
+                ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
                 tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
                 tvMenu.setTextColor(Color.parseColor("#FF9900"));
+                tool_header.setVisibility(View.GONE);
                 Fragment fragment;
                 fragment = new FragmentHome();
                 loadFragment(fragment);
@@ -84,10 +83,11 @@ public class MainActivity extends AppCompatActivity {
         rlCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_room_service_gray_24dp));
-                ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_gray_24dp));
+                ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_unselected));
+                ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
                 tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
                 tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
+                tool_header.setVisibility(View.GONE);
                 Fragment fragment;
                 fragment = new FragmentCheckOut();
                 loadFragment(fragment);
@@ -97,14 +97,15 @@ public class MainActivity extends AppCompatActivity {
         rlProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rl1.setVisibility(View.GONE);
-                ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_room_service_gray_24dp));
-                ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_orange_24dp));
+                ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_unselected));
+                ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_selected));
                 tvProfile.setTextColor(Color.parseColor("#FF9900"));
                 tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
                 Fragment fragment;
                 fragment = new FragmentProfile();
                 loadFragment(fragment);
+                tool_header.setVisibility(View.GONE);
+
             }
         });
 
@@ -114,13 +115,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ActivitySearch.class);
                 startActivity(intent);
-            }
-        });
-        ivDownArrow= findViewById(R.id.ivDownArrow);
-        ivDownArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: 29/11/18  address popup showing
             }
         });
     }

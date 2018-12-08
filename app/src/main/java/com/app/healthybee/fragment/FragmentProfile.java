@@ -46,6 +46,7 @@ public class FragmentProfile extends Fragment {
   // TextView txt_edit;
     TextView txt_login;
     TextView txt_logout;
+    TextView txtedit;
     ProgressDialog progressDialog;
     TextView txt_register, txt_username, txt_email;
     ImageView img_profile;
@@ -67,7 +68,7 @@ public class FragmentProfile extends Fragment {
         lyt_login_register = root_view.findViewById(R.id.lyt_login_register);
         txt_login = root_view.findViewById(R.id.btn_login);
         txt_logout = root_view.findViewById(R.id.txt_logout);
-//        txt_edit = root_view.findViewById(R.id.btn_logout);
+        txtedit = root_view.findViewById(R.id.txtedit);
         txt_register = root_view.findViewById(R.id.txt_register);
         txt_username = root_view.findViewById(R.id.txt_username);
         txt_email = root_view.findViewById(R.id.txt_email);
@@ -138,13 +139,24 @@ public class FragmentProfile extends Fragment {
                     fragmentTransaction.replace(R.id.container, f1);
                     fragmentTransaction.commit();
                 }
-                
+
             }
         });
         ivPauseNextDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myOrderDialog();
+            }
+        });
+
+        txtedit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
+//                FragmentEditProfile f1 = new FragmentEditProfile();
+//                fragmentTransaction.replace(R.id.container, f1);
+                fragmentTransaction.commit();
             }
         });
         return root_view;
