@@ -154,8 +154,8 @@ public class FragmentProfile extends Fragment {
             public void onClick(View v) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
-//                FragmentEditProfile f1 = new FragmentEditProfile();
-//                fragmentTransaction.replace(R.id.container, f1);
+                FragmentEditProfile f1 = new FragmentEditProfile();
+                fragmentTransaction.replace(R.id.container, f1);
                 fragmentTransaction.commit();
             }
         });
