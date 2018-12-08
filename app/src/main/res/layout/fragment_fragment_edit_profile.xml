@@ -118,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/colorWhite"
+                android:padding="10dp"
                 app:cardCornerRadius="4dp"
                 card_view:cardElevation="4sp"
                 card_view:cardPreventCornerOverlap="false"
