@@ -7,7 +7,7 @@ android {
         applicationId "com.app.healthybee"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 14
+        versionCode 1
         versionName "1.0"
     }
     buildTypes {
