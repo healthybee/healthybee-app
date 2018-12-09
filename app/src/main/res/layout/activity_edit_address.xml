@@ -118,6 +118,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/city_star"
+                        android:drawableRight="@drawable/ic_arrow_down"
                         android:inputType="text"
                         android:textSize="@dimen/text_size_16" />
 
@@ -135,6 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/state"
+                        android:drawableRight="@drawable/ic_arrow_down"
                         android:inputType="text"
                         android:textSize="@dimen/text_size_16" />
 

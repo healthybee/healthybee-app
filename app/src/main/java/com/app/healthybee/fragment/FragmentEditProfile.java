@@ -9,15 +9,7 @@ import android.view.ViewGroup;
 
 import com.app.healthybee.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentEditProfile extends Fragment {
-
-
-    public FragmentEditProfile() {
-        // Required empty public constructor
-    }
 
 
     @Override
