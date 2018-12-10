@@ -2,13 +2,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.app.healthybee.fragment.FragmentCheckOut">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/tab_appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <include
+                android:id="@+id/toolbarCheckout"
+                layout="@layout/toolbar_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+        </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nsv"
@@ -17,8 +39,11 @@
             android:background="@color/grayLite">
 
             <LinearLayout
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginRight="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="@dimen/five"
                 android:layout_marginBottom="50dp"
                 android:orientation="vertical">
 
@@ -48,6 +73,7 @@
                         android:src="@drawable/ic_address_24dp" />
 
                     <TextView
+                        android:layout_marginLeft="@dimen/five"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/iv_address"
@@ -60,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/iv_address"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="25dp"
                         android:gravity="center_vertical"
                         android:text="Select weekdays address"
                         android:textColor="@color/colorGreyDark"
@@ -91,6 +117,7 @@
                         android:src="@drawable/ic_date_orange_24dp" />
 
                     <TextView
+                        android:layout_marginLeft="@dimen/five"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/iv_date"
@@ -103,7 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/iv_date"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="25dp"
                         android:gravity="center_vertical"
                         android:text="25 july 2018"
                         android:textColor="@color/colorGreyDark"
@@ -142,9 +169,10 @@
                         android:id="@+id/iv_delivery_slot"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@android:drawable/star_off" />
+                        android:src="@drawable/ic_checkut_delivery_slot" />
 
                     <TextView
+                        android:layout_marginLeft="@dimen/five"
                         android:id="@+id/tv_timeSlot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -209,10 +237,11 @@
                         android:id="@+id/iv_item"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@android:drawable/star_off"
+                        android:src="@drawable/ic_item_in_cart"
                         android:contentDescription="@string/todo" />
 
                     <TextView
+                        android:layout_marginLeft="@dimen/five"
                         android:id="@+id/tvNoOfItemInCart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

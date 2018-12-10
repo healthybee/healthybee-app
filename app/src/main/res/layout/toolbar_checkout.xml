@@ -31,21 +31,11 @@
             android:gravity="center_vertical"
             android:textColor="@color/add_item_text_color"
             android:layout_toRightOf="@+id/ivBack"
-            android:text="@string/saved_address"
+            android:text="@string/checkout"
             android:layout_marginLeft="@dimen/five"
             android:layout_toEndOf="@+id/ivBack" />
 
 
-        <ImageView
-            android:id="@+id/ivAddAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:paddingEnd="20dp"
-            android:paddingRight="20dp"
-            android:src="@drawable/ic_add_address"
-            tools:ignore="RtlSymmetry" />
     </RelativeLayout>
 
 
