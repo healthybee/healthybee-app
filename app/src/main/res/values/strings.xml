@@ -195,5 +195,8 @@
     <string name="location">Location</string>
     <string name="change_my_timing">Change my timing</string>
     <string name="checkout">Checkout</string>
+    <string name="checkout_alert">Checkout Alert</string>
+    <string name="confirm">Confirm</string>
+    <string name="removing_item_from_cart_as_you_selected_quantity_0">Removing Item from cart as you selected Quantity \'0\'</string>
 
 </resources>

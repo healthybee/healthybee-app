@@ -117,9 +117,11 @@
                         android:src="@drawable/ic_date_orange_24dp" />
 
                     <TextView
-                        android:layout_marginLeft="@dimen/five"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/iv_date"
                         android:layout_toRightOf="@+id/iv_date"
                         android:text="Select Date"
                         android:textColor="@color/colorOrange"
@@ -187,7 +189,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_timeSlot"
                         android:layout_marginTop="5dp"
-
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
                         android:clipToPadding="false"
@@ -259,6 +260,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
+                    android:visibility="visible"
                     android:layout_marginRight="10dp"
                     android:clipToPadding="false"
                     android:paddingStart="20dp"
@@ -284,6 +286,7 @@
                     android:weightSum="2">
 
                     <TextView
+                        android:layout_marginLeft="15dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -309,6 +312,7 @@
                     android:weightSum="2">
 
                     <TextView
+                        android:layout_marginLeft="15dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -334,6 +338,7 @@
                     android:weightSum="2">
 
                     <TextView
+                        android:layout_marginLeft="15dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -368,7 +373,7 @@
                     android:weightSum="2">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_marginLeft="15dp"                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Total"
@@ -389,7 +394,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/five"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:weightSum="2">
