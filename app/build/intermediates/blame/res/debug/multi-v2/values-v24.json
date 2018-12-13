@@ -4,7 +4,7 @@
             "outputFile": "/root/AndroidStudioProjects/healthybee-app/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/57ce4d2feb6cf0793acf907c0bc7436b/res/values-v24/values-v24.xml",
+                    "source": "/root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/09ab22fbd7af88b3ca503fd3c52b8f24/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/root/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/1b0873a8fab9102d646165ddc87e71a0/res/values-v24/values-v24.xml",
+                    "source": "/root/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/e1c6af106561041b013f099b7fc04b57/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
