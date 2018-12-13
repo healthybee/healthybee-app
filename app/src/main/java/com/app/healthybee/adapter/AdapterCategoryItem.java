@@ -27,7 +27,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-import static com.app.healthybee.fragment.FragmentHome.mFlagDisplayList;
+import static com.app.healthybee.activities.MainActivity.mFlagDisplayList;
 
 
 public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryItem.MyViewHolder> {

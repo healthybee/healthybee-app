@@ -1031,6 +1031,7 @@ drawable ic_mode_edit_gray_18dp
 drawable ic_my_orders
 drawable ic_no_item
 drawable ic_no_post
+drawable ic_offer_applied_detail_screen
 drawable ic_pause_myorder
 drawable ic_person_gray_24dp
 drawable ic_person_orange_24dp
@@ -1572,6 +1573,7 @@ layout include_no_favorite
 layout include_no_item
 layout include_no_network
 layout include_progress
+layout item_removed_dialog
 layout list_adapter
 layout lsv_item_about
 layout lsv_item_suggestion
@@ -1659,6 +1661,7 @@ string cannot_add_to_favorite
 string change_my_timing
 string character_counter_pattern
 string checkout
+string checkout_alert
 string city_star
 string comment_hint
 string common_google_play_services_enable_button
@@ -1679,6 +1682,7 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string confirm
 string confirm_delete_comment
 string confirm_send_comment
 string confirm_update_comment
@@ -1763,6 +1767,7 @@ string register_now
 string register_process
 string register_success
 string register_title
+string removing_item_from_cart_as_you_selected_quantity_0
 string rs
 string s1
 string s2
