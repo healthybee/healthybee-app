@@ -15,13 +15,14 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
 -keep class org.apache.http.** { *; }
 -dontwarn org.apache.http.**
 -dontwarn android.net.**
 -dontwarn com.squareup.picasso.**
--dontwarn com.squareup.okhttp.**
+-dontwarn javax.annotation.**
 -dontwarn okio.**
-#-dontwarn retrofit2.Platform$Java8
+-dontwarn retrofit2.Platform$Java8
 -keepclassmembers class com.paytm.pgsdk.PaytmWebView$PaytmJavaScriptInterface {
    public *;
 }
