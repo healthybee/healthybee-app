@@ -32,13 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private DbHelper dbHelper;
     private ArrayList<CategoryItem> list;
     private ImageView ivSearch;
-    RelativeLayout tool_header;
-
+    private RelativeLayout tool_header;
+    public static boolean mFlagDisplayList = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mFlagDisplayList = false;
         tool_header=findViewById(R.id.rl1);
         setBottomNavigation();
     }

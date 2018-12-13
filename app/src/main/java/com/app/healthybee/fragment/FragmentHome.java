@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.R;
@@ -35,7 +36,7 @@ public class FragmentHome extends Fragment {
 
     private View rootView;
     private ImageView imageViewGrid, imageViewList;
-    public static boolean mFlagDisplayList = false;
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SearchView searchView = null;
@@ -55,10 +56,17 @@ public class FragmentHome extends Fragment {
 
         imageViewGrid = (ImageView) rootView.findViewById(R.id.imageViewGrid);
         imageViewList = (ImageView) rootView.findViewById(R.id.imageViewList);
+        if (MainActivity.mFlagDisplayList){
+            imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
+            imageViewList.setImageResource(R.drawable.ic_listview_enable);
+        }else {
+            imageViewList.setImageResource(R.drawable.ic_listview_disable);
+            imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
+        }
         imageViewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFlagDisplayList = true;
+                MainActivity.mFlagDisplayList = true;
                 imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
                 imageViewList.setImageResource(R.drawable.ic_listview_enable);
                 refreshFragment();
@@ -67,7 +75,7 @@ public class FragmentHome extends Fragment {
         imageViewGrid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFlagDisplayList = false;
+                MainActivity.mFlagDisplayList = false;
                 imageViewList.setImageResource(R.drawable.ic_listview_disable);
                 imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
                 refreshFragment();

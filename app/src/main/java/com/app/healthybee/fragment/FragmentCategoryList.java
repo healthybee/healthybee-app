@@ -41,7 +41,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.app.healthybee.fragment.FragmentHome.mFlagDisplayList;
+
 
 public class FragmentCategoryList extends Fragment {
     private View rootView;
@@ -82,7 +82,7 @@ public class FragmentCategoryList extends Fragment {
             category = bundle.getString("category", null);
         }
 
-        if (mFlagDisplayList) {
+        if (MainActivity.mFlagDisplayList) {
             mLayoutManager = new LinearLayoutManager(getActivity());
             recyclerView.addItemDecoration(new ListPaddingDecoration(getActivity()));
         } else {
