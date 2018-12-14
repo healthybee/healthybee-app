@@ -198,5 +198,6 @@
     <string name="checkout_alert">Checkout Alert</string>
     <string name="confirm">Confirm</string>
     <string name="removing_item_from_cart_as_you_selected_quantity_0">Removing Item from cart as you selected Quantity \'0\'</string>
+    <string name="delivery_support">Delivery Support</string>
 
 </resources>

@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.healthybee.activities.ActivityEditProfile;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
@@ -152,11 +153,12 @@ public class FragmentProfile extends Fragment {
         txtedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
-                FragmentEditProfile f1 = new FragmentEditProfile();
-                fragmentTransaction.replace(R.id.container, f1);
-                fragmentTransaction.commit();
+//                FragmentManager fm = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
+//                FragmentEditProfile f1 = new FragmentEditProfile();
+//                fragmentTransaction.replace(R.id.container, f1);
+//                fragmentTransaction.commit();
+                startActivity(new Intent(getActivity(),ActivityEditProfile.class));
             }
         });
         return root_view;

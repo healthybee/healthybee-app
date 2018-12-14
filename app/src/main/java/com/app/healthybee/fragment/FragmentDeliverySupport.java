@@ -9,16 +9,7 @@ import android.view.ViewGroup;
 
 import com.app.healthybee.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentDeliverySupport extends Fragment {
-
-
-    public FragmentDeliverySupport() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
