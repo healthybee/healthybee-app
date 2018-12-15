@@ -302,9 +302,6 @@ public class FragmentHome extends Fragment {
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
         }
-
     }
-
-
 }
 
