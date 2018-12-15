@@ -24,12 +24,15 @@
                 android:id="@+id/toolbarDeliverySupport"
                 layout="@layout/toolbar_deliver_support"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
+                android:layout_height="50dp"
                 app:layout_scrollFlags="scroll|enterAlways" />
 
         </android.support.design.widget.AppBarLayout>
 
     </LinearLayout>
 
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
