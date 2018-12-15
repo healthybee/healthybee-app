@@ -29,10 +29,8 @@ import com.app.healthybee.activities.Applications;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class FragmentHome extends Fragment {
 
@@ -58,10 +56,10 @@ public class FragmentHome extends Fragment {
 
         imageViewGrid = (ImageView) rootView.findViewById(R.id.imageViewGrid);
         imageViewList = (ImageView) rootView.findViewById(R.id.imageViewList);
-        if (MainActivity.mFlagDisplayList){
+        if (MainActivity.mFlagDisplayList) {
             imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
             imageViewList.setImageResource(R.drawable.ic_listview_enable);
-        }else {
+        } else {
             imageViewList.setImageResource(R.drawable.ic_listview_disable);
             imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
         }
@@ -146,19 +144,7 @@ public class FragmentHome extends Fragment {
     private void setupViewPager() {
         adapter = new ViewPagerAdapter(getFragmentManager());
         new UploadCategoryFragment().execute();
-        /*int size=categoryList.size();
-
-        for (int i=0;i<size;i++){
-            FragmentCategoryList fragmentCategoryList =new FragmentCategoryList();
-            Bundle bundle=new Bundle();
-            bundle.putString("category",categoryList.get(i));
-            fragmentCategoryList.setArguments(bundle);
-            adapter.addFrag(fragmentCategoryList, categoryList.get(i));
-
-        }*/
-        //viewPager.setAdapter(adapter);
     }
-
 
 
     @SuppressLint("StaticFieldLeak")
@@ -240,7 +226,7 @@ public class FragmentHome extends Fragment {
     public void onResume() {
         super.onResume();
         ((MainActivity) getActivity()).RefreshToolBar();
-      new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 refreshFragment();
