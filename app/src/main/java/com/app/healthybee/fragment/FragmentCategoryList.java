@@ -53,9 +53,6 @@ public class FragmentCategoryList extends Fragment {
     private DbHelper dbHelper;
     private SwipeRefreshLayout swipe_refresh;
 
-
-
-
     public FragmentCategoryList() {
         // Required empty public constructor
     }

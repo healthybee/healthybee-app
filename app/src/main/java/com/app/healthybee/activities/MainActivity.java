@@ -62,10 +62,9 @@ public class MainActivity extends AppCompatActivity {
         tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
         tvMenu.setTextColor(Color.parseColor("#FF9900"));
         tool_header.setVisibility(View.VISIBLE);
-
         Fragment fragment;
         fragment = new FragmentHome();
-        loadFragment(fragment);
+        loadFragment(fragment,"FragmentHome");
 
         rlMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 tool_header.setVisibility(View.GONE);
                 Fragment fragment;
                 fragment = new FragmentHome();
-                loadFragment(fragment);
+                loadFragment(fragment, "FragmentHome");
 
             }
         });
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 tool_header.setVisibility(View.GONE);
                 Fragment fragment;
                 fragment = new FragmentCheckOut();
-                loadFragment(fragment);
+                loadFragment(fragment, "FragmentCheckOut");
 
             }
         });
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
                 Fragment fragment;
                 fragment = new FragmentProfile();
-                loadFragment(fragment);
+                loadFragment(fragment, "FragmentProfile");
                 tool_header.setVisibility(View.GONE);
 
             }
@@ -120,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment, String fragmentTag) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
+        transaction.replace(R.id.container, fragment,fragmentTag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -142,8 +141,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 finish();
             }
-       /* } else if (getSupportFragmentManager().getBackStackEntryCount() == 2) {
-            super.onBackPressed();*/
+
         } else {
             super.onBackPressed();
         }
@@ -155,6 +153,12 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Fragment myFragment = getSupportFragmentManager().findFragmentByTag("FragmentHome");
+                if (myFragment != null && myFragment.isVisible()) {
+                    Toast.makeText(MainActivity.this, "FragmentHome", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(MainActivity.this, " Not FragmentHome", Toast.LENGTH_SHORT).show();
+                }
                 setCountText();
             }
         }, Constant.CARD_UPDATE_TIME_RESUME);

@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.healthybee.activities.MainActivity;
+import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.R;
@@ -237,7 +238,12 @@ public class FragmentHome extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-       // refreshFragment();
+      new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshFragment();
+            }
+        }, Constant.CARD_UPDATE_TIME_RESUME);
     }
 
     @Override
