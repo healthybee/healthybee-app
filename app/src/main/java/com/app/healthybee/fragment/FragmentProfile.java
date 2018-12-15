@@ -136,7 +136,7 @@ public class FragmentProfile extends Fragment {
                     // TODO: 20/9/18
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
-                    FragmentNotification f1 = new FragmentNotification();
+                    FragmentDeliverySupport f1 = new FragmentDeliverySupport();
                     fragmentTransaction.replace(R.id.container, f1);
                     fragmentTransaction.commit();
                 }
