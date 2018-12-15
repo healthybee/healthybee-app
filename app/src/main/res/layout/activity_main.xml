@@ -19,7 +19,8 @@
             android:id="@+id/ivIcon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_location_on_black_24dp" />
+            android:src="@drawable/ic_location_on_black_24dp"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/tvLocation"
@@ -126,7 +127,7 @@
                         android:paddingBottom="12dp"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        android:text="122"/>
+                        android:text=""/>
 
                 </RelativeLayout>
             </RelativeLayout>

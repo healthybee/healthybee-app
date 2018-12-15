@@ -33,6 +33,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FragmentHome extends Fragment {
 
     private View rootView;
@@ -238,6 +239,7 @@ public class FragmentHome extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        ((MainActivity) getActivity()).RefreshToolBar();
       new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -302,5 +304,7 @@ public class FragmentHome extends Fragment {
         }
 
     }
+
+
 }
 

@@ -16,7 +16,13 @@ import android.widget.Toast;
 import com.app.healthybee.R;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.fragment.FragmentCheckOut;
+import com.app.healthybee.fragment.FragmentDeliverySupport;
+import com.app.healthybee.fragment.FragmentEditProfile;
+import com.app.healthybee.fragment.FragmentFavorite;
 import com.app.healthybee.fragment.FragmentHome;
+import com.app.healthybee.fragment.FragmentItemDetails;
+import com.app.healthybee.fragment.FragmentMyOrder;
+import com.app.healthybee.fragment.FragmentNotification;
 import com.app.healthybee.fragment.FragmentProfile;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Constant;
@@ -73,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
                 tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
                 tvMenu.setTextColor(Color.parseColor("#FF9900"));
-                tool_header.setVisibility(View.GONE);
+                tool_header.setVisibility(View.VISIBLE);
                 Fragment fragment;
                 fragment = new FragmentHome();
                 loadFragment(fragment, "FragmentHome");
@@ -129,10 +135,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        exitApp();
+       exitApp();
 
     }
-
     public void exitApp() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
@@ -141,24 +146,20 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 finish();
             }
-
         } else {
             super.onBackPressed();
         }
     }
 
+    public void RefreshToolBar() {
+        tool_header.setVisibility(View.VISIBLE);
+    }
     @Override
     protected void onResume() {
         super.onResume();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Fragment myFragment = getSupportFragmentManager().findFragmentByTag("FragmentHome");
-                if (myFragment != null && myFragment.isVisible()) {
-                    Toast.makeText(MainActivity.this, "FragmentHome", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MainActivity.this, " Not FragmentHome", Toast.LENGTH_SHORT).show();
-                }
                 setCountText();
             }
         }, Constant.CARD_UPDATE_TIME_RESUME);
