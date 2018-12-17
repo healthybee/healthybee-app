@@ -62,8 +62,9 @@ public class AdapterDeliverySupport extends RecyclerView.Adapter<AdapterDelivery
                     holder.textViewQues.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down,0);
                     holder.linearLayout.setVisibility(View.GONE);
                 }else {
-                    holder.textViewQues.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.backarrow_black,0);
+                    holder.textViewQues.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
                     holder.linearLayout.setVisibility(View.VISIBLE);
+
                 }
 
                 //reloding the list
