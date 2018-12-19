@@ -396,6 +396,7 @@
                 android:drawableStart="@drawable/offer_applied_menu_screen"
                 android:drawableLeft="@drawable/offer_applied_menu_screen"
                 android:gravity="center_vertical"
+                android:drawablePadding="10dp"
                 android:text="Saved upto Rs. 1050 on your subscription  T&amp;C"
                 android:textSize="@dimen/text_size_12" />
 
@@ -406,6 +407,7 @@
                 android:drawableStart="@drawable/offer_applied_menu_screen"
                 android:drawableLeft="@drawable/offer_applied_menu_screen"
                 android:gravity="center_vertical"
+                android:drawablePadding="10dp"
                 android:text="Apply coupon code HEALTHYBEE and get 10% discount T&amp;C"
                 android:textSize="@dimen/text_size_12" />
 
