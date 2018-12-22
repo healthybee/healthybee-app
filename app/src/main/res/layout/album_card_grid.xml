@@ -22,11 +22,14 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:padding="2dp"
+                android:elevation="8dp"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="4dp"
-                card_view:cardElevation="8sp"
+                card_view:cardElevation="10dp"
                 card_view:cardPreventCornerOverlap="false"
-                card_view:cardUseCompatPadding="true">
+                card_view:cardUseCompatPadding="true"
+                card_view:targetApi="lollipop">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

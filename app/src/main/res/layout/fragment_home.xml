@@ -1,54 +1,69 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@drawable/bg_main_page"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_main_page">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
+        <android.support.v7.widget.CardView
+            android:id="@+id/parent_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            app:tabGravity="center"
-            app:tabIndicatorColor="@color/colorOrange"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/colorOrange"
-            app:tabTextColor="@color/colorText" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            app:cardBackgroundColor="@color/colorWhite"
+            card_view:cardElevation="8sp"
+            card_view:cardPreventCornerOverlap="false">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:textAllCaps="true"
+                android:textSize="12sp"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@color/colorOrange"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/colorOrange"
+                app:tabTextColor="@color/tabTextColor" />
+        </android.support.v7.widget.CardView>
 
         <RelativeLayout
             android:id="@+id/rl1"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/tabs"
+            android:layout_below="@+id/parent_card"
             android:background="@color/colorWhite">
 
             <ImageView
                 android:id="@+id/imageViewList"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:padding="5dp"
-                android:src="@drawable/list_view_gray" />
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/todo"
+                android:padding="8dp"
+                android:src="@drawable/list_view_gray"/>
 
             <ImageView
-                android:contentDescription="@string/todo"
                 android:id="@+id/imageViewGrid"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="9dp"
                 android:layout_marginRight="9dp"
                 android:layout_toStartOf="@+id/imageViewList"
                 android:layout_toLeftOf="@+id/imageViewList"
-                android:padding="5dp"
+                android:contentDescription="@string/todo"
+                android:padding="8dp"
                 android:src="@drawable/grid_view_dark" />
 
         </RelativeLayout>
@@ -58,7 +73,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rl1"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
-        </android.support.v4.view.ViewPager>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
