@@ -145,8 +145,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void RefreshToolBar() {
-        tool_header.setVisibility(View.VISIBLE);
+    public void RefreshToolBar(boolean b) {
+        if (b) {
+            tool_header.setVisibility(View.VISIBLE);
+        }
+        else {
+            tool_header.setVisibility(View.GONE);
+        }
     }
     @Override
     protected void onResume() {
