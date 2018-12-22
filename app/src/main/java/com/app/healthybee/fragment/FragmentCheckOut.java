@@ -28,6 +28,7 @@ import com.app.healthybee.Api;
 import com.app.healthybee.Checksum;
 import com.app.healthybee.Constants;
 import com.app.healthybee.Paytm;
+import com.app.healthybee.activities.ActivityCheckOut;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.activities.ActivityAddress;
@@ -267,7 +268,9 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             @Override
             public void onClick(View view) {
                 //calling the method generateCheckSum() which will generate the paytm checksum for payment
-                generateCheckSum();
+               // generateCheckSum();
+                Intent intent =new Intent(getActivity(),ActivityCheckOut.class);
+                startActivity(intent);
             }
         });
         return view;

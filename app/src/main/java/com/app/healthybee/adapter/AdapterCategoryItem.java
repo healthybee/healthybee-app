@@ -2,7 +2,13 @@ package com.app.healthybee.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -13,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.app.healthybee.RoundedCornersTransformation;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
@@ -53,7 +60,8 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
         private TextView tv_old_price;
         private TextView tv_new_price;
         private ImageView thumbnail;
-        private TextView tvMinus, tvCount, tvPlus;
+        private TextView  tvCount ;
+        private ImageView tvPlus,tvMinus;
 
         private LinearLayout llAddRemove;
         private TextView tvAddItem;
@@ -65,9 +73,9 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
             tv_old_price = (TextView) view.findViewById(R.id.tv_old_price);
             tv_new_price = (TextView) view.findViewById(R.id.tv_new_price);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-            tvMinus = (TextView) view.findViewById(R.id.tvMinus);
+            tvMinus =  view.findViewById(R.id.tvMinus);
             tvCount = (TextView) view.findViewById(R.id.tvCount);
-            tvPlus = (TextView) view.findViewById(R.id.tvPlus);
+            tvPlus = view.findViewById(R.id.tvPlus);
             llAddRemove = (LinearLayout) view.findViewById(R.id.llAddRemove);
             tvAddItem = (TextView) view.findViewById(R.id.tvAddItem);
 
@@ -107,7 +115,7 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
 
     @SuppressLint({"SetTextI18n", "Range"})
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final CategoryItem categoryItem = categoryItemList.get(position);
 
         holder.title.setText(Html.fromHtml(categoryItem.getName()));
@@ -115,22 +123,18 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
         holder.tv_old_price.setPaintFlags(holder.tv_old_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_new_price.setText(Html.fromHtml(mContext.getResources().getString(R.string.rs)+" "+categoryItem.getPrice()+".00/Meal"));
 
-//        Glide.with(mContext)
-//                .load(categoryItem.getImage_url().replace(" ", "%20"))
-//                .into(holder.thumbnail);
 
         Glide.with(mContext)
                 .load(categoryItem.getImage_url().replace(" ", "%20"))
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.load)
-                        .fitCenter()
+                .apply(RequestOptions
+                        .bitmapTransform(new RoundedCornersTransformation( mContext,10, 0))
                         .error(R.drawable.ic_no_item))
                 .into(holder.thumbnail);
 
-//        Picasso.with(mContext)
-//                .load(categoryItem.getImage_url().replace(" ", "%20"))
-//                .placeholder(R.drawable.ic_thumbnail)
-//                .into(holder.thumbnail);
+       /* Glide.with(mContext)
+                .load("http://thedeveloperworldisyours.com/wp-content/uploads/scareface.jpeg")
+                .bitmapTransform(new RoundedCornersTransformation( mContext,15, 2))
+                .into(holder.thumbnail);*/
 
         holder.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,5 +197,27 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
     @Override
     public int getItemCount() {
         return categoryItemList.size();
+    }
+
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        final float roundPx = 12;
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
     }
 }

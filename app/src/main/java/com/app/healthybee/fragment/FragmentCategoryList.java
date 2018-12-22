@@ -16,8 +16,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -34,11 +32,9 @@ import com.app.healthybee.activities.Applications;
 import com.app.healthybee.adapter.AdapterCategoryItem;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.models.CategoryItem;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 
@@ -85,7 +81,7 @@ public class FragmentCategoryList extends Fragment {
         } else {
 
             mLayoutManager = new GridLayoutManager(getActivity(), 2);
-            recyclerView.addItemDecoration(new GridSpacingItemDecoration(getActivity(),2, dpToPx(3), true));
+            recyclerView.addItemDecoration(new GridSpacingItemDecoration(getActivity(),2, dpToPx(7), true));
         }
         recyclerView.setLayoutManager(mLayoutManager);
 

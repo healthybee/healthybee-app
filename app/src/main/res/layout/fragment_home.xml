@@ -5,6 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@drawable/bg_main_page"
         android:layout_height="match_parent">
 
         <android.support.design.widget.TabLayout
@@ -38,6 +39,7 @@
                 android:src="@drawable/list_view_gray" />
 
             <ImageView
+                android:contentDescription="@string/todo"
                 android:id="@+id/imageViewGrid"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
