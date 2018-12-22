@@ -225,7 +225,7 @@ public class FragmentHome extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity) getActivity()).RefreshToolBar();
+        ((MainActivity) getActivity()).RefreshToolBar(true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
