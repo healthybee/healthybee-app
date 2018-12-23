@@ -26,6 +26,7 @@
             android:layout_centerVertical="true">
 
             <TextView
+                android:paddingTop="3dp"
                 android:id="@+id/txtedit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +44,7 @@
                 android:layout_toRightOf="@+id/txtedit"
                 android:text="Profile Edit"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/text_size_16"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -101,17 +102,17 @@
                             android:layout_width="72dp"
                             android:layout_height="72dp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/ic_user_account_white"
-                            app:civ_border_color="@color/colorArtBorder" />
+                            android:src="@drawable/raw_profile"
+                            />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/img_profile2"
-                            android:layout_alignParentEnd="true"
+                            android:layout_below="@+id/img_profile2"
                             android:layout_alignParentRight="true"
-                            android:layout_marginEnd="134dp"
-                            android:layout_marginRight="134dp"
+                            android:layout_marginTop="-29dp"
+                            android:layout_marginEnd="132dp"
+                            android:layout_marginRight="130dp"
                             android:layout_marginBottom="7dp"
                             android:src="@drawable/ic_camera_alt_black_16dp" />
 
@@ -142,10 +143,10 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:theme="@style/TextInputLayoutAppearance">
 
                         <android.support.design.widget.TextInputEditText
-                            style="@style/EditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Name *"
@@ -156,12 +157,12 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:theme="@style/TextInputLayoutAppearance">
 
                         <android.support.design.widget.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/EditTextStyle"
                             android:hint="Email *"
                             android:imeOptions="actionDone"
                             android:inputType="textEmailAddress"
@@ -170,12 +171,12 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:theme="@style/TextInputLayoutAppearance">
 
                         <android.support.design.widget.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/EditTextStyle"
                             android:hint="Mobile *"
                             android:imeOptions="actionDone"
                             android:inputType="number"
@@ -206,12 +207,12 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:theme="@style/TextInputLayoutAppearance">
 
                         <android.support.design.widget.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/EditTextStyle"
                             android:hint="Change Password "
                             android:imeOptions="actionNext"
                             android:inputType="textPassword"
@@ -220,7 +221,8 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:theme="@style/TextInputLayoutAppearance">
 
                         <android.support.design.widget.TextInputEditText
                             android:layout_width="match_parent"

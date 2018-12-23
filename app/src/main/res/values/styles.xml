@@ -12,9 +12,31 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
         <item name="colorControlNormal">@android:color/white</item>
     </style>
-    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="colorControlNormal">#c5c5c5</item>
-        <item name="colorControlActivated">@color/colorGreyDark</item>
-        <item name="colorControlHighlight">@color/colorGreyMedium</item>
+    <!--<style name="EditTextStyle" parent="Widget.AppCompat.EditText">-->
+        <!--<item name="colorControlNormal">#c5c5c5</item>-->
+        <!--<item name="colorControlActivated">@color/colorGreyDark</item>-->
+        <!--<item name="colorControlHighlight">@color/colorGreyMedium</item>-->
+    <!--</style>-->
+
+    <style name="ErrorText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#f00000</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="HintText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@style/ErrorText</item>
+        <item name="android:textColor">#f000</item>
+        <item name="android:textColorHint">#96989A</item>
+        <item name="colorControlNormal">#BDBFC1</item>
+        <item name="colorControlActivated">#797979</item>
+        <item name="colorControlHighlight">#797979</item>
     </style>
 </resources>
