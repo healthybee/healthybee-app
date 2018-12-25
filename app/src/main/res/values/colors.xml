@@ -6,6 +6,7 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#BDBFC1</color>
 
+    <color name="color_dark">#000000</color>
     <!--swipe down refresh animation color-->
     <color name="colorOrange">#FF9900</color>
     <color name="colorGreen">#009900</color>

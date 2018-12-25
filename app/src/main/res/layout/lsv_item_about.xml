@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <com.balysv.materialripple.MaterialRippleLayout
@@ -9,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:mrl_rippleAlpha="0.2"
+        android:background="@color/colorWhite"
         app:mrl_rippleColor="@color/colorRipple"
         app:mrl_rippleHover="true"
         app:mrl_rippleOverlay="true">
@@ -56,9 +58,9 @@
                         android:text="Heading"
                         android:paddingLeft="10dp"
                         android:paddingStart="10dp"
-                        android:textColor="@color/colorText"
-                        android:textSize="@dimen/text_size_14"
-                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="normal"
                          />
 
                     <TextView

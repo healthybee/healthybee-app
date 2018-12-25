@@ -63,7 +63,7 @@ public class AdapterAbout extends RecyclerView.Adapter<AdapterAbout.UserViewHold
 
         if (position == 3 || position == 4||position==5) {
             holder.sub_title.setVisibility(View.GONE);
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            holder.title.setTextColor(ContextCompat.getColor(context, R.color.color_dark));
 
 
 //            if (myApplication.getIsLogin()) {

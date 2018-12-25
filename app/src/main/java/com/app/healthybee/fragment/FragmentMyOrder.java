@@ -47,7 +47,7 @@ public class FragmentMyOrder extends Fragment {
         //let us add some items into the list
         data.add(
                 new MyOrder(
-                        "First Item",
+                        "Veg Grill Sandwich with Cheese ",
                         "Rs.99.00/Meal",
                         "Your monthly subscription will expire on October 3, 2018",
                         "Address change",
@@ -56,7 +56,7 @@ public class FragmentMyOrder extends Fragment {
 
         data.add(
                 new MyOrder(
-                        "Second Item",
+                        "Veg Grill Toast with Cheese Item",
                         "Rs.99.00/Meal",
                         "Your monthly subscription will expire on October 3, 2018",
                         "Address change",
@@ -64,7 +64,7 @@ public class FragmentMyOrder extends Fragment {
                 ));
         data.add(
                 new MyOrder(
-                        "Third Item",
+                        "Mayo Bombers with Jalapeno ",
                         "Rs.99.00/Meal",
                         "Your monthly subscription will expire on October 3, 2018",
                         "Address change",
