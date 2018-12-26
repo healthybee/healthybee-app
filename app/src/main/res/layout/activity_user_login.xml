@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bc1"
@@ -8,7 +9,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
 
         <LinearLayout
@@ -23,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Welcome"
+                android:text="@string/welcome"
                 android:textColor="@color/colorWhite"
                 android:textSize="40sp"
                 android:textStyle="normal" />
@@ -32,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Sign In to continue"
+                android:text="@string/sign_in_to_continue"
                 android:textColor="@color/colorWhite" />
 
             <EditText
@@ -44,7 +46,7 @@
                 android:background="@drawable/edit_text_bg_transparent"
                 android:gravity="center"
                 android:textColorHint="@color/colorWhite"
-                android:hint="Enter email"
+                android:hint="@string/enter_email"
                 android:inputType="textEmailAddress" />
 
 
@@ -55,7 +57,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/edit_text_bg_transparent"
                 android:gravity="center"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:textColorHint="@color/colorWhite"
                 android:textColor="@color/colorWhite"
                 android:imeOptions="actionDone"
@@ -75,7 +77,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Forgot Password ?"
+                    android:text="@string/forgot_password"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
 
@@ -91,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/button_shap_left_round"
-                        android:text="Password"
+                        android:text="@string/password"
                         android:textAllCaps="false"
                         android:textColor="@color/colorPrimaryDark" />
 
@@ -101,21 +103,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/button_shap_right_round"
-                        android:text="OTP"
+                        android:text="@string/otp"
                         android:textColor="@color/colorWhite" />
                 </LinearLayout>
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_background"
                 android:gravity="center"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
-                android:text="SIGN IN"
+                android:text="@string/sign_in"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
@@ -141,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="OR"
+                    android:text="@string/or"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp"
                     />
@@ -166,6 +168,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:contentDescription="@string/todo"
                     android:id="@+id/iv_fb"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -174,6 +177,7 @@
                     android:src="@drawable/ic_fb" />
 
                 <ImageView
+                    android:contentDescription="@string/todo"
                     android:id="@+id/iv_google"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -190,7 +194,7 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Don't have an account? Sign up"
+                android:text="@string/don_t_have_an_account_sign_up"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
 

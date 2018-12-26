@@ -172,7 +172,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@drawable/button_background"
+                        android:background="@drawable/button_background_orange"
                         android:text="@string/btn_register"
                         android:textColor="@color/colorWhite"
                         android:textStyle="bold" />

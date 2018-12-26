@@ -184,67 +184,6 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                     }
                 });
     }
-//    public void getLogin() {
-//        RequestQueue mRequestQueue;
-//        // Instantiate the cache
-//        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
-//        // Set up the network to use HttpURLConnection as the HTTP client.
-//        Network network = new BasicNetwork(new HurlStack());
-//        // Instantiate the RequestQueue with the cache and network.
-//        mRequestQueue = new RequestQueue(cache, network);
-//        // Start the queue
-//        mRequestQueue.start();
-//
-//        String url = "http://localhost:5000/healthybee-subscription/us-central1/api/auth/login";
-//
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-//                Request.Method.POST,
-//                url,
-//                null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        if (response.has("statusMessage")) {
-//                            try {
-//                                if (response.getString("statusMessage").equalsIgnoreCase("ok")) {
-//                                    Intent intent = new Intent(LoginActivity.this, SkipActivity.class);
-//                                    startActivity(intent);
-//                                    // finish();
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.d("1604", "onErrorResponse: " + error.getMessage());
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                HashMap<String, String> params = new HashMap<>();
-//                params.put("email", strLoginId);
-//                params.put("password", strPassword);
-//                return params;
-//            }
-//
-//            @Override
-//            public Map<String, String> getHeaders() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("content-type", "application/json");
-//                return params;
-//            }
-//
-//        };
-//
-//        // Add JsonObjectRequest to the RequestQueue
-//        mRequestQueue.add(jsonObjectRequest);
-//
-//
-//    }
     private int ValidateUser(View v) {
         strLoginId = edt_email_id.getText().toString().trim();
         strPassword = edt_login_password.getText().toString().trim();
