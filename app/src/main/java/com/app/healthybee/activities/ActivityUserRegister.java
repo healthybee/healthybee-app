@@ -50,7 +50,7 @@ import java.util.Map;
 public class ActivityUserRegister extends AppCompatActivity {
 
 
-    EditText edt_password,edt_mobile,edt_email;
+    EditText edt_password,edt_mobile,edt_email,edt_re_enter_password;
     private Activity activity;
 
 
@@ -73,6 +73,7 @@ public class ActivityUserRegister extends AppCompatActivity {
         edt_mobile = findViewById(R.id.edt_mobile);
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
+        edt_re_enter_password = findViewById(R.id.edt_re_enter_password);
 
         txt_terms = findViewById(R.id.txt_terms);
         btn_register = findViewById(R.id.btn_register);
@@ -129,36 +130,6 @@ public class ActivityUserRegister extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onValidationSucceeded() {
-//        strFullname = edtFullName.getText().toString().replace(" ", "%20");
-//        strEmail = edtEmail.getText().toString();
-//        strPassword = edtPassword.getText().toString();
-//
-//
-//        if (NetworkCheck.isNetworkAvailable(ActivityUserRegister.this)) {
-//            new MyTaskRegister().execute(Constant.REGISTER_URL + strFullname + "&email=" + strEmail + "&password=" + strPassword);
-//        } else {
-//            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//            dialog.setTitle(R.string.whops);
-//            dialog.setMessage(R.string.msg_no_network);
-//            dialog.setPositiveButton(R.string.dialog_ok, null);
-//            dialog.setCancelable(false);
-//            dialog.show();
-//        }
-//
-//    }
-//
-//    @Override
-//    public void onValidationFailed(View failedView, Rule<?> failedRule) {
-//        String message = failedRule.getFailureMessage();
-//        if (failedView instanceof EditText) {
-//            failedView.requestFocus();
-//            ((EditText) failedView).setError(message);
-//        } else {
-//            Toast.makeText(this, "Record Not Saved", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     private class MyTaskRegister extends AsyncTask<String, Void, String> {
 
