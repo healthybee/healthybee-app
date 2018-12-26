@@ -2,12 +2,14 @@ package com.app.healthybee.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,7 +44,9 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tvItemName, tvItemPrice,tv_monthly_subs,tv_quantity;
 
-        private TextView tvMinus, tvCount,tvPlus;
+        private ImageView tvMinus;
+        private TextView  tvCount;
+        private ImageView tvPlus;
         private LinearLayout llAddRemove;
         private TextView tvAddItem;
 
@@ -55,9 +59,9 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
             tv_quantity = (TextView) view.findViewById(R.id.tv_quantity);
 
 
-            tvMinus= (TextView) view.findViewById(R.id.tvMinus);
+            tvMinus= (ImageView) view.findViewById(R.id.tvMinus);
             tvCount= (TextView) view.findViewById(R.id.tvCount);
-            tvPlus= (TextView) view.findViewById(R.id.tvPlus);
+            tvPlus= (ImageView) view.findViewById(R.id.tvPlus);
 
             llAddRemove = (LinearLayout) view.findViewById(R.id.llAddRemove);
             tvAddItem = (TextView) view.findViewById(R.id.tvAddItem);

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite">
 
 
@@ -51,8 +50,7 @@
                 android:gravity="center"
                 android:maxLength="3"
                 android:text="101"
-                android:textColor="@color/colorWhite"
-              />
+                android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:id="@+id/tvPlus"

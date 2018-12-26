@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -113,7 +114,9 @@ public class AdapterItemsList extends RecyclerView.Adapter<AdapterItemsList.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemTitle;
         public TextView tv_price;
-        private TextView tvMinus, tvCount,tvPlus;
+        private ImageView tvMinus;
+      private ImageView tvPlus;
+      private TextView  tvCount;
         private LinearLayout llAddRemove;
         private TextView tvAddItem;
 
@@ -121,9 +124,9 @@ public class AdapterItemsList extends RecyclerView.Adapter<AdapterItemsList.View
             super(v);
             itemTitle = (TextView) v.findViewById(R.id.tv_title);
             tv_price = (TextView) v.findViewById(R.id.tv_price);
-            tvMinus= (TextView) v.findViewById(R.id.tvMinus);
+            tvMinus= (ImageView) v.findViewById(R.id.tvMinus);
             tvCount= (TextView) v.findViewById(R.id.tvCount);
-            tvPlus= (TextView) v.findViewById(R.id.tvPlus);
+            tvPlus= (ImageView) v.findViewById(R.id.tvPlus);
             llAddRemove = (LinearLayout) v.findViewById(R.id.llAddRemove);
             tvAddItem = (TextView) v.findViewById(R.id.tvAddItem);
 
