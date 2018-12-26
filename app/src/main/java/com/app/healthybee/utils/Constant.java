@@ -3,10 +3,10 @@ package com.app.healthybee.utils;
 
 
 public class Constant {
-
-
+    public static final String access_token="3biGa1hRAPnwN7Ad9hdMOhm6NGBGC4MU";
 
     public static final String CATEGORY_ARRAY_NAME = "result";
+
     public static int GET_SUCCESS_MSG;
     public static final String MSG = "msg";
     public static final String SUCCESS = "success";

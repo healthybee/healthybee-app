@@ -1,6 +1,7 @@
 package com.app.healthybee.activities;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +19,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.R;
+import com.app.healthybee.utils.MyCustomProgressDialog;
+import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.UrlConstants;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -26,10 +36,15 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class ActivityUserLogin extends AppCompatActivity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 1;
-    private EditText edt_login_id;
+    private EditText edt_email_id;
     private EditText edt_login_password;
     private Button btn_login;
     private String strLoginId;
@@ -38,6 +53,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
     private Button bt_password,bt_otp;
     private boolean isOtpSelected=false;
     private ImageView iv_google;
+    private Activity activity;
     GoogleSignInClient mGoogleSignInClient;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -45,13 +61,14 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
+        activity=ActivityUserLogin.this;
         init();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void init() {
-        edt_login_id = (EditText) findViewById(R.id.edt_login_id);
+        edt_email_id = (EditText) findViewById(R.id.edt_email_id);
         edt_login_password = (EditText) findViewById(R.id.edt_login_password);
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_login.setOnClickListener(this);
@@ -85,9 +102,10 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 if (ValidateUser(v) == 1) {
                     // getLogin();
 //                    Intent intent = new Intent(LoginActivity.this, SkipActivity.class);
-                    Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);
-                    startActivity(intent);
-                    finish();
+                    AuthUser();
+//                    Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);
+//                    startActivity(intent);
+//                    finish();
                 }
                 break;
             case R.id.tv_newUser:
@@ -228,7 +246,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
 //
 //    }
     private int ValidateUser(View v) {
-        strLoginId = edt_login_id.getText().toString().trim();
+        strLoginId = edt_email_id.getText().toString().trim();
         strPassword = edt_login_password.getText().toString().trim();
         if (!isValidEmail(strLoginId)) {
             Toast.makeText(this, "Invalid email id", Toast.LENGTH_SHORT).show();
@@ -241,5 +259,51 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
     }
     public boolean isValidEmail(CharSequence target) {
         return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+    private void AuthUser() {
+        if (NetworkConstants.isConnectingToInternet(activity)) {
+            MyCustomProgressDialog.showDialog(activity, getString(R.string.please_wait));
+            Map<String, String> params = new HashMap<>();
+            params.put("email",edt_email_id.getText().toString().trim());
+            params.put("password", edt_login_password.getText().toString().trim());
+            Log.d("4343", new JSONObject(params).toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    UrlConstants.authUser,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            MyCustomProgressDialog.dismissDialog();
+                          //  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMjM1NzZiNzNhN2FhMDAxN2RkNjY2ZSIsImlhdCI6MTU0NTgyMjcwMX0.ekBniz5xdlYHjDy3rKV4AUWIA3Lupek1Jn3LcHxWGPo","user":{"id":"5c23576b73a7aa0017dd666e","name":"amod2android","picture":"https:\/\/gravatar.com\/avatar\/e0ced4403e76e8bc5cdea71754834388?d=identicon","email":"amod2android@gmail.com","mobile":"9284326399","createdAt":"2018-12-26T10:26:51.868Z"}}
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    String credentials = edt_email_id.getText().toString().trim()+":"+edt_login_password.getText().toString().trim();
+                    String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                    headers.put("Content-Type","application/json");
+                    headers.put("Authorization","Basic " + base64EncodedCredentials);
+
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(activity, getString(R.string.network_title), getString(R.string.network_message));
+        }
     }
 }

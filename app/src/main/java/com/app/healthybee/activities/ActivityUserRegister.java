@@ -1,5 +1,6 @@
 package com.app.healthybee.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,24 +23,41 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.Constant;
+import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkCheck;
+import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.UrlConstants;
+import com.google.gson.JsonObject;
 //import com.app.healthybee.utils.validation.Validator;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class ActivityUserRegister extends AppCompatActivity {
 
 
-    EditText edtPassword;
+    EditText edt_password,edt_mobile,edt_email;
+    private Activity activity;
 
 
-
-    Button btnsignup, btn_login;
+    Button btn_register, btn_login;
     TextView txt_terms;
     String strFullname, strEmail, strPassword, strMessage;
 
@@ -47,19 +66,19 @@ public class ActivityUserRegister extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
-
+        activity = ActivityUserRegister.this;
         if (Config.ENABLE_RTL_MODE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             }
         }
 
-//        edtFullName = findViewById(R.id.edt_user);
-//        edtEmail = findViewById(R.id.edt_email);
-        edtPassword = findViewById(R.id.edt_password);
+        edt_mobile = findViewById(R.id.edt_mobile);
+        edt_email = findViewById(R.id.edt_email);
+        edt_password = findViewById(R.id.edt_password);
 
         txt_terms = findViewById(R.id.txt_terms);
-        btnsignup = findViewById(R.id.btn_update);
+        btn_register = findViewById(R.id.btn_register);
         btn_login = findViewById(R.id.btn_login);
 
         txt_terms.setOnClickListener(new View.OnClickListener() {
@@ -77,15 +96,13 @@ public class ActivityUserRegister extends AppCompatActivity {
             }
         });
 
-//        btnsignup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                validator.validateAsync();
-//            }
-//        });
-//
-//        validator = new Validator(this);
-//        validator.setValidationListener(this);
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerUser();
+            }
+        });
+
 
         setupToolbar();
 
@@ -244,6 +261,50 @@ public class ActivityUserRegister extends AppCompatActivity {
                 return super.onOptionsItemSelected(menuItem);
         }
         return true;
+    }
+
+
+    private void registerUser() {
+        if (NetworkConstants.isConnectingToInternet(activity)) {
+            MyCustomProgressDialog.showDialog(activity, getString(R.string.please_wait));
+            Map<String, String> params = new HashMap<>();
+            params.put("email", edt_email.getText().toString());
+            params.put("password", edt_password.getText().toString());
+            params.put("mobile", edt_mobile.getText().toString());
+            Log.d("4343", new JSONObject(params).toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    UrlConstants.createUser,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("4343", response.toString());
+                    MyCustomProgressDialog.dismissDialog();
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type","application/json");
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(activity, getString(R.string.network_title), getString(R.string.network_message));
+        }
     }
 }
 
