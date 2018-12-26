@@ -24,14 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
+
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.Constant;
@@ -39,8 +37,7 @@ import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkCheck;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.UrlConstants;
-import com.google.gson.JsonObject;
-//import com.app.healthybee.utils.validation.Validator;
+
 
 
 import org.json.JSONArray;
