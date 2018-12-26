@@ -239,5 +239,6 @@
     <string name="minus">-</string>
     <string name="notification">Notification</string>
     <string name="myorder">MyOrder</string>
+    <string name="login_now">LOGIN NOW</string>
 
 </resources>

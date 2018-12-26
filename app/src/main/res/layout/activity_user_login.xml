@@ -36,7 +36,7 @@
                 android:textColor="@color/colorWhite" />
 
             <EditText
-                android:id="@+id/edt_login_id"
+                android:id="@+id/edt_email_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -44,7 +44,7 @@
                 android:background="@drawable/edit_text_bg_transparent"
                 android:gravity="center"
                 android:textColorHint="@color/colorWhite"
-                android:hint="Mobile Number"
+                android:hint="Enter email"
                 android:inputType="textEmailAddress" />
 
 
