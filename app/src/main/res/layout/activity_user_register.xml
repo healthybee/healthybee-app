@@ -86,23 +86,6 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/edt_mobile"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="15dp"
-                        android:hint="@string/edt_name"
-                        android:importantForAutofill="no"
-                        android:inputType="phone"
-                        tools:ignore="UnusedAttribute" />
-
-                </android.support.design.widget.TextInputLayout>
-
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -112,12 +95,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="15dp"
-                        android:hint="@string/edt_email"
+                        android:hint="@string/enter_email_id"
+                        android:imeOptions="actionNext"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
                         tools:ignore="UnusedAttribute" />
 
                 </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edt_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="15dp"
+                        android:imeOptions="actionNext"
+                        android:hint="@string/enter_mobile_no"
+                        android:digits="@string/mobile_digits"
+                        android:maxLength="10"
+                        android:importantForAutofill="no"
+                        android:inputType="phone"
+                        tools:ignore="UnusedAttribute" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -129,7 +133,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="15dp"
-                        android:hint="@string/edt_password"
+                        android:hint="@string/enter_password"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword"
+                        tools:ignore="UnusedAttribute" />
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/edt_re_enter_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="15dp"
+                        android:hint="@string/re_enter_password"
+                        android:imeOptions="actionDone"
                         android:importantForAutofill="no"
                         android:inputType="textPassword"
                         tools:ignore="UnusedAttribute" />

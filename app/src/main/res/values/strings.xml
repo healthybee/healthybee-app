@@ -240,5 +240,11 @@
     <string name="notification">Notification</string>
     <string name="myorder">MyOrder</string>
     <string name="login_now">LOGIN NOW</string>
+    <string name="mobile_no">Mobile No</string>
+    <string name="mobile_digits">1234567890</string>
+    <string name="re_enter_password">Re-Enter Password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_mobile_no">Enter Mobile No</string>
+    <string name="enter_email_id">Enter Email Id</string>
 
 </resources>
