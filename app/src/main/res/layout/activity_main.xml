@@ -131,7 +131,7 @@
                     android:layout_marginTop="0dp"
                     android:contentDescription="@string/app_name"
                     android:padding="@dimen/eight"
-                    android:src="@drawable/ic_menu_selected" />
+                    android:src="@drawable/ic_notification_unselected" />
 
                 <TextView
                     android:id="@+id/tvNotification"
@@ -189,8 +189,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:contentDescription="@string/todo"
-                    android:padding="@dimen/eight"
-                    android:src="@drawable/ic_menu_selected" />
+                    android:padding="@dimen/six"
+                    android:src="@drawable/ic_my_orders_unselected" />
 
                 <TextView
                     android:id="@+id/tvMyOrder"
