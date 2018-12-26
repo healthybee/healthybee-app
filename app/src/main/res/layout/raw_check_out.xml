@@ -20,7 +20,7 @@
             android:layout_weight="2"
             android:textColor="@color/colorBlack"
             android:text="Veg Grill Sandwich with cheese"
-            />
+            android:layout_marginStart="@dimen/ten" />
 
         <TextView
             android:id="@+id/tvItemPrice"
@@ -31,7 +31,8 @@
             android:textColor="@color/colorGreyDark"
             android:layout_marginRight="10dp"
             android:text="Rs.1200.00"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:layout_marginEnd="10dp" />
     </LinearLayout>
 
     <RelativeLayout
