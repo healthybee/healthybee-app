@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -35,9 +34,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -216,6 +213,9 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                         public void onResponse(JSONObject response) {
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
+                            Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);
+                             startActivity(intent);
+                             finish();
                           //  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMjM1NzZiNzNhN2FhMDAxN2RkNjY2ZSIsImlhdCI6MTU0NTgyMjcwMX0.ekBniz5xdlYHjDy3rKV4AUWIA3Lupek1Jn3LcHxWGPo","user":{"id":"5c23576b73a7aa0017dd666e","name":"amod2android","picture":"https:\/\/gravatar.com\/avatar\/e0ced4403e76e8bc5cdea71754834388?d=identicon","email":"amod2android@gmail.com","mobile":"9284326399","createdAt":"2018-12-26T10:26:51.868Z"}}
 
                         }

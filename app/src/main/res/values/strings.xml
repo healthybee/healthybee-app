@@ -252,7 +252,6 @@
     <string name="otp">OTP</string>
     <string name="password">Password</string>
     <string name="enter_email">Enter email</string>
-    <string name="sign_in_to_continue">Sign In to continue</string>
-    <string name="welcome">Welcome</string>
+
 
 </resources>
