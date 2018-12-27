@@ -26,12 +26,12 @@
             android:layout_centerVertical="true">
 
             <TextView
-                android:paddingTop="3dp"
                 android:id="@+id/txtedit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:drawableRight="@drawable/ic_back_arrow"
+                android:paddingTop="3dp"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/text_size_16"
                 android:textStyle="bold" />
@@ -102,18 +102,17 @@
                             android:layout_width="72dp"
                             android:layout_height="72dp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/raw_profile"
-                            />
+                            android:src="@drawable/raw_profile" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/img_profile2"
                             android:layout_alignParentRight="true"
-                            android:layout_marginTop="-29dp"
+                            android:layout_below="@+id/img_profile2"
+                            android:layout_marginBottom="7dp"
                             android:layout_marginEnd="132dp"
                             android:layout_marginRight="130dp"
-                            android:layout_marginBottom="7dp"
+                            android:layout_marginTop="-29dp"
                             android:src="@drawable/ic_camera_alt_black_16dp" />
 
 

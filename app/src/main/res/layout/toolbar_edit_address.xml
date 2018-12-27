@@ -19,11 +19,12 @@
 
         <ImageView
             android:id="@+id/ivBack"
+            android:padding="@dimen/five"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/backarrow_black" />
+            android:src="@drawable/ic_back_arrow" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -31,6 +32,9 @@
             android:textColor="@color/add_item_text_color"
             android:layout_toRightOf="@+id/ivBack"
             android:text="@string/edit_address"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/five"
             android:layout_toEndOf="@+id/ivBack" />
 
         <TextView
@@ -39,8 +43,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:text="Save"
+            android:textStyle="bold"
             android:gravity="center_vertical"
-            android:textColor="@color/colorLightBlue"
+            android:textColor="#5c6bc0"
             android:layout_alignParentRight="true"
             android:paddingEnd="20dp"
             android:paddingRight="20dp"/>

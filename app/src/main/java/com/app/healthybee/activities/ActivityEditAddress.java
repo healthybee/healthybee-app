@@ -2,8 +2,9 @@ package com.app.healthybee.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,14 +25,20 @@ public class ActivityEditAddress extends AppCompatActivity {
     private TextView tvSaveAddress;
     private DbHelper dbHelper;
 
-    private EditText etAddressType;
-    private EditText etAddressLine1;
-    private EditText etAddressLine2;
+    //    private EditText etAddressType;
+//    private EditText etAddressLine1;
+//    private EditText etAddressLine2;
+
+    private TextInputEditText etAddressType;
+    private TextInputEditText etAddressLine1;
+    private TextInputEditText etAddressLine2;
+
     private EditText etAddressCity;
     private EditText etAddressState;
-    private EditText etAddressZipCode;
-    private EditText etAddressLandmark;
-
+    //    private EditText etAddressZipCode;
+//    private EditText etAddressLandmark;
+    private TextInputEditText etAddressZipCode;
+    private TextInputEditText etAddressLandmark;
     private String strAddressType;
     private String strAddressLine1;
     private String strAddressLine2;
@@ -75,12 +82,12 @@ public class ActivityEditAddress extends AppCompatActivity {
                 if (validateData() == 1) {
                     setAddressData();
                     long isSaved = dbHelper.insertUpdateAddress(address);
-                    if (isSaved>0){
-                        Intent intent=new Intent();
-                        intent.putExtra("addressObj",address);
-                        setResult(Activity.RESULT_OK,intent);
+                    if (isSaved > 0) {
+                        Intent intent = new Intent();
+                        intent.putExtra("addressObj", address);
+                        setResult(Activity.RESULT_OK, intent);
                         finish();
-                    }else {
+                    } else {
                         Toast.makeText(ActivityEditAddress.this, "Address not saved please try again", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -91,25 +98,25 @@ public class ActivityEditAddress extends AppCompatActivity {
     }
 
     private void setInitialAddress() {
-        if (null!=address.getAddressType()){
+        if (null != address.getAddressType()) {
             etAddressType.setText(address.getAddressType());
         }
-        if (null!=address.getAddressLine1()){
+        if (null != address.getAddressLine1()) {
             etAddressLine1.setText(address.getAddressLine1());
         }
-        if (null!=address.getAddressLine2()){
+        if (null != address.getAddressLine2()) {
             etAddressLine2.setText(address.getAddressLine2());
         }
-        if (null!=address.getAddressCity()){
+        if (null != address.getAddressCity()) {
             etAddressCity.setText(address.getAddressCity());
         }
-        if (null!=address.getAddressState()){
+        if (null != address.getAddressState()) {
             etAddressState.setText(address.getAddressState());
         }
-        if (null!=address.getAddressZipCode()){
+        if (null != address.getAddressZipCode()) {
             etAddressZipCode.setText(address.getAddressZipCode());
         }
-        if (null!=address.getAddressLandmark()){
+        if (null != address.getAddressLandmark()) {
             etAddressLandmark.setText(address.getAddressLandmark());
         }
     }
