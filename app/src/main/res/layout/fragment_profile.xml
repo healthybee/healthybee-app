@@ -50,7 +50,7 @@
                 android:drawableRight="@drawable/ic_logout"
                 android:textColor="@color/colorText"
                 android:textSize="20sp"
-                android:paddingRight="5dp"
+                android:padding="5dp"
                 android:layout_alignParentEnd="true"
                 android:textStyle="bold"
                 android:layout_alignParentRight="true" />
@@ -201,6 +201,7 @@
                     </RelativeLayout>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -210,6 +211,8 @@
                         android:background="#c0c0c0" />
 
                     <RelativeLayout
+                        android:visibility="gone"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view"

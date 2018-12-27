@@ -70,6 +70,7 @@
     <dimen name="space_item_text_default_size">12sp</dimen>
     <dimen name="badge_left_margin">5dp</dimen>
     <dimen name="view_bottom_margin">50dp</dimen>
+    <dimen name="six">6dp</dimen>
 
 
 </resources>

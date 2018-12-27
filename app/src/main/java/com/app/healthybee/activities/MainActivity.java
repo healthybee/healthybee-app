@@ -17,6 +17,8 @@ import com.app.healthybee.R;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.fragment.FragmentCheckOut;
 import com.app.healthybee.fragment.FragmentHome;
+import com.app.healthybee.fragment.FragmentMyOrder;
+import com.app.healthybee.fragment.FragmentNotification;
 import com.app.healthybee.fragment.FragmentProfile;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Constant;
@@ -24,9 +26,9 @@ import com.app.healthybee.utils.Constant;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private RelativeLayout rlMenu, rlCart, rlProfile;
-    private ImageView ivMenu, ivProfile;
-    private TextView tvProfile, tvCart, tvMenu;
+    private RelativeLayout rlMenu, rlCart, rlProfile,rlMyOrder,rlNotification;
+    private ImageView ivMenu, ivProfile,ivMyOrder,ivNotification;
+    private TextView tvProfile, tvCart, tvMenu,tvMyOrder,tvNotification;
     private long exitTime = 0;
     private int count = 0;
     private DbHelper dbHelper;
@@ -48,17 +50,27 @@ public class MainActivity extends AppCompatActivity {
         rlMenu = findViewById(R.id.rlMenu);
         rlCart = findViewById(R.id.rlCart);
         rlProfile = findViewById(R.id.rlProfile);
+        rlMyOrder = findViewById(R.id.rlMyOrder);
+        rlNotification = findViewById(R.id.rlNotification);
         tvProfile = findViewById(R.id.tvProfile);
         tvCart = findViewById(R.id.tvCart);
         tvMenu = findViewById(R.id.tvMenu);
+        tvMyOrder = findViewById(R.id.tvMyOrder);
+        tvNotification = findViewById(R.id.tvNotification);
         ivMenu = findViewById(R.id.ivMenu);
         ivProfile = findViewById(R.id.ivProfile);
+        ivMyOrder = findViewById(R.id.ivMyOrder);
+        ivNotification = findViewById(R.id.ivNotification);
 
         dbHelper = new DbHelper(getApplicationContext());
         count = 0;
 
         ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_selected));
         ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
+        ivMyOrder.setImageDrawable(getResources().getDrawable(R.drawable.ic_my_orders_unselected));
+        ivNotification.setImageDrawable(getResources().getDrawable(R.drawable.ic_notification_unselected));
+        tvMyOrder.setTextColor(Color.parseColor("#C2C2C2"));
+        tvNotification.setTextColor(Color.parseColor("#C2C2C2"));
         tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
         tvMenu.setTextColor(Color.parseColor("#FF9900"));
         tool_header.setVisibility(View.VISIBLE);
@@ -71,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_selected));
                 ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
+                ivMyOrder.setImageDrawable(getResources().getDrawable(R.drawable.ic_my_orders_unselected));
+                ivNotification.setImageDrawable(getResources().getDrawable(R.drawable.ic_notification_unselected));
+                tvMyOrder.setTextColor(Color.parseColor("#C2C2C2"));
+                tvNotification.setTextColor(Color.parseColor("#C2C2C2"));
                 tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
                 tvMenu.setTextColor(Color.parseColor("#FF9900"));
                 tool_header.setVisibility(View.VISIBLE);
@@ -85,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_unselected));
                 ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
+                ivMyOrder.setImageDrawable(getResources().getDrawable(R.drawable.ic_my_orders_unselected));
+                ivNotification.setImageDrawable(getResources().getDrawable(R.drawable.ic_notification_unselected));
+                tvMyOrder.setTextColor(Color.parseColor("#C2C2C2"));
+                tvNotification.setTextColor(Color.parseColor("#C2C2C2"));
                 tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
                 tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
                 tool_header.setVisibility(View.GONE);
@@ -99,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_unselected));
                 ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_selected));
+                ivMyOrder.setImageDrawable(getResources().getDrawable(R.drawable.ic_my_orders_unselected));
+                ivNotification.setImageDrawable(getResources().getDrawable(R.drawable.ic_notification_unselected));
+                tvMyOrder.setTextColor(Color.parseColor("#C2C2C2"));
+                tvNotification.setTextColor(Color.parseColor("#C2C2C2"));
                 tvProfile.setTextColor(Color.parseColor("#FF9900"));
                 tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
                 Fragment fragment;
@@ -108,6 +132,46 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        rlMyOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_unselected));
+                ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
+                ivMyOrder.setImageDrawable(getResources().getDrawable(R.drawable.ic_my_orders));
+                ivNotification.setImageDrawable(getResources().getDrawable(R.drawable.ic_notification_unselected));
+                tvMyOrder.setTextColor(Color.parseColor("#FF9900"));
+                tvNotification.setTextColor(Color.parseColor("#C2C2C2"));
+                tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
+                tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
+                Fragment fragment;
+                fragment = new FragmentMyOrder();
+                loadFragment(fragment, "FragmentMyOrder");
+                tool_header.setVisibility(View.GONE);
+
+            }
+        });
+
+        rlNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_unselected));
+                ivProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_profile_unselected));
+                ivMyOrder.setImageDrawable(getResources().getDrawable(R.drawable.ic_my_orders_unselected));
+                ivNotification.setImageDrawable(getResources().getDrawable(R.drawable.ic_notifications_selected));
+                tvMyOrder.setTextColor(Color.parseColor("#C2C2C2"));
+                tvNotification.setTextColor(Color.parseColor("#FF9900"));
+                tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
+                tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
+                Fragment fragment;
+                fragment = new FragmentNotification();
+                loadFragment(fragment, "FragmentNotification");
+                tool_header.setVisibility(View.GONE);
+
+            }
+        });
+
+
 
         ivSearch = findViewById(R.id.ivSearch);
         ivSearch.setOnClickListener(new View.OnClickListener() {
