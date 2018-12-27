@@ -26,6 +26,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -34,6 +35,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.JsonObject;
+
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -185,7 +188,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         strLoginId = edt_email_id.getText().toString().trim();
         strPassword = edt_login_password.getText().toString().trim();
         if (!isValidEmail(strLoginId)) {
-            Toast.makeText(this, "Invalid email id", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid Email Id", Toast.LENGTH_SHORT).show();
             return 0;
         } else if (TextUtils.isEmpty(strPassword)) {
             Toast.makeText(this, "Invalid Password", Toast.LENGTH_SHORT).show();
@@ -213,10 +216,42 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                         public void onResponse(JSONObject response) {
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
+
+                             if (response.has("token")){
+                                 SharedPrefUtil.setToken(activity,response.optString("token"));
+                             }
+                            if (response.has("user")){
+                                JSONObject jsonObject=response.optJSONObject("user");
+                                if (jsonObject.has("id")){
+                                    SharedPrefUtil.setUserId(activity,jsonObject.optString("id"));
+                                }
+                                if (jsonObject.has("name")){
+                                    SharedPrefUtil.setUserName(activity,jsonObject.optString("name"));
+                                }
+                                if (jsonObject.has("picture")){
+                                    SharedPrefUtil.setUserPicture(activity,jsonObject.optString("picture"));
+                                }
+                                if (jsonObject.has("email")){
+                                    SharedPrefUtil.setUserEmail(activity,jsonObject.optString("email"));
+                                }
+                                if (jsonObject.has("mobile")){
+                                    SharedPrefUtil.setUserMobile(activity,jsonObject.optString("mobile"));
+                                }
+                                if (jsonObject.has("createdAt")){
+                                    SharedPrefUtil.setCreatedAt(activity,jsonObject.optString("createdAt"));
+                                }
+                            }
                             Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);
-                             startActivity(intent);
-                             finish();
-                          //  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMjM1NzZiNzNhN2FhMDAxN2RkNjY2ZSIsImlhdCI6MTU0NTgyMjcwMX0.ekBniz5xdlYHjDy3rKV4AUWIA3Lupek1Jn3LcHxWGPo","user":{"id":"5c23576b73a7aa0017dd666e","name":"amod2android","picture":"https:\/\/gravatar.com\/avatar\/e0ced4403e76e8bc5cdea71754834388?d=identicon","email":"amod2android@gmail.com","mobile":"9284326399","createdAt":"2018-12-26T10:26:51.868Z"}}
+                            startActivity(intent);
+                            finish();
+
+                          //  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMjM1NzZiNzNhN2FhMDAxN2RkNjY2ZSIsImlhdCI6MTU0NTgyMjcwMX0.ekBniz5xdlYHjDy3rKV4AUWIA3Lupek1Jn3LcHxWGPo",
+                            // "user":{"id":"5c23576b73a7aa0017dd666e",
+                            // "name":"amod2android",
+                            // "picture":"https:\/\/gravatar.com\/avatar\/e0ced4403e76e8bc5cdea71754834388?d=identicon",
+                            // "email":"amod2android@gmail.com",
+                            // "mobile":"9284326399",
+                            // "createdAt":"2018-12-26T10:26:51.868Z"}}
 
                         }
                     }, new Response.ErrorListener() {

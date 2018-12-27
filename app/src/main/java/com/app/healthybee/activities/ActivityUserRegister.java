@@ -89,8 +89,8 @@ public class ActivityUserRegister extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 startActivity(new Intent(getApplicationContext(), ActivityUserLogin.class));
+                finish();
             }
         });
 
@@ -250,12 +250,27 @@ public class ActivityUserRegister extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     Log.d("4343", response.toString());
                     MyCustomProgressDialog.dismissDialog();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(ActivityUserRegister.this);
+                    dialog.setTitle(R.string.register_title);
+                    dialog.setMessage(R.string.register_success);
+                    dialog.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(getApplicationContext(), ActivityUserLogin.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.show();
 
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("4343", "Site Info Error: " + error.getMessage());
+                    Toast.makeText(activity, error.getMessage(), Toast.LENGTH_SHORT).show();
                     MyCustomProgressDialog.dismissDialog();
                 }
             }) {

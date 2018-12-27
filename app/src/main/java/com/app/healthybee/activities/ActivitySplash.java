@@ -25,9 +25,9 @@ public class ActivitySplash extends AppCompatActivity {
         new CountDownTimer(Config.SPLASH_TIME, 1000) {
             @Override
             public void onFinish() {
-//                Intent intent = new Intent(getBaseContext(), ActivityUserLogin.class);
+                Intent intent = new Intent(getBaseContext(), ActivityUserLogin.class);
 //                Intent intent = new Intent(getBaseContext(), ActivityLogin.class);
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+//                Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             }

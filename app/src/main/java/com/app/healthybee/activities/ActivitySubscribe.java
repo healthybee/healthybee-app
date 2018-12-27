@@ -1,20 +1,27 @@
 package com.app.healthybee.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.app.healthybee.R;
+import com.app.healthybee.utils.SharedPrefUtil;
 
 public class ActivitySubscribe extends AppCompatActivity {
     private Button btn_subscribe;
+    private TextView tvUserName;
+    private Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscribe);
+        activity=ActivitySubscribe.this;
         btn_subscribe=findViewById(R.id.btn_subscribe);
+        tvUserName=findViewById(R.id.tvUserName);
         btn_subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -22,5 +29,11 @@ public class ActivitySubscribe extends AppCompatActivity {
                 finish();
             }
         });
+        setDefaultValue();
+
+    }
+
+    private void setDefaultValue() {
+        tvUserName.setText(SharedPrefUtil.getUserName(activity));
     }
 }
