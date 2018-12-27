@@ -71,6 +71,7 @@
     <dimen name="badge_left_margin">5dp</dimen>
     <dimen name="view_bottom_margin">50dp</dimen>
     <dimen name="six">6dp</dimen>
+    <dimen name="seven">7dp</dimen>
 
 
 </resources>

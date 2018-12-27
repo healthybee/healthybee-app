@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private DbHelper dbHelper;
     private ArrayList<CategoryItem> list;
     private ImageView ivSearch;
-    private RelativeLayout tool_header;
+    private RelativeLayout tool_header,relativeLayout;
     public static boolean mFlagDisplayList = false;
 
     @Override
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mFlagDisplayList = false;
         tool_header=findViewById(R.id.rl1);
+        relativeLayout=findViewById(R.id.relativeLayout);
         setBottomNavigation();
     }
 
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
                 tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
                 tool_header.setVisibility(View.GONE);
+//                relativeLayout.setVisibility(View.GONE);
                 Fragment fragment;
                 fragment = new FragmentCheckOut();
                 loadFragment(fragment, "FragmentCheckOut");
