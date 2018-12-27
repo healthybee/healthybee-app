@@ -35,7 +35,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -219,6 +218,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
 
                              if (response.has("token")){
                                  SharedPrefUtil.setToken(activity,response.optString("token"));
+                                 Log.d("4343", response.optString("token"));
                              }
                             if (response.has("user")){
                                 JSONObject jsonObject=response.optJSONObject("user");
