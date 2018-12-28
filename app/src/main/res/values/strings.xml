@@ -252,6 +252,7 @@
     <string name="otp">OTP</string>
     <string name="password">Password</string>
     <string name="enter_email">Enter email</string>
+    <string name="profile">Profile</string>
 
 
 </resources>

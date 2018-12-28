@@ -13,9 +13,7 @@ public class UrlConstants {
 
     public static String createUser = baseUrl+users+"?"+access_token+"="+token;
     public static String authUser = baseUrl +auth+"?"+access_token+"="+token;
-
-
-
+    public static String deliverySupport = baseUrl +"delivery-supports";
 
 
 

@@ -1,5 +1,6 @@
 package com.app.healthybee.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +18,8 @@ import com.app.healthybee.models.ModelDeliverySupport;
 import java.util.ArrayList;
 
 public class AdapterDeliverySupport extends RecyclerView.Adapter<AdapterDeliverySupport.ViewHolder> {
-    Context context;
-    ArrayList<ModelDeliverySupport> quesAnsList;
-    private static int currentPosition = 0;
+    private Context context;
+    private ArrayList<ModelDeliverySupport> quesAnsList;
 
     public AdapterDeliverySupport(Context context, ArrayList<ModelDeliverySupport> quesAnsList) {
         this.context = context;
@@ -34,7 +34,7 @@ public class AdapterDeliverySupport extends RecyclerView.Adapter<AdapterDelivery
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AdapterDeliverySupport.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final AdapterDeliverySupport.ViewHolder holder, final int position) {
         ModelDeliverySupport model = quesAnsList.get(position);
         holder.textViewQues.setText(model.getQuestion());
         holder.textViewAns.setText(model.getAnswer());
@@ -57,7 +57,6 @@ public class AdapterDeliverySupport extends RecyclerView.Adapter<AdapterDelivery
             public void onClick(View view) {
 
                 //getting the position of the item to expand it
-                currentPosition = position;
                 if (holder.linearLayout.isShown()){
                     holder.textViewQues.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down,0);
                     holder.linearLayout.setVisibility(View.GONE);
@@ -68,7 +67,7 @@ public class AdapterDeliverySupport extends RecyclerView.Adapter<AdapterDelivery
                 }
 
                 //reloding the list
-                notifyDataSetChanged();
+               // notifyDataSetChanged();
             }
         });
 

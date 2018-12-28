@@ -191,7 +191,6 @@ public class FragmentProfile extends Fragment {
     }
 
     public void logoutDialog() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.logout_title);
         builder.setMessage(R.string.logout_message);
