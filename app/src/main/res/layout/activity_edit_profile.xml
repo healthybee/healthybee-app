@@ -105,6 +105,7 @@
                             android:src="@drawable/raw_profile" />
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -113,7 +114,8 @@
                             android:layout_marginEnd="132dp"
                             android:layout_marginRight="130dp"
                             android:layout_marginTop="-29dp"
-                            android:src="@drawable/ic_camera_alt_black_16dp" />
+                            android:src="@drawable/ic_camera_alt_black_16dp"
+                            android:layout_alignParentEnd="true" />
 
 
                     </RelativeLayout>
@@ -142,10 +144,10 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/TextInputLayoutAppearance">
+                        android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etUserName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Name *"
@@ -156,24 +158,24 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/TextInputLayoutAppearance">
+                        android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etUserEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Email *"
-                            android:imeOptions="actionDone"
+                            android:imeOptions="actionNext"
                             android:inputType="textEmailAddress"
                             android:text="" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/TextInputLayoutAppearance">
+                        android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etUserMobile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Mobile *"

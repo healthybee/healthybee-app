@@ -8,4 +8,5 @@ public class Constants {
     public static final String WEBSITE = "APP_STAGING";
     public static final String CALLBACK_URL = "https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp";
 
+
 }
