@@ -156,7 +156,7 @@
                             android:layout_toRightOf="@+id/img_profile2">
 
                             <TextView
-                                android:id="@+id/txt_welcome"
+                                android:id="@+id/txtUserName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
@@ -171,25 +171,28 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:layout_toRightOf="@+id/txt_welcome"
+                                android:layout_toRightOf="@+id/txtUserName"
                                 android:drawableRight="@drawable/ic_tick"
                                 android:textColor="@color/colorText"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:layout_marginStart="@dimen/five"
+                                android:drawableEnd="@drawable/ic_tick"
+                                android:layout_toEndOf="@+id/txtUserName" />
 
                             <TextView
-                                android:id="@+id/txt_not_registered"
+                                android:id="@+id/txtUserEmail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/txt_welcome"
+                                android:layout_below="@+id/txtUserName"
                                 android:layout_marginBottom="6dp"
                                 android:text="amod2android@gmail.com" />
 
                             <TextView
-                                android:id="@+id/txt_register"
+                                android:id="@+id/txtUserMobile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/txt_not_registered"
+                                android:layout_below="@+id/txtUserEmail"
                                 android:layout_marginBottom="6dp"
                                 android:paddingEnd="6dp"
                                 android:paddingRight="6dp"

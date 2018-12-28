@@ -35,6 +35,7 @@ import com.app.healthybee.adapter.AdapterAbout;
 import com.app.healthybee.adapter.AdapterPause;
 import com.app.healthybee.models.Pause;
 import com.app.healthybee.utils.Constant;
+import com.app.healthybee.utils.SharedPrefUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +45,12 @@ public class FragmentProfile extends Fragment {
     private View root_view, parent_view;
     Applications myApplication;
     RelativeLayout lyt_is_login, lyt_login_register;
-  // TextView txt_edit;
+   TextView txtUserEmail,txtUserMobile,txtUserName;
     TextView txt_login;
     TextView txt_logout;
     TextView txtedit;
     ProgressDialog progressDialog;
-    TextView txt_register, txt_username, txt_email;
+    TextView txt_username, txt_email;
     ImageView img_profile;
     RecyclerView recyclerView;
     AdapterAbout adapterAbout;
@@ -64,13 +65,14 @@ public class FragmentProfile extends Fragment {
         lyt_root = root_view.findViewById(R.id.root_layout);
 
        // myApplication = Applications.getInstance();
-
+        txtUserEmail= root_view.findViewById(R.id.txtUserEmail);
+        txtUserMobile= root_view.findViewById(R.id.txtUserMobile);
+        txtUserName= root_view.findViewById(R.id.txtUserName);
         lyt_is_login = root_view.findViewById(R.id.lyt_is_login);
         lyt_login_register = root_view.findViewById(R.id.lyt_login_register);
         txt_login = root_view.findViewById(R.id.btn_login);
         txt_logout = root_view.findViewById(R.id.txt_logout);
         txtedit = root_view.findViewById(R.id.txtedit);
-        txt_register = root_view.findViewById(R.id.txt_register);
         txt_username = root_view.findViewById(R.id.txt_username);
         txt_email = root_view.findViewById(R.id.txt_email);
         img_profile = root_view.findViewById(R.id.img_profile);
@@ -85,6 +87,8 @@ public class FragmentProfile extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapterAbout = new AdapterAbout(getDataInformation(), getActivity());
         recyclerView.setAdapter(adapterAbout);
+
+        setProfileData();
 
         if (Config.ENABLE_RTL_MODE) {
             lyt_root.setRotationY(180);
@@ -158,57 +162,26 @@ public class FragmentProfile extends Fragment {
         });
         return root_view;
     }
+
+
+    private void setProfileData() {
+        txtUserName.setText(SharedPrefUtil.getUserName(getContext()));
+        txtUserEmail.setText(SharedPrefUtil.getUserEmail(getContext()));
+        txtUserMobile.setText(SharedPrefUtil.getUserMobile(getContext()));
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        assert ((AppCompatActivity)getActivity()) != null;
+   //     assert ((AppCompatActivity)getActivity()) != null;
 //        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        assert ((AppCompatActivity)getActivity()) != null;
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
-//    @Override
-//    public void onResume() {
-
-//        if (myApplication.getIsLogin()) {
-//            lyt_is_login.setVisibility(View.VISIBLE);
-//            lyt_login_register.setVisibility(View.GONE);
-//
-//           // new getUserImage().execute(new ApiConnector());
-//
-//            txt_logout.setVisibility(View.VISIBLE);
-//            txt_logout.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    logoutDialog();
-//                }
-//            });
-//
-//        } else {
-//            lyt_is_login.setVisibility(View.GONE);
-//            lyt_login_register.setVisibility(View.VISIBLE);
-//            txt_login.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startActivity(new Intent(getActivity(), ActivityUserLogin.class));
-//                }
-//            });
-//
-//            txt_register.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startActivity(new Intent(getActivity(), ActivityUserRegister.class));
-//                }
-//            });
-//            txt_logout.setVisibility(View.GONE);
-//        }
-//
-//        super.onResume();
-//    }
 
     public void logoutDialog() {
 

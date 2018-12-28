@@ -2,10 +2,12 @@ package com.app.healthybee.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -28,12 +30,13 @@ public class ActivityEditProfile extends AppCompatActivity {
     private Activity activity;
     private TextInputEditText etUserName, etUserEmail, etUserMobile;
     private TextView tv_save;
-
+    LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         activity = ActivityEditProfile.this;
+        linearLayout=findViewById(R.id.root_layout);
         init();
         setProfileData();
         tv_save.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +84,8 @@ public class ActivityEditProfile extends AppCompatActivity {
                                 SharedPrefUtil.setCreatedAt(activity, response.optString("createdAt"));
                             }
                             setProfileData();
+                            Snackbar snackbar1 = Snackbar.make(linearLayout, "Profile saved successfully", Snackbar.LENGTH_SHORT);
+                            snackbar1.show();
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -118,6 +123,7 @@ public class ActivityEditProfile extends AppCompatActivity {
         etUserName.setText(SharedPrefUtil.getUserName(activity));
         etUserEmail.setText(SharedPrefUtil.getUserEmail(activity));
         etUserMobile.setText(SharedPrefUtil.getUserMobile(activity));
+
     }
 
 }
