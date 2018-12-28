@@ -11,7 +11,16 @@ public class SharedPrefUtil {
         editor.putString("token", tokenId);
         editor.apply();
     }
-
+    public static boolean getIsLogin(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("HealthyBee", Context.MODE_PRIVATE);
+        return prefs.getBoolean("IsLogin", false);
+    }
+    public static void setIsLogin(Context context, boolean IsLogin) {
+        SharedPreferences preferences = context.getSharedPreferences("HealthyBee", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("IsLogin", IsLogin);
+        editor.apply();
+    }
     public static String getToken(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("HealthyBee", Context.MODE_PRIVATE);
         return prefs.getString("token", "");

@@ -241,6 +241,8 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                                     SharedPrefUtil.setCreatedAt(activity,jsonObject.optString("createdAt"));
                                 }
                             }
+                            // for login session
+                            SharedPrefUtil.setIsLogin(activity,true);
                             Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);
                             startActivity(intent);
                             finish();

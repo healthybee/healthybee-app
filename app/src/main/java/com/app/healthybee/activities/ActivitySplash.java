@@ -9,25 +9,27 @@ import android.widget.ProgressBar;
 
 import com.app.healthybee.R;
 import com.app.healthybee.utils.Config;
+import com.app.healthybee.utils.SharedPrefUtil;
 
 public class ActivitySplash extends AppCompatActivity {
-
-    private ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        progressBar = findViewById(R.id.progressBar);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
         new CountDownTimer(Config.SPLASH_TIME, 1000) {
             @Override
             public void onFinish() {
-                Intent intent = new Intent(getBaseContext(), ActivityUserLogin.class);
-//                Intent intent = new Intent(getBaseContext(), ActivityLogin.class);
-//                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                Intent intent;
+                if (SharedPrefUtil.getIsLogin(ActivitySplash.this)) {
+                    intent = new Intent(getBaseContext(), MainActivity.class);
+                } else {
+                    intent = new Intent(getBaseContext(), ActivityUserLogin.class);
+                }
                 startActivity(intent);
                 finish();
             }
