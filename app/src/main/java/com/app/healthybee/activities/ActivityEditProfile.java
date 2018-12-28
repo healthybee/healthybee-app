@@ -84,7 +84,7 @@ public class ActivityEditProfile extends AppCompatActivity {
                                 SharedPrefUtil.setCreatedAt(activity, response.optString("createdAt"));
                             }
                             setProfileData();
-                            Snackbar snackbar1 = Snackbar.make(linearLayout, "Profile saved successfully", Snackbar.LENGTH_SHORT);
+                            Snackbar snackbar1 = Snackbar.make(linearLayout, "Profile updated successfully", Snackbar.LENGTH_SHORT);
                             snackbar1.show();
                         }
                     }, new Response.ErrorListener() {
