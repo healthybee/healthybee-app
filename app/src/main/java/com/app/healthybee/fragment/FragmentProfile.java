@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.healthybee.activities.ActivityEditProfile;
+import com.app.healthybee.activities.ActivityUserLogin;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
@@ -46,7 +47,7 @@ public class FragmentProfile extends Fragment {
     Applications myApplication;
     RelativeLayout lyt_is_login, lyt_login_register;
    TextView txtUserEmail,txtUserMobile,txtUserName;
-    TextView txt_login;
+    TextView txt_login,tv_logout;
     TextView txt_logout;
     TextView txtedit;
     ProgressDialog progressDialog;
@@ -69,6 +70,7 @@ public class FragmentProfile extends Fragment {
         txtUserMobile= root_view.findViewById(R.id.txtUserMobile);
         txtUserName= root_view.findViewById(R.id.txtUserName);
         lyt_is_login = root_view.findViewById(R.id.lyt_is_login);
+        tv_logout= root_view.findViewById(R.id.tv_logout);
         lyt_login_register = root_view.findViewById(R.id.lyt_login_register);
         txt_login = root_view.findViewById(R.id.btn_login);
         txt_logout = root_view.findViewById(R.id.txt_logout);
@@ -160,6 +162,13 @@ public class FragmentProfile extends Fragment {
                 startActivity(new Intent(getActivity(),ActivityEditProfile.class));
             }
         });
+        tv_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutDialog();
+
+            }
+        });
         return root_view;
     }
 
@@ -174,8 +183,6 @@ public class FragmentProfile extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-   //     assert ((AppCompatActivity)getActivity()) != null;
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     @Override
@@ -203,7 +210,10 @@ public class FragmentProfile extends Fragment {
                         builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                refreshFragment();
+                                SharedPrefUtil.setIsLogin(getActivity(),false);
+                                startActivity(new Intent(getActivity(),ActivityUserLogin.class));
+                                getActivity().finishAffinity();
+                                dialogInterface.dismiss();
                             }
                         });
                         builder.setCancelable(false);
