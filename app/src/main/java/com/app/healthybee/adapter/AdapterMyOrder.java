@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.app.healthybee.listeners.CustomAddClickListener;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.models.MyOrder;
 import com.app.healthybee.R;
@@ -22,7 +23,7 @@ public class AdapterMyOrder extends RecyclerView.Adapter<AdapterMyOrder.ViewHold
     ArrayList<MyOrder> data;
 
     Context mContext;
-    CustomItemClickListener listener;
+    CustomAddClickListener listener;
 
     @Override
     public AdapterMyOrder.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,7 +50,7 @@ public class AdapterMyOrder extends RecyclerView.Adapter<AdapterMyOrder.ViewHold
         holder.address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(v, holder.getPosition());
+                listener.onItemClick(v, holder.getPosition(),"select");
                 }
         });
 
@@ -61,7 +62,7 @@ public class AdapterMyOrder extends RecyclerView.Adapter<AdapterMyOrder.ViewHold
         return data.size();
     }
 
-    public AdapterMyOrder(Context mContext, ArrayList<MyOrder> data, CustomItemClickListener listener) {
+    public AdapterMyOrder(Context mContext, ArrayList<MyOrder> data, CustomAddClickListener listener) {
         this.data = data;
         this.mContext = mContext;
         this.listener = listener;

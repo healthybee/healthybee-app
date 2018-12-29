@@ -3,6 +3,9 @@ package com.app.healthybee.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -12,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.healthybee.activities.ActivityEditAddress;
+import com.app.healthybee.fragment.FragmentEditAddress;
+import com.app.healthybee.listeners.CustomAddClickListener;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
 import com.app.healthybee.models.Address;
@@ -26,7 +31,7 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
     ArrayList<Address> data;
 
     Context mContext;
-    CustomItemClickListener listener;
+    CustomAddClickListener listener;
 
     @Override
     public AdapterAddress.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,7 +40,7 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(v, mViewHolder.getPosition());
+                listener.onItemClick(v, mViewHolder.getPosition(),"select");
             }
         });
         return mViewHolder;
@@ -49,10 +54,12 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
         holder.ivEditAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(mContext,ActivityEditAddress.class);
-                intent.putExtra("addressObj",data.get(position));
-                ((Activity) mContext).startActivityForResult(intent, 1);
-                //mContext.startActivity(intent);
+//                Intent intent =new Intent(mContext,ActivityEditAddress.class);
+//                intent.putExtra("addressObj",data.get(position));
+//                ((Activity) mContext).startActivityForResult(intent, 1);
+//                //mContext.startActivity(intent);
+                listener.onItemClick(view,position,"edit");
+
 
             }
         });
@@ -65,7 +72,7 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
         return data.size();
     }
 
-    public AdapterAddress(Context mContext, ArrayList<Address> data, CustomItemClickListener listener) {
+    public AdapterAddress(Context mContext, ArrayList<Address> data, CustomAddClickListener listener) {
         this.data = data;
         this.mContext = mContext;
         this.listener = listener;

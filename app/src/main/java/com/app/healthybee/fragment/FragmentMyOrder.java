@@ -1,10 +1,8 @@
 package com.app.healthybee.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,8 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.app.healthybee.listeners.CustomItemClickListener;
-import com.app.healthybee.activities.ActivityAddress;
+import com.app.healthybee.listeners.CustomAddClickListener;
 import com.app.healthybee.models.MyOrder;
 import com.app.healthybee.adapter.AdapterMyOrder;
 import com.app.healthybee.R;
@@ -72,21 +69,13 @@ public class FragmentMyOrder extends Fragment {
                 ));
 
 
-        adapter = new AdapterMyOrder(getActivity(), data, new CustomItemClickListener() {
+        adapter = new AdapterMyOrder(getActivity(), data, new CustomAddClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position,String type) {
                 Log.d("TAG", "clicked position:" + position);
                 String postId = data.get(position).getItemName();
                 Toast.makeText(getActivity(), postId, Toast.LENGTH_SHORT).show();
-
-                Intent intent =new Intent(getActivity(),ActivityAddress.class);
-                startActivity(intent);
-
-//                FragmentManager fm =getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
-//                FragmentAddress f1 = new FragmentAddress();
-//                fragmentTransaction.add(R.id.container, f1);
-//                fragmentTransaction.commit();
+                // TODO: 29/12/18  change timing
             }
         });
         itemsList.setAdapter(adapter);
@@ -96,15 +85,11 @@ public class FragmentMyOrder extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        assert ((AppCompatActivity)getActivity()) != null;
-      //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        assert ((AppCompatActivity)getActivity()) != null;
-      //  ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
 }

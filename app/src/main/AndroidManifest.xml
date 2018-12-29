@@ -79,11 +79,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".activities.ActivityAddress"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

@@ -30,8 +30,6 @@ import com.app.healthybee.activities.ActivityUserLogin;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
-import com.app.healthybee.activities.ActivityAddress;
-import com.app.healthybee.activities.Applications;
 import com.app.healthybee.adapter.AdapterAbout;
 import com.app.healthybee.adapter.AdapterPause;
 import com.app.healthybee.models.Pause;
@@ -99,24 +97,15 @@ public class FragmentProfile extends Fragment {
                     FragmentNotification f1 = new FragmentNotification();
                     fragmentTransaction.replace(R.id.container, f1);
                     fragmentTransaction.commit();
-                   // startActivity(new Intent(getActivity(), ActivityPrivacyPolicy.class));
                 }
                 if (position == 1) {
 
-                    Intent intent =new Intent(getActivity(),ActivityAddress.class);
-                    startActivity(intent);
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
+                    FragmentAddress f1 = new FragmentAddress();
+                    fragmentTransaction.replace(R.id.container, f1);
+                    fragmentTransaction.commit();
 
-//                    FragmentManager fm = getActivity().getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
-//                    FragmentAddress f1 = new FragmentAddress();
-//                    fragmentTransaction.replace(R.id.container, f1);
-//                    fragmentTransaction.commit();
-//                    final String appName = getActivity().getPackageName();
-//                    try {
-//                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appName)));
-//                    } catch (android.content.ActivityNotFoundException anfe) {
-//                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appName)));
-//                    }
                 } else if (position == 2) {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
@@ -224,62 +213,6 @@ public class FragmentProfile extends Fragment {
         builder.show();
 
     }
-
-    public void refreshFragment() {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.detach(this).attach(this).commit();
-    }
-
-    /*private class getUserImage extends AsyncTask<ApiConnector, Long, JSONArray> {
-        @Override
-        protected JSONArray doInBackground(ApiConnector... params) {
-            return params[0].GetCustomerDetails(myApplication.getUserId());
-        }
-
-        @Override
-        protected void onPostExecute(JSONArray jsonArray) {
-
-            try {
-                JSONObject objJson = null;
-                objJson = jsonArray.getJSONObject(0);
-                final String user_id = objJson.getString("id");
-                final String name = objJson.getString("name");
-                final String email = objJson.getString("email");
-                final String user_image = objJson.getString("imageName");
-                final String password = objJson.getString("password");
-
-                txt_username.setText(name);
-                txt_email.setText(email);
-
-                if (user_image.equals("")) {
-                    img_profile.setImageResource(R.drawable.ic_user_account_white);
-                } else {
-                    Picasso.with(getActivity())
-                            .load(Config.ADMIN_PANEL_URL + "/upload/avatar/" + user_image.replace(" ", "%20"))
-                            .resize(300, 300)
-                            .centerCrop()
-
-                            .into(img_profile);
-                }
-//
-//                txt_edit.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(getActivity(), ActivityProfile.class);
-//                        intent.putExtra("name", name);
-//                        intent.putExtra("email", email);
-//                        intent.putExtra("user_image", user_image);
-//                        intent.putExtra("password", password);
-//                        startActivity(intent);
-//                    }
-//                });
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-    }*/
 
     private List<Data> getDataInformation() {
 

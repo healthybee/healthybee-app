@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -31,10 +32,8 @@ import com.app.healthybee.Paytm;
 import com.app.healthybee.activities.ActivityCheckOut;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.listeners.UpdateCart;
-import com.app.healthybee.activities.ActivityAddress;
 import com.app.healthybee.adapter.AdapterTimeSlot;
 import com.app.healthybee.dboperation.DbHelper;
-import com.app.healthybee.models.Address;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.adapter.AdapterCheckOut;
 import com.app.healthybee.listeners.CustomItemClickListener;
@@ -89,7 +88,6 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     private TextView tvAddMoreItem,tv_checkout;
     private TextView tvAddress;
 
-    static Address address =new Address();
 
     ArrayList<String> mSpinnerData = new ArrayList<>();
 
@@ -126,6 +124,8 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         tv_checkout=view.findViewById(R.id.tv_checkout);
         tvAddress=view.findViewById(R.id.tvAddress);
 
+        tvAddress.setText(MainActivity.address.getAddressType());
+
 
         sv=view.findViewById(R.id.nsv);
         sv.post(new Runnable() {
@@ -138,8 +138,13 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         rlAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(getActivity(),ActivityAddress.class);
-                startActivity(intent);
+//                Intent intent =new Intent(getActivity(),ActivityAddress.class);
+//                startActivity(intent);
+                FragmentManager fm =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
+                FragmentAddress f1 = new FragmentAddress();
+                fragmentTransaction.replace(R.id.container, f1);
+                fragmentTransaction.commit();
             }
         });
 
@@ -280,15 +285,11 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     @Override
     public void onResume() {
         super.onResume();
-        assert ((AppCompatActivity)getActivity()) != null;
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        assert ((AppCompatActivity)getActivity()) != null;
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
     private void selectDatePicker(Context context) {
         Calendar c = Calendar.getInstance();
