@@ -83,10 +83,9 @@ public class FragmentHome extends Fragment {
             }
         });
         tabLayout.setupWithViewPager(viewPager);
-        // setupTabIcons();
-        // makeActionOverflowMenuShown();
 
         // Attach the page change listener inside the activity
+        viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             // This method will be invoked when a new page becomes selected.
@@ -153,7 +152,8 @@ public class FragmentHome extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
+            MyCustomProgressDialog.showDialog(getActivity(),
+                    getString(R.string.please_wait));
         }
 
         @Override

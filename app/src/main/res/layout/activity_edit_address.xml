@@ -60,7 +60,7 @@ android:layout_height="match_parent">
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/address_type"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:inputType="text"
                         android:maxLength="30"
                         android:textSize="@dimen/text_size_16"
@@ -79,7 +79,7 @@ android:layout_height="match_parent">
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/address_line_1_star"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:inputType="text"
                         android:textSize="@dimen/text_size_16"
                         android:text=""
@@ -97,7 +97,7 @@ android:layout_height="match_parent">
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/address_line_2_star"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:inputType="text"
                         android:textSize="@dimen/text_size_16"
                         android:text=""
@@ -116,10 +116,12 @@ android:layout_height="match_parent">
                     android:id="@+id/etAddressCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:drawableRight="@drawable/ic_arrow_down"
                     android:hint="@string/city_star"
                     android:inputType="text"
-                    android:textSize="@dimen/text_size_16" />
+                    android:textSize="@dimen/text_size_16"
+                    android:drawableEnd="@drawable/ic_arrow_down" />
 
 
                 <TextView
@@ -134,10 +136,12 @@ android:layout_height="match_parent">
                     android:id="@+id/etAddressState"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:drawableRight="@drawable/ic_arrow_down"
                     android:hint="@string/state"
                     android:inputType="text"
-                    android:textSize="@dimen/text_size_16" />
+                    android:textSize="@dimen/text_size_16"
+                    android:drawableEnd="@drawable/ic_arrow_down" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -150,7 +154,7 @@ android:layout_height="match_parent">
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/zipcode_star"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:inputType="number"
                         android:textSize="@dimen/text_size_16"
                         android:maxLength="6"

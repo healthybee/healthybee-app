@@ -11,8 +11,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import com.app.healthybee.RoundedCornersTransformation;
 import com.app.healthybee.activities.ActivityUserLogin;
+import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
@@ -45,29 +48,40 @@ public class FragmentProfile extends Fragment {
 
     private View root_view;
     private TextView txtUserEmail,txtUserMobile,txtUserName;
-    private TextView tv_logout;
-    private TextView txtedit;
+    private ImageView imageViewLogout;
+    private ImageView ivEditProfile;
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
     private AdapterAbout adapterAbout;
     private LinearLayout lyt_root;
-    private ImageView ivPauseNextDay;
+    //private ImageView ivPauseNextDay;
     private CircularImageView civProfileImage;
+    private Toolbar toolbar;
+    private ImageView ivBack;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_profile, null);
         lyt_root = root_view.findViewById(R.id.root_layout);
-
+        toolbar = root_view.findViewById(R.id.toolbarProfile);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ivBack = root_view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).exitApp();
+                //finish();
+            }
+        });
        // myApplication = Applications.getInstance();
         txtUserEmail= root_view.findViewById(R.id.txtUserEmail);
         civProfileImage= root_view.findViewById(R.id.civProfileImage);
         txtUserMobile= root_view.findViewById(R.id.txtUserMobile);
         txtUserName= root_view.findViewById(R.id.txtUserName);
-        tv_logout= root_view.findViewById(R.id.tv_logout);
-        txtedit = root_view.findViewById(R.id.txtedit);
-        ivPauseNextDay = root_view.findViewById(R.id.ivPauseNextDay);
+        imageViewLogout= root_view.findViewById(R.id.imageViewLogout);
+        ivEditProfile = root_view.findViewById(R.id.ivEditProfile);
+       // ivPauseNextDay = root_view.findViewById(R.id.ivPauseNextDay);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle(getResources().getString(R.string.title_please_wait));
@@ -89,7 +103,6 @@ public class FragmentProfile extends Fragment {
             @Override
             public void onItemClick(View v, Data obj, int position) {
                 if (position == 0) {
-                    // TODO: 22/9/18
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
                     FragmentNotification f1 = new FragmentNotification();
@@ -97,7 +110,6 @@ public class FragmentProfile extends Fragment {
                     fragmentTransaction.commit();
                 }
                 if (position == 1) {
-
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
                     FragmentAddress f1 = new FragmentAddress();
@@ -110,16 +122,8 @@ public class FragmentProfile extends Fragment {
                     sendIntent.putExtra(Intent.EXTRA_TEXT, "Hi friends awesome app for you HealthyBee");
                     sendIntent.setType("text/plain");
                     startActivity(sendIntent);
-                    //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_more_apps))));
+
                 } else if (position == 3) {
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
-                    FragmentMyOrder f1 = new FragmentMyOrder();
-                    fragmentTransaction.replace(R.id.container, f1);
-                    fragmentTransaction.commit();
-                }
-                else if (position == 4) {
-                    // TODO: 20/9/18
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
                     FragmentDeliverySupport f1 = new FragmentDeliverySupport();
@@ -129,14 +133,14 @@ public class FragmentProfile extends Fragment {
 
             }
         });
-        ivPauseNextDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myOrderDialog();
-            }
-        });
+//        ivPauseNextDay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                myOrderDialog();
+//            }
+//        });
 
-        txtedit.setOnClickListener(new View.OnClickListener() {
+        ivEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -146,7 +150,7 @@ public class FragmentProfile extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        tv_logout.setOnClickListener(new View.OnClickListener() {
+        imageViewLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logoutDialog();
@@ -186,8 +190,6 @@ public class FragmentProfile extends Fragment {
         builder.setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface di, int i) {
-
-               // Applications.getInstance().saveIsLogin(false);
                 progressDialog.show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -237,11 +239,11 @@ public class FragmentProfile extends Fragment {
                "Get Rs. 100.00 FREE"
         ));
 
-        data.add(new Data(
-                R.drawable.ic_my_orders,
-              "My Orders",
-                ""
-        ));
+//        data.add(new Data(
+//                R.drawable.ic_my_orders,
+//              "My Orders",
+//                ""
+//        ));
         data.add(new Data(
                 R.drawable.ic_delivery_support,
                 "Delivery Support",

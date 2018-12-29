@@ -15,24 +15,32 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/toolbar_title"
+            android:id="@+id/tvProfile"
             style="@style/TextAppearance.AppCompat.Small.Inverse"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="?attr/actionBarSize"
-            android:layout_marginRight="?attr/actionBarSize"
             android:layout_toEndOf="@+id/ivBack"
             android:layout_toRightOf="@+id/ivBack"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:text="@string/profile_edit"
+            android:text="@string/profile"
             android:textColor="@color/black"
             android:visibility="visible"
             tools:ignore="RelativeOverlap" />
 
+        <ImageView
+            android:id="@+id/ivEditProfile"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toEndOf="@+id/tvProfile"
+            android:layout_toRightOf="@+id/tvProfile"
+            android:contentDescription="@string/todo"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_edit" />
         <!-- This is a custom left side button -->
         <ImageView
             android:id="@+id/ivBack"
@@ -44,23 +52,19 @@
             android:src="@drawable/ic_back_arrow"
             android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/tvSaveProfile"
-            style="@style/TextAppearance.AppCompat.Small.Inverse"
+        <!-- This is a custom right side button -->
+        <ImageView
+            android:id="@+id/imageViewLogout"
+            style="@style/Widget.AppCompat.ActionButton"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:text="@string/save"
-            android:textColor="@color/colorSave"
-            android:textStyle="bold" />
+            android:layout_gravity="end"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_logout" />
 
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>
-
-
-
 
