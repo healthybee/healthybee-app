@@ -99,18 +99,18 @@
                         android:visibility="visible">
 
                         <com.mikhaellopez.circularimageview.CircularImageView
-                            android:id="@+id/img_profile2"
+                            android:id="@+id/civProfileImage"
                             android:layout_width="72dp"
                             android:layout_height="72dp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/raw_profile" />
+                            android:src="@drawable/ic_person_orange_24dp" />
 
                         <ImageView
                             android:contentDescription="@string/todo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_below="@+id/img_profile2"
+                            android:layout_below="@+id/civProfileImage"
                             android:layout_marginBottom="7dp"
                             android:layout_marginEnd="132dp"
                             android:layout_marginRight="130dp"

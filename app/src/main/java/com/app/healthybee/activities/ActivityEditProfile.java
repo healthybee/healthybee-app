@@ -16,21 +16,28 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.R;
+import com.app.healthybee.RoundedCornersTransformation;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ActivityEditProfile extends AppCompatActivity {
     private Activity activity;
     private TextInputEditText etUserName, etUserEmail, etUserMobile;
     private TextView tv_save;
-    LinearLayout linearLayout;
+    private LinearLayout linearLayout;
+    private CircularImageView civProfileImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +122,7 @@ public class ActivityEditProfile extends AppCompatActivity {
         etUserName = findViewById(R.id.etUserName);
         etUserEmail = findViewById(R.id.etUserEmail);
         etUserMobile = findViewById(R.id.etUserMobile);
+        civProfileImage= findViewById(R.id.civProfileImage);
         tv_save = findViewById(R.id.tv_save);
 
     }
@@ -123,6 +131,12 @@ public class ActivityEditProfile extends AppCompatActivity {
         etUserName.setText(SharedPrefUtil.getUserName(activity));
         etUserEmail.setText(SharedPrefUtil.getUserEmail(activity));
         etUserMobile.setText(SharedPrefUtil.getUserMobile(activity));
+        Glide.with(activity)
+                .load(SharedPrefUtil.getUserPicture(activity).replace(" ", "%20"))
+                .apply(RequestOptions
+                        .bitmapTransform(new RoundedCornersTransformation(activity,10, 0))
+                        .error(R.drawable.ic_profile_unselected))
+                .into(civProfileImage);
 
     }
 

@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.healthybee.RoundedCornersTransformation;
 import com.app.healthybee.activities.ActivityEditProfile;
 import com.app.healthybee.activities.ActivityUserLogin;
 import com.app.healthybee.utils.Config;
@@ -37,47 +37,40 @@ import com.app.healthybee.adapter.AdapterPause;
 import com.app.healthybee.models.Pause;
 import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.SharedPrefUtil;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FragmentProfile extends Fragment {
 
-    private View root_view, parent_view;
-    Applications myApplication;
-    RelativeLayout lyt_is_login, lyt_login_register;
-   TextView txtUserEmail,txtUserMobile,txtUserName;
-    TextView txt_login,tv_logout;
-    TextView txt_logout;
-    TextView txtedit;
-    ProgressDialog progressDialog;
-    TextView txt_username, txt_email;
-    ImageView img_profile;
-    RecyclerView recyclerView;
-    AdapterAbout adapterAbout;
-    LinearLayout lyt_root;
+    private View root_view;
+    private TextView txtUserEmail,txtUserMobile,txtUserName;
+    private TextView tv_logout;
+    private TextView txtedit;
+    private ProgressDialog progressDialog;
+    private RecyclerView recyclerView;
+    private AdapterAbout adapterAbout;
+    private LinearLayout lyt_root;
     private ImageView ivPauseNextDay;
+    private CircularImageView civProfileImage;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_profile, null);
-        parent_view = getActivity().findViewById(R.id.main_content);
         lyt_root = root_view.findViewById(R.id.root_layout);
 
        // myApplication = Applications.getInstance();
         txtUserEmail= root_view.findViewById(R.id.txtUserEmail);
+        civProfileImage= root_view.findViewById(R.id.civProfileImage);
         txtUserMobile= root_view.findViewById(R.id.txtUserMobile);
         txtUserName= root_view.findViewById(R.id.txtUserName);
-        lyt_is_login = root_view.findViewById(R.id.lyt_is_login);
         tv_logout= root_view.findViewById(R.id.tv_logout);
-        lyt_login_register = root_view.findViewById(R.id.lyt_login_register);
-        txt_login = root_view.findViewById(R.id.btn_login);
-        txt_logout = root_view.findViewById(R.id.txt_logout);
         txtedit = root_view.findViewById(R.id.txtedit);
-        txt_username = root_view.findViewById(R.id.txt_username);
-        txt_email = root_view.findViewById(R.id.txt_email);
-        img_profile = root_view.findViewById(R.id.img_profile);
         ivPauseNextDay = root_view.findViewById(R.id.ivPauseNextDay);
 
         progressDialog = new ProgressDialog(getActivity());
@@ -174,10 +167,15 @@ public class FragmentProfile extends Fragment {
 
 
     private void setProfileData() {
-        txtUserName.setText(SharedPrefUtil.getUserName(getContext()));
-        txtUserEmail.setText(SharedPrefUtil.getUserEmail(getContext()));
-        txtUserMobile.setText(SharedPrefUtil.getUserMobile(getContext()));
-
+        txtUserName.setText(SharedPrefUtil.getUserName(getActivity()));
+        txtUserEmail.setText(SharedPrefUtil.getUserEmail(getActivity()));
+        txtUserMobile.setText(SharedPrefUtil.getUserMobile(getActivity()));
+        Glide.with(getActivity())
+                .load(SharedPrefUtil.getUserPicture(getActivity()).replace(" ", "%20"))
+                .apply(RequestOptions
+                        .bitmapTransform(new RoundedCornersTransformation(getActivity(),10, 0))
+                        .error(R.drawable.ic_profile_unselected))
+                .into(civProfileImage);
     }
 
     @Override

@@ -99,7 +99,7 @@
                             android:id="@+id/img_profile"
                             android:layout_width="72dp"
                             android:layout_height="72dp"
-                            android:src="@drawable/raw_profile"
+                            android:src="@drawable/ic_person_orange_24dp"
                             app:civ_border_color="@color/colorArtBorder" />
 
                         <RelativeLayout
@@ -142,21 +142,19 @@
                         android:visibility="visible">
 
                         <com.mikhaellopez.circularimageview.CircularImageView
-                            android:id="@+id/img_profile2"
+                            android:id="@+id/civProfileImage"
                             android:layout_width="72dp"
                             android:layout_height="72dp"
-                            android:src="@drawable/raw_profile"
-                             />
+                            android:src="@drawable/ic_person_orange_24dp" />
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-
                             android:layout_marginLeft="10dp"
-                            android:layout_toEndOf="@+id/img_profile2"
-                            android:layout_toRightOf="@+id/img_profile2">
+                            android:layout_toEndOf="@+id/civProfileImage"
+                            android:layout_toRightOf="@+id/civProfileImage">
 
                             <TextView
                                 android:id="@+id/txtUserName"
