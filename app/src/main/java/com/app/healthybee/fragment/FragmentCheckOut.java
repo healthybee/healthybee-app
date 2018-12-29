@@ -91,6 +91,8 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
 
     static Address address =new Address();
 
+    ArrayList<String> mSpinnerData = new ArrayList<>();
+
 
 
     public FragmentCheckOut() {
@@ -105,6 +107,8 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         View view=inflater.inflate(R.layout.fragment_check_out, container, false);
         dbHelper=new DbHelper(getActivity());
         data = new ArrayList<>();
+        mSpinnerData.add("Monthly Subscription");
+        mSpinnerData.add("Weakly Subscription");
         timeSlotArrayList = new ArrayList<>();
         swipe_refresh = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout_home);
         swipe_refresh.setColorSchemeResources(R.color.colorOrange, R.color.colorGreen, R.color.colorBlue, R.color.colorRed);
@@ -134,10 +138,8 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         rlAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent =new Intent(getActivity(),ActivityAddress.class);
                 startActivity(intent);
-
             }
         });
 
@@ -159,7 +161,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         data.addAll(dbHelper.getCartList());
 
 
-        adapter = new AdapterCheckOut(getActivity(), data, new CustomItemClickListener() {
+        adapter = new AdapterCheckOut(getActivity(), data,mSpinnerData, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 Log.d("TAG", "clicked position:" + position);

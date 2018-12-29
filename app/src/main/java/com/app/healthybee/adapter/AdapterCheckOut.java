@@ -9,9 +9,14 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.models.CategoryItem;
@@ -30,34 +35,36 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
 
     private Context mContext;
     private List<CategoryItem> categoryItemList;
+    ArrayList<String> mSpinnerDataList;
     private CustomItemClickListener listener;
     private UpdateCart updateCart;
 
-    public AdapterCheckOut(Context context, ArrayList<CategoryItem> data, CustomItemClickListener tag, UpdateCart updateCart1) {
+    public AdapterCheckOut(Context context, ArrayList<CategoryItem> data,ArrayList<String> mSpinnerData, CustomItemClickListener tag, UpdateCart updateCart1) {
         this.mContext = context;
         this.categoryItemList = data;
+        this.mSpinnerDataList=mSpinnerData;
         this.listener=tag;
         this.updateCart=updateCart1;
     }
 
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvItemName, tvItemPrice,tv_monthly_subs,tv_quantity;
+        private TextView tvItemName, tvItemPrice,tv_quantity;
 
         private ImageView tvMinus;
         private TextView  tvCount;
         private ImageView tvPlus;
         private LinearLayout llAddRemove;
-        private TextView tvAddItem;
+        private TextView tvAddItem,tvWeakMonthPrice;
+        private Spinner spWeakMonth;
 
         MyViewHolder(View view) {
             super(view);
-            //  cardViewAddItem= (CardView) view.findViewById(R.id.cardViewAddItem);
             tvItemName = (TextView) view.findViewById(R.id.tvItemName);
             tvItemPrice = (TextView) view.findViewById(R.id.tvItemPrice);
-            tv_monthly_subs = (TextView) view.findViewById(R.id.tv_monthly_subs);
             tv_quantity = (TextView) view.findViewById(R.id.tv_quantity);
-
+            spWeakMonth = (Spinner) view.findViewById(R.id.spWeakMonth);
+            tvWeakMonthPrice= (TextView) view.findViewById(R.id.tvWeakMonthPrice);
 
             tvMinus= (ImageView) view.findViewById(R.id.tvMinus);
             tvCount= (TextView) view.findViewById(R.id.tvCount);
@@ -71,12 +78,6 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
     }
 
 
-//    public AdapterCheckOut(Context mContext, List<CategoryItem> categoryItemList1, CustomItemClickListener listener1) {
-//        this.mContext = mContext;
-//        this.categoryItemList = categoryItemList1;
-//        this.listener=listener1;
-//        dbHelper=new DbHelper(mContext);
-//    }
 
     @NonNull
     @Override
@@ -100,6 +101,20 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
         holder.tvItemName.setText(Html.fromHtml(categoryItem.getName()));
         holder.tvItemPrice.setText(Html.fromHtml(mContext.getResources().getString(R.string.rs)+" "+categoryItem.getPrice())+"/Meal");
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, mSpinnerDataList);
+        holder.spWeakMonth.setAdapter(adapter);
+        holder.spWeakMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(holder.itemView.getContext(), position+" : "+ holder.spWeakMonth.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+              // spinnerData.setSelectedData(position, binding.optionSpinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         if (categoryItem.getCount()==0){
             holder.tvAddItem.setVisibility(View.VISIBLE);
             holder.llAddRemove.setVisibility(View.GONE);

@@ -39,7 +39,6 @@ import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.UrlConstants;
 
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,13 +49,11 @@ import java.util.Map;
 public class ActivityUserRegister extends AppCompatActivity {
 
 
-    EditText edt_password,edt_mobile,edt_email,edt_re_enter_password;
+    private EditText edt_password, edt_mobile, edt_email, edt_re_enter_password;
     private Activity activity;
-
-
-    Button btn_register, btn_login;
-    TextView txt_terms;
-    String strFullname, strEmail, strPassword, strMessage;
+    private Button btn_register, btn_login;
+    private TextView txt_terms;
+    private String strMessage;
 
 
     @Override
@@ -246,27 +243,27 @@ public class ActivityUserRegister extends AppCompatActivity {
                     new JSONObject(params),
                     new Response.Listener<JSONObject>() {
 
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.d("4343", response.toString());
-                    MyCustomProgressDialog.dismissDialog();
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(ActivityUserRegister.this);
-                    dialog.setTitle(R.string.register_title);
-                    dialog.setMessage(R.string.register_success);
-                    dialog.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getApplicationContext(), ActivityUserLogin.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-                    dialog.setCancelable(false);
-                    dialog.show();
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            MyCustomProgressDialog.dismissDialog();
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(ActivityUserRegister.this);
+                            dialog.setTitle(R.string.register_title);
+                            dialog.setMessage(R.string.register_success);
+                            dialog.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(getApplicationContext(), ActivityUserLogin.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                            dialog.setCancelable(false);
+                            dialog.show();
 
-                }
-            }, new Response.ErrorListener() {
+                        }
+                    }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("4343", "Site Info Error: " + error.getMessage());
@@ -278,7 +275,7 @@ public class ActivityUserRegister extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
-                    headers.put("Content-Type","application/json");
+                    headers.put("Content-Type", "application/json");
                     return headers;
                 }
             };

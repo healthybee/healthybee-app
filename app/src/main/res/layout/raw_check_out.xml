@@ -13,51 +13,79 @@
         android:weightSum="3">
 
         <TextView
-            android:layout_marginLeft="@dimen/ten"
             android:id="@+id/tvItemName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginLeft="@dimen/ten"
             android:layout_weight="2"
-            android:textColor="@color/colorBlack"
             android:text="Veg Grill Sandwich with cheese"
-            android:layout_marginStart="@dimen/ten" />
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size_14" />
 
         <TextView
             android:id="@+id/tvItemPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:gravity="end"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginRight="10dp"
             android:text="Rs.1200.00"
-            android:textStyle="normal"
-            android:layout_marginEnd="10dp" />
+            android:textColor="@color/colorGreyDark"
+            android:textStyle="normal" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <!--<RelativeLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--&lt;!&ndash;<TextView-->
+    <!--android:layout_marginLeft="@dimen/ten"-->
+    <!--android:id="@+id/tv_monthly_subs"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Monthly Subscription"-->
+    <!--android:textColor="@color/colorGreyDark"-->
+    <!--android:layout_marginStart="@dimen/ten" />&ndash;&gt;-->
+    <!---->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_monthly_subs"-->
+    <!--android:layout_width="20dp"-->
+    <!--android:layout_height="20dp"-->
+    <!--android:layout_toEndOf="@+id/tv_monthly_subs"-->
+    <!--android:layout_toRightOf="@+id/tv_monthly_subs"-->
+    <!--android:src="@drawable/dropdown"-->
+    <!--android:contentDescription="sdg" />-->
+
+    <!--</RelativeLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Spinner
+            android:id="@+id/spWeakMonth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="2dp"/>
 
         <TextView
-            android:layout_marginLeft="@dimen/ten"
-            android:id="@+id/tv_monthly_subs"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvWeakMonthPrice"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Monthly Subscription"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="Rs.1200.00"
             android:textColor="@color/colorGreyDark"
-            android:layout_marginStart="@dimen/ten" />
-
-        <ImageView
-            android:id="@+id/iv_monthly_subs"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_toEndOf="@+id/tv_monthly_subs"
-            android:layout_toRightOf="@+id/tv_monthly_subs"
-            android:src="@drawable/dropdown"
-            android:contentDescription="@string/todo" />
-
-    </RelativeLayout>
+            android:textStyle="normal" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -66,18 +94,18 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:layout_marginLeft="@dimen/ten"
             android:id="@+id/tv_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginLeft="@dimen/ten"
             android:gravity="center_vertical"
             android:text="Quantity"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size_14"
-            android:layout_marginStart="@dimen/ten" />
+            android:textSize="@dimen/text_size_14" />
 
 
         <LinearLayout

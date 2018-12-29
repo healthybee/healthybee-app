@@ -22,9 +22,9 @@ import com.app.healthybee.models.Address;
 import java.util.ArrayList;
 
 public class ActivityAddress extends AppCompatActivity {
-    RecyclerView itemsList;
-    AdapterAddress adapter;
-    ArrayList<Address> data = new ArrayList<>();
+    private RecyclerView itemsList;
+    private AdapterAddress adapter;
+    private ArrayList<Address> data = new ArrayList<>();
     private Activity activity;
 
     private Address address;
@@ -50,7 +50,7 @@ public class ActivityAddress extends AppCompatActivity {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(activity);
         itemsList.setLayoutManager(mLinearLayoutManager);
         //let us add some items into the list
-        // TODO: 17/11/18  get addres list from table
+        // TODO: 17/11/18  get address list from table
         data.addAll(dbHelper.getAddressList());
 
         adapter = new AdapterAddress(activity, data, new CustomItemClickListener() {

@@ -7,6 +7,8 @@ package com.app.healthybee.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 
 public class CategoryItem implements Parcelable {
     private int itemId;
@@ -20,6 +22,7 @@ public class CategoryItem implements Parcelable {
     private String name;
     private String category;
     private int count;
+    private ArrayList<String> mSpinnerData = new ArrayList<>();
 
     public CategoryItem() {
     }
@@ -49,6 +52,14 @@ public class CategoryItem implements Parcelable {
             return new CategoryItem[size];
         }
     };
+
+    public ArrayList<String> getmSpinnerData() {
+        return mSpinnerData;
+    }
+
+    public void setmSpinnerData(ArrayList<String> mSpinnerData) {
+        this.mSpinnerData = mSpinnerData;
+    }
 
     public int getItemId() {
         return itemId;
