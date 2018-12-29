@@ -2,14 +2,15 @@ package com.app.healthybee.fragment;
 
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -17,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.healthybee.R;
 import com.app.healthybee.activities.Applications;
+import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.adapter.AdapterDeliverySupport;
 import com.app.healthybee.models.ModelDeliverySupport;
 import com.app.healthybee.utils.MyCustomProgressDialog;
@@ -33,23 +35,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentDeliverySupport extends Fragment {
-    RecyclerView recView;
-    AdapterDeliverySupport adapterDeliverySupport;
-    ArrayList<ModelDeliverySupport> list;
-    LinearLayoutManager layoutManager;
-
+    private RecyclerView recView;
+    private AdapterDeliverySupport adapterDeliverySupport;
+    private ArrayList<ModelDeliverySupport> list;
+    private LinearLayoutManager layoutManager;
+    private ImageView ivBack;
+    private Toolbar toolbar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_fragment_delivery_support, container, false);
+        View view = inflater.inflate(R.layout.fragment_delivery_support, container, false);
+        toolbar = view.findViewById(R.id.toolbarDeliverySupport);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         list = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity());
         recView = view.findViewById(R.id.recyclerView);
         recView.setHasFixedSize(true);
         recView.setLayoutManager(layoutManager);
         getDeliverySupport();
-
+        ivBack = view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).exitApp();
+            }
+        });
         return view;
     }
 

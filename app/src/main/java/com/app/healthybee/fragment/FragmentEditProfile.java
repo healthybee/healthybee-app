@@ -1,12 +1,18 @@
-package com.app.healthybee.activities;
+package com.app.healthybee.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.R;
 import com.app.healthybee.RoundedCornersTransformation;
+import com.app.healthybee.activities.Applications;
+import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.SharedPrefUtil;
@@ -31,21 +39,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ActivityEditProfile extends AppCompatActivity {
-    private Activity activity;
+public class FragmentEditProfile extends Fragment {
+
+    private View root_view;
+    private Toolbar toolbar;
+    private ImageView ivBack;
+
     private TextInputEditText etUserName, etUserEmail, etUserMobile;
-    private TextView tv_save;
-    private LinearLayout linearLayout;
+    private TextView tvSaveProfile;
     private CircularImageView civProfileImage;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
-        activity = ActivityEditProfile.this;
-        linearLayout=findViewById(R.id.root_layout);
-        init();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        root_view = inflater.inflate(R.layout.activity_edit_profile, null);
+        toolbar = root_view.findViewById(R.id.toolbarEditProfile);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ivBack = root_view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).exitApp();
+                //finish();
+            }
+        });
+
+        init(root_view);
         setProfileData();
-        tv_save.setOnClickListener(new View.OnClickListener() {
+        tvSaveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateUserProfile();
@@ -53,11 +73,11 @@ public class ActivityEditProfile extends AppCompatActivity {
             }
         });
 
+        return root_view;
     }
-
     private void updateUserProfile() {
-        if (NetworkConstants.isConnectingToInternet(activity)) {
-            MyCustomProgressDialog.showDialog(activity, getString(R.string.please_wait));
+        if (NetworkConstants.isConnectingToInternet(getActivity())) {
+            MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
             Map<String, String> params = new HashMap<>();
             params.put("name", etUserName.getText().toString().trim());
             params.put("email", etUserEmail.getText().toString().trim());
@@ -65,7 +85,7 @@ public class ActivityEditProfile extends AppCompatActivity {
             Log.d("4343", new JSONObject(params).toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.PUT,
-                    UrlConstants.baseUrl + UrlConstants.users + "/" + SharedPrefUtil.getUserId(activity),
+                    UrlConstants.baseUrl + UrlConstants.users + "/" + SharedPrefUtil.getUserId(getActivity()),
                     new JSONObject(params),
                     new Response.Listener<JSONObject>() {
 
@@ -74,24 +94,24 @@ public class ActivityEditProfile extends AppCompatActivity {
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
                             if (response.has("id")) {
-                                SharedPrefUtil.setUserId(activity, response.optString("id"));
+                                SharedPrefUtil.setUserId(getActivity(), response.optString("id"));
                             }
                             if (response.has("name")) {
-                                SharedPrefUtil.setUserName(activity, response.optString("name"));
+                                SharedPrefUtil.setUserName(getActivity(), response.optString("name"));
                             }
 
                             if (response.has("email")) {
-                                SharedPrefUtil.setUserEmail(activity, response.optString("email"));
+                                SharedPrefUtil.setUserEmail(getActivity(), response.optString("email"));
                             }
                             if (response.has("mobile")) {
-                                SharedPrefUtil.setUserMobile(activity, response.optString("mobile"));
+                                SharedPrefUtil.setUserMobile(getActivity(), response.optString("mobile"));
                             }
                             if (response.has("createdAt")) {
-                                SharedPrefUtil.setCreatedAt(activity, response.optString("createdAt"));
+                                SharedPrefUtil.setCreatedAt(getActivity(), response.optString("createdAt"));
                             }
                             setProfileData();
-                            Snackbar snackbar1 = Snackbar.make(linearLayout, "Profile updated successfully", Snackbar.LENGTH_SHORT);
-                            snackbar1.show();
+//                            Snackbar snackbar1 = Snackbar.make(linearLayout, "Profile updated successfully", Snackbar.LENGTH_SHORT);
+//                            snackbar1.show();
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -104,7 +124,7 @@ public class ActivityEditProfile extends AppCompatActivity {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json");
-                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(activity));
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
 
                     return headers;
                 }
@@ -113,30 +133,41 @@ public class ActivityEditProfile extends AppCompatActivity {
             Applications.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
-            MyCustomProgressDialog.showAlertDialogMessage(activity, getString(R.string.network_title), getString(R.string.network_message));
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
         }
     }
 
-    private void init() {
-        etUserName = findViewById(R.id.etUserName);
-        etUserEmail = findViewById(R.id.etUserEmail);
-        etUserMobile = findViewById(R.id.etUserMobile);
-        civProfileImage= findViewById(R.id.civProfileImage);
-        tv_save = findViewById(R.id.tv_save);
+    private void init(View root_view) {
+        etUserName =root_view. findViewById(R.id.etUserName);
+        etUserEmail = root_view.findViewById(R.id.etUserEmail);
+        etUserMobile = root_view.findViewById(R.id.etUserMobile);
+        civProfileImage= root_view.findViewById(R.id.civProfileImage);
+        tvSaveProfile = root_view.findViewById(R.id.tvSaveProfile);
 
     }
 
     private void setProfileData() {
-        etUserName.setText(SharedPrefUtil.getUserName(activity));
-        etUserEmail.setText(SharedPrefUtil.getUserEmail(activity));
-        etUserMobile.setText(SharedPrefUtil.getUserMobile(activity));
-        Glide.with(activity)
-                .load(SharedPrefUtil.getUserPicture(activity).replace(" ", "%20"))
+        etUserName.setText(SharedPrefUtil.getUserName(getActivity()));
+        etUserEmail.setText(SharedPrefUtil.getUserEmail(getActivity()));
+        etUserMobile.setText(SharedPrefUtil.getUserMobile(getActivity()));
+        Glide.with(getActivity())
+                .load(SharedPrefUtil.getUserPicture(getActivity()).replace(" ", "%20"))
                 .apply(RequestOptions
-                        .bitmapTransform(new RoundedCornersTransformation(activity,10, 0))
+                        .bitmapTransform(new RoundedCornersTransformation(getActivity(),10, 0))
                         .error(R.drawable.ic_profile_unselected))
                 .into(civProfileImage);
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
 }

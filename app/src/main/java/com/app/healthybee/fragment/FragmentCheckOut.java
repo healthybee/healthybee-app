@@ -174,7 +174,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             public void onItemClick(View v, int position) {
                 Log.d("TAG", "clicked position:" + position);
                 String name = data.get(position).getName();
-                Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
 
                 // do what ever you want to do with it
             }
@@ -230,7 +230,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             public void onItemClick(View v, int position) {
                 Log.d("TAG", "clicked position:" + position);
                 String timeSlot = timeSlotArrayList.get(position).getTimeSlot();
-                Toast.makeText(getActivity(), timeSlot, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), timeSlot, Toast.LENGTH_SHORT).show();
                 timeSlotArrayList.get(position).setSelected(true);
                 for (int i=0;i<timeSlotArrayList.size();i++){
                     if (!(i==position)){

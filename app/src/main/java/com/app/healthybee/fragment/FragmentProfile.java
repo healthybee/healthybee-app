@@ -20,12 +20,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.healthybee.RoundedCornersTransformation;
-import com.app.healthybee.activities.ActivityEditProfile;
 import com.app.healthybee.activities.ActivityUserLogin;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.listeners.CustomItemClickListener;
@@ -141,7 +139,11 @@ public class FragmentProfile extends Fragment {
         txtedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),ActivityEditProfile.class));
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
+                FragmentEditProfile f1 = new FragmentEditProfile();
+                fragmentTransaction.replace(R.id.container, f1);
+                fragmentTransaction.commit();
             }
         });
         tv_logout.setOnClickListener(new View.OnClickListener() {

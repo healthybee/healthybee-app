@@ -14,49 +14,52 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardElevation="0dp"
         card_view:cardCornerRadius="4dp"
-        card_view:cardUseCompatPadding="false"
-        card_view:cardPreventCornerOverlap="false">
+        card_view:cardElevation="0dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="false">
+
         <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
-        <TextView
-            android:id="@+id/txt_profile"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="@string/profile"
-            android:textColor="@color/colorText"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-        <TextView
-            android:layout_toRightOf="@+id/txt_profile"
-            android:id="@+id/txtedit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:drawableRight="@drawable/ic_edit"
-            android:textColor="@color/colorText"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/txt_profile"
-            android:drawableEnd="@drawable/ic_edit" />
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/txt_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:text="@string/profile"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:layout_toEndOf="@+id/txt_profile"
+                android:layout_toRightOf="@+id/txt_profile"
+                android:drawableEnd="@drawable/ic_edit"
+                android:drawableRight="@drawable/ic_edit"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_margin="6dp"
+                android:drawableEnd="@drawable/ic_logout"
                 android:drawableRight="@drawable/ic_logout"
+                android:padding="5dp"
                 android:textColor="@color/colorText"
                 android:textSize="20sp"
-                android:padding="5dp"
-                android:layout_alignParentEnd="true"
-                android:textStyle="bold"
-                android:layout_alignParentRight="true"
-                android:drawableEnd="@drawable/ic_logout" />
+                android:textStyle="bold" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
@@ -167,19 +170,19 @@
                                 android:textStyle="normal" />
 
                             <TextView
-                                android:layout_marginLeft="@dimen/five"
                                 android:id="@+id/txt_verified"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/five"
+                                android:layout_marginLeft="@dimen/five"
                                 android:layout_marginTop="6dp"
+                                android:layout_toEndOf="@+id/txtUserName"
                                 android:layout_toRightOf="@+id/txtUserName"
+                                android:drawableEnd="@drawable/ic_tick"
                                 android:drawableRight="@drawable/ic_tick"
                                 android:textColor="@color/colorText"
                                 android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:layout_marginStart="@dimen/five"
-                                android:drawableEnd="@drawable/ic_tick"
-                                android:layout_toEndOf="@+id/txtUserName" />
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/txtUserEmail"
@@ -197,33 +200,32 @@
                                 android:layout_marginBottom="6dp"
                                 android:paddingEnd="6dp"
                                 android:paddingRight="6dp"
-                                android:text="9404252648"
-                               />
+                                android:text="9404252648" />
 
                         </RelativeLayout>
 
                     </RelativeLayout>
 
                     <View
-                        android:visibility="gone"
                         android:id="@+id/view"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/lyt_login_register"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:background="#c0c0c0" />
+                        android:background="#c0c0c0"
+                        android:visibility="gone" />
 
                     <RelativeLayout
-                        android:visibility="gone"
-
                         android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:padding="10dp">
+                        android:padding="10dp"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
