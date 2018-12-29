@@ -125,7 +125,7 @@ public class FragmentHome extends Fragment {
             }
         });
         getCategory();
-
+        adapter = new ViewPagerAdapter(getFragmentManager());
         return rootView;
     }
 

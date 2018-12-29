@@ -30,7 +30,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivityEditProfile extends AppCompatActivity {
     private Activity activity;

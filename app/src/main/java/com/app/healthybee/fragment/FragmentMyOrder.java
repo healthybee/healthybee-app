@@ -3,14 +3,18 @@ package com.app.healthybee.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.listeners.CustomAddClickListener;
 import com.app.healthybee.models.MyOrder;
 import com.app.healthybee.adapter.AdapterMyOrder;
@@ -23,10 +27,12 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentMyOrder extends Fragment {
+    private ImageView ivBack;
+    private RecyclerView itemsList;
+    private AdapterMyOrder adapter;
+    private Toolbar toolbar;
 
-    RecyclerView itemsList;
-    AdapterMyOrder adapter;
-    ArrayList<MyOrder> data = new ArrayList<>();
+    private ArrayList<MyOrder> data = new ArrayList<>();
     public FragmentMyOrder() {
         // Required empty public constructor
     }
@@ -37,6 +43,8 @@ public class FragmentMyOrder extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_my_order, container, false);
+        toolbar = view.findViewById(R.id.toolbarMyOrder);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         itemsList = (RecyclerView)view.findViewById(R.id.recycler_view_my_order);
         itemsList.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -79,7 +87,14 @@ public class FragmentMyOrder extends Fragment {
             }
         });
         itemsList.setAdapter(adapter);
-
+        ivBack = view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).exitApp();
+                //finish();
+            }
+        });
         return view;
     }
     @Override

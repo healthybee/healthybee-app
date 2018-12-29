@@ -1,11 +1,6 @@
 package com.app.healthybee.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -14,10 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.app.healthybee.activities.ActivityEditAddress;
-import com.app.healthybee.fragment.FragmentEditAddress;
 import com.app.healthybee.listeners.CustomAddClickListener;
-import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
 import com.app.healthybee.models.Address;
 
@@ -40,7 +32,7 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(v, mViewHolder.getPosition(),"select");
+                listener.onItemClick(v, mViewHolder.getPosition(), "select");
             }
         });
         return mViewHolder;
@@ -48,19 +40,13 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
 
     @Override
     public void onBindViewHolder(AdapterAddress.ViewHolder holder, final int position) {
-        Address address=data.get(position);
+        Address address = data.get(position);
         holder.tvAddressType.setText(Html.fromHtml(address.getAddressType()));
-        holder.tvFullAddress.setText(Html.fromHtml(address.getAddressLine1()+", "+address.getAddressLine2()+", "+address.getAddressLandmark()+", "+address.getAddressCity()+", "+address.getAddressState()+", "+address.getAddressZipCode()));
+        holder.tvFullAddress.setText(Html.fromHtml(address.getAddressLine1() + ", " + address.getAddressLine2() + ", " + address.getAddressLandmark() + ", " + address.getAddressCity() + ", " + address.getAddressState() + ", " + address.getAddressZipCode()));
         holder.ivEditAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent =new Intent(mContext,ActivityEditAddress.class);
-//                intent.putExtra("addressObj",data.get(position));
-//                ((Activity) mContext).startActivityForResult(intent, 1);
-//                //mContext.startActivity(intent);
-                listener.onItemClick(view,position,"edit");
-
-
+                listener.onItemClick(view, position, "edit");
             }
         });
 
@@ -87,7 +73,7 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
             super(v);
             tvAddressType = (TextView) v.findViewById(R.id.tvAddressType);
             tvFullAddress = (TextView) v.findViewById(R.id.tvFullAddress);
-            ivEditAddress= (ImageView) v.findViewById(R.id.ivEditAddress);
+            ivEditAddress = (ImageView) v.findViewById(R.id.ivEditAddress);
 
         }
     }

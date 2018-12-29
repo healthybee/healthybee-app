@@ -15,12 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,7 +77,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     private String selectedDate;
     private TextView tv_date;
     private RelativeLayout rlDate,rlAddress;
-
+    private ImageView ivBack;
     private RecyclerView recyclerViewTimeSlot;
     private RecyclerView.LayoutManager mLayoutManagerTimeSlot;
 
@@ -87,7 +89,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     private TextView tvTotal;
     private TextView tvAddMoreItem,tv_checkout;
     private TextView tvAddress;
-
+    private Toolbar toolbar;
 
     ArrayList<String> mSpinnerData = new ArrayList<>();
 
@@ -103,6 +105,8 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_check_out, container, false);
+        toolbar = view.findViewById(R.id.toolbarCheckout);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         dbHelper=new DbHelper(getActivity());
         data = new ArrayList<>();
         mSpinnerData.add("Monthly Subscription");
@@ -138,8 +142,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         rlAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent =new Intent(getActivity(),ActivityAddress.class);
-//                startActivity(intent);
+
                 FragmentManager fm =getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
                 FragmentAddress f1 = new FragmentAddress();
@@ -204,12 +207,14 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
 
             }
         });
+        ivBack = view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).exitApp();
+            }
+        });
         recyclerViewItemsList.setAdapter(adapter);
-
-
-//===============================================================
-
-
 
         recyclerViewTimeSlot = (RecyclerView)view.findViewById(R.id.recyclerViewTimeSlot);
         recyclerViewTimeSlot.setHasFixedSize(true);

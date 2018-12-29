@@ -102,11 +102,6 @@ public class FragmentAddress extends Fragment {
         ivAddAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(), ActivityEditAddress.class);
-//                intent.putExtra("addressObj", address);
-//                startActivityForResult(intent, 1);
-                //startActivity(intent);
-
                 Bundle bundle=new Bundle();
                 bundle.putParcelable("addressObj",  address);
                 FragmentManager fm =getActivity().getSupportFragmentManager();

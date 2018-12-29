@@ -1,17 +1,12 @@
 package com.app.healthybee.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.healthybee.R;
-import com.app.healthybee.activities.ActivityEditAddress;
 import com.app.healthybee.activities.MainActivity;
-import com.app.healthybee.adapter.AdapterAddress;
 import com.app.healthybee.dboperation.DbHelper;
-import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.models.Address;
 
-import java.util.ArrayList;
 
 public class FragmentEditAddress extends Fragment {
 
@@ -101,7 +92,6 @@ public class FragmentEditAddress extends Fragment {
         tvSaveAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(ActivityEditAddress.this, "tvSaveAddress", Toast.LENGTH_SHORT).show();
                 if (validateData() == 1) {
                     setAddressData();
                     long isSaved = dbHelper.insertUpdateAddress(address);
@@ -110,15 +100,6 @@ public class FragmentEditAddress extends Fragment {
                     }else {
                         Toast.makeText(getActivity(), "Address not saved please try again", Toast.LENGTH_SHORT).show();
                     }
-
-//                    if (isSaved > 0) {
-//                        Intent intent = new Intent();
-//                        intent.putExtra("addressObj", address);
-//                        setResult(Activity.RESULT_OK, intent);
-//                        finish();
-//                    } else {
-//                        Toast.makeText(ActivityEditAddress.this, "Address not saved please try again", Toast.LENGTH_SHORT).show();
-//                    }
                 }
             }
         });
