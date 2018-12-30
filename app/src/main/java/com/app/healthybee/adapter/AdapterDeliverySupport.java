@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class AdapterDeliverySupport extends RecyclerView.Adapter<AdapterDeliverySupport.ViewHolder> {
     private Context context;
     private ArrayList<ModelDeliverySupport> quesAnsList;
+    private int Cposition = -1;
 
     public AdapterDeliverySupport(Context context, ArrayList<ModelDeliverySupport> quesAnsList) {
         this.context = context;
@@ -36,35 +37,21 @@ public class AdapterDeliverySupport extends RecyclerView.Adapter<AdapterDelivery
         holder.textViewQues.setText(model.getQuestion());
         holder.textViewAns.setText(model.getAnswer());
 
-//        holder.linearLayout.setVisibility(View.GONE);
+        final boolean isExpanded = position == Cposition;
+        if (isExpanded) {
+            holder.textViewQues.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0);
+        } else {
+            holder.textViewQues.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0);
 
-        //if the position is equals to the item position which is to be expanded
-//        if (currentPosition == position) {
-//            //creating an animation
-//            Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down_anim);
-//
-//            //toggling visibility
-//            holder.linearLayout.setVisibility(View.VISIBLE);
-//
-//            //adding sliding effect
-//            holder.linearLayout.startAnimation(slideDown);
-//        }
+        }
+        holder.linearLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
+
         holder.textViewQues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //getting the position of the item to expand it
-                if (holder.linearLayout.isShown()){
-                    holder.textViewQues.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down,0);
-                    holder.linearLayout.setVisibility(View.GONE);
-                }else {
-                    holder.textViewQues.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
-                    holder.linearLayout.setVisibility(View.VISIBLE);
-
-                }
-
-                //reloding the list
-               // notifyDataSetChanged();
+                Cposition = isExpanded ? -1 : position;
+                notifyDataSetChanged();
             }
         });
 
@@ -78,6 +65,7 @@ public class AdapterDeliverySupport extends RecyclerView.Adapter<AdapterDelivery
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewQues, textViewAns;
         LinearLayout linearLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             textViewQues = (TextView) itemView.findViewById(R.id.textViewQues);

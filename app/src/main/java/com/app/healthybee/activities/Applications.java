@@ -11,6 +11,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.app.healthybee.utils.FontsOverride;
 
 public class Applications extends Application {
 
@@ -35,6 +36,10 @@ public class Applications extends Application {
         mMainContext = getApplicationContext();
         mMainHandler = new Handler(getMainLooper());
         mMainLayoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+       FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/Roboto-Regular.ttf");
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/Roboto-Regular.ttf");
+        FontsOverride.setDefaultFont(this, "SERIF", "fonts/Roboto-Regular.ttf");
+        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Regular.ttf");
     }
 
 

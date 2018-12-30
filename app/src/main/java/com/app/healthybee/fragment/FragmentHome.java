@@ -251,42 +251,46 @@ public class FragmentHome extends Fragment {
 
 
     private void getCategory() {
-        if (NetworkConstants.isConnectingToInternet(getActivity())) {
-            MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
-            // Initialize a new JsonArrayRequest instance
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                    UrlConstants.getCategory,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            MyCustomProgressDialog.dismissDialog();
-                            // Do something with response
-                            for (int i = 0; i < response.length(); i++) {
-                                try {
-                                    categoryList.add((String) response.get(i));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+        try {
+            if (NetworkConstants.isConnectingToInternet(getActivity())) {
+                MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
+                // Initialize a new JsonArrayRequest instance
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                        UrlConstants.getCategory,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                MyCustomProgressDialog.dismissDialog();
+                                // Do something with response
+                                for (int i = 0; i < response.length(); i++) {
+                                    try {
+                                        categoryList.add((String) response.get(i));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
-
+                                setupViewPager();
                             }
-                            setupViewPager();
+
+
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                MyCustomProgressDialog.dismissDialog();
+                            }
                         }
+                );
 
+                // Add JsonArrayRequest to the RequestQueue
+                Applications.getInstance().addToRequestQueue(jsonArrayRequest);
 
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            MyCustomProgressDialog.dismissDialog();
-                        }
-                    }
-            );
+            } else {
+                MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
+            }
+        }catch (Exception e){
 
-            // Add JsonArrayRequest to the RequestQueue
-            Applications.getInstance().addToRequestQueue(jsonArrayRequest);
-
-        } else {
-            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
         }
     }
 }

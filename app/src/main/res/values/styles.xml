@@ -6,10 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item> 
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item> 
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:typeface">monospace</item>
+
         <!--<item name="android:editTextStyle">@style/EditTextStyle</item>-->
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:typeface">monospace</item>
         <item name="colorControlNormal">@android:color/white</item>
     </style>
     <!--<style name="EditTextStyle" parent="Widget.AppCompat.EditText">-->
@@ -22,11 +25,15 @@
         <item name="android:textColor">#f00000</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:typeface">monospace</item>
+
     </style>
 
     <style name="HintText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:typeface">monospace</item>
+
     </style>
 
     <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
@@ -36,6 +43,7 @@
         <item name="android:textColor">#f000</item>
         <item name="android:textColorHint">#96989A</item>
         <item name="colorControlNormal">#BDBFC1</item>
+        <item name="android:typeface">monospace</item>
         <item name="colorControlActivated">#797979</item>
         <item name="colorControlHighlight">#797979</item>
     </style>

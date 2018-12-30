@@ -130,6 +130,14 @@ public class FragmentProfile extends Fragment {
                     fragmentTransaction.replace(R.id.container, f1);
                     fragmentTransaction.commit();
                 }
+//                else if (position == 4) {
+//                    // TODO: 20/9/18
+//                    FragmentManager fm = getActivity().getSupportFragmentManager();
+//                    FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
+//                    FragmentDeliverySupport f1 = new FragmentDeliverySupport();
+//                    fragmentTransaction.replace(R.id.container, f1);
+//                    fragmentTransaction.commit();
+//                }
 
             }
         });
