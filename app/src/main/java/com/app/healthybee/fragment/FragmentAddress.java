@@ -1,12 +1,8 @@
 package com.app.healthybee.fragment;
 
-
-
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -17,48 +13,58 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-
-
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.healthybee.R;
+import com.app.healthybee.activities.Applications;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.adapter.AdapterAddress;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.listeners.CustomAddClickListener;
-import com.app.healthybee.models.Address;
+import com.app.healthybee.models.AddressModule;
+import com.app.healthybee.utils.MyCustomProgressDialog;
+import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.SharedPrefUtil;
+import com.app.healthybee.utils.UrlConstants;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class FragmentAddress extends Fragment {
 
     private View root_view;
-    private LinearLayout lyt_root;
-
     private RecyclerView itemsList;
-    private ArrayList<Address> data ;
-
-    private Address address;
+   // private ArrayList<Address> data ;
+    private AddressModule address;
     private Toolbar toolbar;
     private ImageView ivBack;
     private ImageView ivAddAddress;
-    private DbHelper dbHelper;
+    //private DbHelper dbHelper;
+    private AdapterAddress adapter;
+    private ArrayList<AddressModule> dataList ;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.activity_address, null);
-        lyt_root = root_view.findViewById(R.id.root_layout);
-
 
         toolbar = root_view.findViewById(R.id.toolbarAddress);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        data = new ArrayList<>();
-        address = new Address();
+       // data = new ArrayList<>();
+        dataList= new ArrayList<>();
+        address = new AddressModule();
 
-        dbHelper = new DbHelper(getActivity());
+        //dbHelper = new DbHelper(getActivity());
 
         itemsList = (RecyclerView) root_view.findViewById(R.id.recycler_view_address);
         itemsList.setHasFixedSize(true);
@@ -66,19 +72,20 @@ public class FragmentAddress extends Fragment {
         itemsList.setLayoutManager(mLinearLayoutManager);
         //let us add some items into the list
         // TODO: 17/11/18  get address list from table
-        data.addAll(dbHelper.getAddressList());
-
-        AdapterAddress adapter = new AdapterAddress(getActivity(), data, new CustomAddClickListener() {
+      //  data.addAll(dbHelper.getAddressList());
+        getSavedAddress();
+        adapter = new AdapterAddress(getActivity(), dataList, new CustomAddClickListener() {
             @Override
             public void onItemClick(View v, int position, String type) {
                 if (type.equalsIgnoreCase("select")) {
                     Log.d("TAG", "clicked position:" + position);
-                    MainActivity.address=data.get(position);
+                    MainActivity.address=dataList.get(position);
                     ((MainActivity) getActivity()).exitApp();
                 }
                 if (type.equalsIgnoreCase("edit")) {
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("addressObj", data.get(position));
+                    bundle.putParcelable("addressObj", dataList.get(position));
+                    bundle.putString("operationType", "EDIT");
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
                     FragmentEditAddress f1 = new FragmentEditAddress();
@@ -104,6 +111,7 @@ public class FragmentAddress extends Fragment {
             public void onClick(View view) {
                 Bundle bundle=new Bundle();
                 bundle.putParcelable("addressObj",  address);
+                bundle.putString("operationType", "ADD");
                 FragmentManager fm =getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
                 FragmentEditAddress f1 = new FragmentEditAddress();
@@ -125,5 +133,61 @@ public class FragmentAddress extends Fragment {
     public void onStop() {
         super.onStop();
     }
+    private void getSavedAddress() {
+        if (NetworkConstants.isConnectingToInternet(getActivity())) {
+            MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(UrlConstants.retrieveAddresses,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray jsonArray) {
+                            MyCustomProgressDialog.dismissDialog();
+                            for (int i=0;i<jsonArray.length();i++){
+                                try {
+                                    JSONObject jsonObject=jsonArray.getJSONObject(i);
+                                    AddressModule addressModule=new AddressModule();
 
+                                    addressModule.setId(jsonObject.optString("id"));
+                                    addressModule.setUser(jsonObject.optString("user"));
+                                    addressModule.setAddressType(jsonObject.optString("addressType"));
+                                    addressModule.setLine1(jsonObject.optString("line1"));
+                                    addressModule.setLine2(jsonObject.optString("line2"));
+                                    addressModule.setCity(jsonObject.optString("city"));
+                                    addressModule.setState(jsonObject.optString("state"));
+                                    addressModule.setZipcode(jsonObject.optString("zipcode"));
+                                    addressModule.setLandmark(jsonObject.optString("landmark"));
+                                    addressModule.setCreatedAt(jsonObject.optString("createdAt"));
+                                    addressModule.setUpdatedAt(jsonObject.optString("updatedAt"));
+                                    dataList.add(addressModule);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            adapter.notifyDataSetChanged();
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            MyCustomProgressDialog.dismissDialog();
+                        }
+                    }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+
+                    return headers;
+                }
+            };
+
+            Applications.getInstance().addToRequestQueue(jsonArrayRequest);
+
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
+        }
+    }
 }

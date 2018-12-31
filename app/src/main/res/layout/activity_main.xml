@@ -16,47 +16,54 @@
         android:paddingLeft="10dp"
         tools:ignore="RtlSymmetry">
 
-        <ImageView
-            android:id="@+id/ivIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/ic_location_on_black_24dp" />
-
         <TextView
             android:id="@+id/tvLocation"
+            style="@style/TextAppearance.AppCompat.Small.Inverse"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toEndOf="@+id/ivIcon"
-            android:layout_toRightOf="@+id/ivIcon"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/ivBack"
+            android:layout_toRightOf="@+id/ivBack"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:text="@string/location"
-            android:textColor="@color/colorBlack" />
+            android:textColor="@color/black"
+            android:visibility="visible"
+            tools:ignore="RelativeOverlap" />
 
         <ImageView
-            android:contentDescription="@string/todo"
             android:id="@+id/ivDownArrow"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
             android:layout_toEndOf="@+id/tvLocation"
             android:layout_toRightOf="@+id/tvLocation"
+            android:contentDescription="@string/todo"
             android:src="@drawable/dropdown" />
 
+        <!-- This is a custom left side button -->
         <ImageView
+            android:id="@+id/ivBack"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="start"
             android:contentDescription="@string/todo"
+            android:src="@drawable/ic_location_on_black_24dp"
+            android:visibility="visible" />
+
+        <ImageView
             android:id="@+id/ivSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
+            android:contentDescription="@string/todo"
+            android:gravity="center"
             android:src="@drawable/ic_search_black_24dp" />
 
     </RelativeLayout>
@@ -80,10 +87,10 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:background="@color/transparent"
+            android:baselineAligned="false"
             android:gravity="bottom"
             android:orientation="horizontal"
-            android:weightSum="11"
-            android:baselineAligned="false">
+            android:weightSum="11">
 
             <RelativeLayout
                 android:id="@+id/rlMenu"
@@ -166,9 +173,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:textColor="@color/colorOrange"
                         android:paddingBottom="10dp"
                         android:text=""
+                        android:textColor="@color/colorOrange"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 

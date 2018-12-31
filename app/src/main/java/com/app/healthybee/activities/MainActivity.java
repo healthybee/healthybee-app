@@ -21,6 +21,7 @@ import com.app.healthybee.fragment.FragmentMyOrder;
 import com.app.healthybee.fragment.FragmentNotification;
 import com.app.healthybee.fragment.FragmentProfile;
 import com.app.healthybee.models.Address;
+import com.app.healthybee.models.AddressModule;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Constant;
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout tool_header,relativeLayout;
     public static boolean mFlagDisplayList = false;
 
-    public static Address address;
+    public static AddressModule address;
 
 
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mFlagDisplayList = false;
         tool_header=findViewById(R.id.rl1);
         relativeLayout=findViewById(R.id.relativeLayout);
-        address=new Address();
+        address=new AddressModule();
         setBottomNavigation();
     }
 

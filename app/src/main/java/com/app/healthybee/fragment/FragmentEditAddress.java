@@ -1,5 +1,6 @@
 package com.app.healthybee.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -7,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,36 +19,43 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.R;
+import com.app.healthybee.activities.ActivitySubscribe;
+import com.app.healthybee.activities.ActivityUserLogin;
+import com.app.healthybee.activities.Applications;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.models.Address;
+import com.app.healthybee.models.AddressModule;
+import com.app.healthybee.utils.MyCustomProgressDialog;
+import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.SharedPrefUtil;
+import com.app.healthybee.utils.UrlConstants;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class FragmentEditAddress extends Fragment {
 
     private View root_view;
-    private LinearLayout lyt_root;
 
-
-    private Address address;
+    private AddressModule address;
     private Toolbar toolbar;
     private ImageView ivBack;
     private TextView tvSaveAddress;
-    private DbHelper dbHelper;
-
-    //    private EditText etAddressType;
-//    private EditText etAddressLine1;
-//    private EditText etAddressLine2;
-
     private TextInputEditText etAddressType;
     private TextInputEditText etAddressLine1;
     private TextInputEditText etAddressLine2;
-
     private EditText etAddressCity;
     private EditText etAddressState;
-    //    private EditText etAddressZipCode;
-//    private EditText etAddressLandmark;
     private TextInputEditText etAddressZipCode;
     private TextInputEditText etAddressLandmark;
     private String strAddressType;
@@ -55,31 +65,23 @@ public class FragmentEditAddress extends Fragment {
     private String strAddressState;
     private String strAddressZipCode;
     private String strAddressLandmark;
-
+    private String operationType;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.activity_edit_address, null);
-        lyt_root = root_view.findViewById(R.id.root_layout);
         toolbar = root_view.findViewById(R.id.toolbarEditAddress);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         initView(root_view);
 
-//        //let us add some items into the list
-//        address = new Address();
-//        Intent intent = getIntent();
-//        if (null != intent) {
-//            if (intent.hasExtra("addressObj")) {
-//                address = intent.getParcelableExtra("addressObj");
-//            }
-//        }
-        address = new Address();
+        address = new AddressModule();
         Bundle bundle = getArguments();
         assert bundle != null;
         address= bundle.getParcelable("addressObj");
+        operationType= bundle.getString("operationType");
 
-        dbHelper = new DbHelper(getActivity());
+       // dbHelper = new DbHelper(getActivity());
         ivBack = root_view.findViewById(R.id.ivBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,12 +96,20 @@ public class FragmentEditAddress extends Fragment {
             public void onClick(View view) {
                 if (validateData() == 1) {
                     setAddressData();
-                    long isSaved = dbHelper.insertUpdateAddress(address);
-                    if (isSaved > 0) {
-                        ((MainActivity) getActivity()).exitApp();
-                    }else {
-                        Toast.makeText(getActivity(), "Address not saved please try again", Toast.LENGTH_SHORT).show();
+                    if (operationType.equalsIgnoreCase("ADD")) {
+                        SaveAddressData();
                     }
+                    if (operationType.equalsIgnoreCase("EDIT")){
+                        UpdateAddressData();
+                    }
+
+
+//                    long isSaved = dbHelper.insertUpdateAddress(address);
+//                    if (isSaved > 0) {
+//                        ((MainActivity) getActivity()).exitApp();
+//                    }else {
+//                        Toast.makeText(getActivity(), "Address not saved please try again", Toast.LENGTH_SHORT).show();
+//                    }
                 }
             }
         });
@@ -108,27 +118,125 @@ public class FragmentEditAddress extends Fragment {
 
         return root_view;
     }
+
+    private void UpdateAddressData() {
+        if (NetworkConstants.isConnectingToInternet(getActivity())) {
+            MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
+            Map<String, String> params = new HashMap<>();
+            params.put("addressType",strAddressType);
+            params.put("line1", strAddressLine1);
+            params.put("line2",strAddressLine2);
+            params.put("city", strAddressCity);
+            params.put("state",strAddressState);
+            params.put("zipcode", strAddressZipCode);
+            params.put("landmark",strAddressLandmark);
+            Log.d("4343", new JSONObject(params).toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.PUT,
+                    UrlConstants.updateAddresses+address.getId(),
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            MyCustomProgressDialog.dismissDialog();
+                            ((MainActivity) getActivity()).exitApp();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type","application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
+        }
+    }
+
+
+    private void SaveAddressData() {
+        if (NetworkConstants.isConnectingToInternet(getActivity())) {
+            MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
+            Map<String, String> params = new HashMap<>();
+            params.put("addressType",strAddressType);
+            params.put("line1", strAddressLine1);
+            params.put("line2",strAddressLine2);
+            params.put("city", strAddressCity);
+            params.put("state",strAddressState);
+            params.put("zipcode", strAddressZipCode);
+            params.put("landmark",strAddressLandmark);
+            Log.d("4343", new JSONObject(params).toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    UrlConstants.createAddresses,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            MyCustomProgressDialog.dismissDialog();
+                            ((MainActivity) getActivity()).exitApp();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type","application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
+        }
+    }
+
     private void setInitialAddress() {
         if (null != address.getAddressType()) {
             etAddressType.setText(address.getAddressType());
         }
-        if (null != address.getAddressLine1()) {
-            etAddressLine1.setText(address.getAddressLine1());
+        if (null != address.getLine1()) {
+            etAddressLine1.setText(address.getLine1());
         }
-        if (null != address.getAddressLine2()) {
-            etAddressLine2.setText(address.getAddressLine2());
+        if (null != address.getLine2()) {
+            etAddressLine2.setText(address.getLine2());
         }
-        if (null != address.getAddressCity()) {
-            etAddressCity.setText(address.getAddressCity());
+        if (null != address.getCity()) {
+            etAddressCity.setText(address.getCity());
         }
-        if (null != address.getAddressState()) {
-            etAddressState.setText(address.getAddressState());
+        if (null != address.getState()) {
+            etAddressState.setText(address.getState());
         }
-        if (null != address.getAddressZipCode()) {
-            etAddressZipCode.setText(address.getAddressZipCode());
+        if (null != address.getCreatedAt()) {
+            etAddressZipCode.setText(address.getZipcode());
         }
-        if (null != address.getAddressLandmark()) {
-            etAddressLandmark.setText(address.getAddressLandmark());
+        if (null != address.getUpdatedAt()) {
+            etAddressLandmark.setText(address.getLandmark());
         }
     }
 
@@ -141,12 +249,12 @@ public class FragmentEditAddress extends Fragment {
         strAddressZipCode = etAddressZipCode.getText().toString().trim();
         strAddressLandmark = etAddressLandmark.getText().toString().trim();
         address.setAddressType(strAddressType);
-        address.setAddressLine1(strAddressLine1);
-        address.setAddressLine2(strAddressLine2);
-        address.setAddressCity(strAddressCity);
-        address.setAddressState(strAddressState);
-        address.setAddressZipCode(strAddressZipCode);
-        address.setAddressLandmark(strAddressLandmark);
+        address.setLine1(strAddressLine1);
+        address.setLine2(strAddressLine2);
+        address.setCity(strAddressCity);
+        address.setState(strAddressState);
+        address.setZipcode(strAddressZipCode);
+        address.setLandmark(strAddressLandmark);
     }
 
     private int validateData() {

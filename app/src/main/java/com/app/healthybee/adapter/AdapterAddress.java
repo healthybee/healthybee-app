@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.app.healthybee.listeners.CustomAddClickListener;
 import com.app.healthybee.R;
 import com.app.healthybee.models.Address;
+import com.app.healthybee.models.AddressModule;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  */
 
 public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHolder> {
-    ArrayList<Address> data;
+    ArrayList<AddressModule> data;
 
     Context mContext;
     CustomAddClickListener listener;
@@ -40,9 +41,9 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
 
     @Override
     public void onBindViewHolder(AdapterAddress.ViewHolder holder, final int position) {
-        Address address = data.get(position);
+        AddressModule address = data.get(position);
         holder.tvAddressType.setText(Html.fromHtml(address.getAddressType()));
-        holder.tvFullAddress.setText(Html.fromHtml(address.getAddressLine1() + ", " + address.getAddressLine2() + ", " + address.getAddressLandmark() + ", " + address.getAddressCity() + ", " + address.getAddressState() + ", " + address.getAddressZipCode()));
+        holder.tvFullAddress.setText(Html.fromHtml(address.getLine1() + ", " + address.getLine2()+ ", " + address.getAddressType() + ", " + address.getState()));
         holder.ivEditAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +59,7 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
         return data.size();
     }
 
-    public AdapterAddress(Context mContext, ArrayList<Address> data, CustomAddClickListener listener) {
+    public AdapterAddress(Context mContext, ArrayList<AddressModule> data, CustomAddClickListener listener) {
         this.data = data;
         this.mContext = mContext;
         this.listener = listener;
