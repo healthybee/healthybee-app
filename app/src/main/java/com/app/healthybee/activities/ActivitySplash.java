@@ -27,6 +27,8 @@ public class ActivitySplash extends AppCompatActivity {
                 Intent intent;
                 if (SharedPrefUtil.getIsLogin(ActivitySplash.this)) {
                     intent = new Intent(getBaseContext(), MainActivity.class);
+//                    intent = new Intent(getBaseContext(), TempActivity.class);
+
                 } else {
                     intent = new Intent(getBaseContext(), ActivityUserLogin.class);
                 }

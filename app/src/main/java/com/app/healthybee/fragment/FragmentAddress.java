@@ -58,7 +58,6 @@ public class FragmentAddress extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         dataList= new ArrayList<>();
         address = new AddressModule();
-
         itemsList = (RecyclerView) root_view.findViewById(R.id.recycler_view_address);
         itemsList.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());

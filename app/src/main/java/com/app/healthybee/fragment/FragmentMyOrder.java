@@ -37,7 +37,9 @@ public class FragmentMyOrder extends Fragment {
         // Required empty public constructor
     }
 
-
+    public static FragmentMyOrder newInstance() {
+        return new FragmentMyOrder();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

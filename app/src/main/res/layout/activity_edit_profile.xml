@@ -63,7 +63,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:visibility="visible">
+                            android:visibility="visible"
+                            tools:ignore="UselessParent">
 
                             <com.mikhaellopez.circularimageview.CircularImageView
                                 android:id="@+id/civProfileImage"
@@ -158,11 +159,23 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
+                <TextView
+                    android:id="@+id/tvChangePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="end"
+                    android:text="@string/change_password"
+                    android:textColor="@color/colorSave"
+                    android:textStyle="bold" />
+
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cvChangePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="?attr/actionBarSize"
                     android:foreground="?android:attr/selectableItemBackground"
+                    android:visibility="gone"
                     app:cardBackgroundColor="@color/colorWhite"
                     app:cardCornerRadius="6dp"
                     card_view:cardElevation="6sp"
@@ -183,9 +196,10 @@
                             app:passwordToggleEnabled="true">
 
                             <android.support.design.widget.TextInputEditText
+                                android:id="@+id/tieNewPassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Change Password "
+                                android:hint="@string/change_password"
                                 android:imeOptions="actionNext"
                                 android:inputType="textPassword"
                                 android:text="" />
@@ -198,14 +212,26 @@
                             app:passwordToggleEnabled="true">
 
                             <android.support.design.widget.TextInputEditText
+                                android:id="@+id/tieReNewPassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Re-Enter Password "
+                                android:hint="@string/re_enter_password"
                                 android:imeOptions="actionDone"
                                 android:inputType="textPassword"
                                 android:text="" />
                         </android.support.design.widget.TextInputLayout>
 
+                        <Button
+                            android:id="@+id/btChangePassword"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:background="@drawable/button_background"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:text="@string/change_password"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>

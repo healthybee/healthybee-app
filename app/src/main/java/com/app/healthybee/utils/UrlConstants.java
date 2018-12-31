@@ -7,7 +7,7 @@ package com.app.healthybee.utils;
 public class UrlConstants {
     public static final String users = "users";
     private static final String auth = "auth";
-    private static final String access_token = "access_token";
+    public static final String access_token = "access_token";
     private static String token = "3biGa1hRAPnwN7Ad9hdMOhm6NGBGC4MU";
     public static String baseUrl = "https://healthybee-mob-api.herokuapp.com/";
 
@@ -17,6 +17,7 @@ public class UrlConstants {
     public static String retrieveAddresses = baseUrl +"addresses";
     public static String createAddresses = baseUrl +"addresses";
     public static String updateAddresses = baseUrl +"addresses/";
+    public static String updatePassword = baseUrl+users+"/";
 
 
 

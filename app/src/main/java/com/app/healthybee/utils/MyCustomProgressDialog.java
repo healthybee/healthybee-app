@@ -54,4 +54,5 @@ public class MyCustomProgressDialog {
         });
         builder.show();
     }
+
 }

@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/main_content"
+android:background="@color/colorWhite"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout_category"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/tab_appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@color/colorWhite"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <RelativeLayout
+        <include
+            android:id="@+id/toolbarNotification"
+            layout="@layout/toolbar_notification"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="?actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways" />
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_margin="5dp"
-                android:id="@+id/recyclerViewCategory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:scrollbars="vertical"
-                android:scrollingCache="true" />
+    </android.support.design.widget.AppBarLayout>
 
-            <include
-                android:id="@+id/lyt_no_item_category"
-                layout="@layout/include_no_item"
-                android:visibility="gone" />
 
-            <include
-                android:id="@+id/lyt_failed_category"
-                layout="@layout/include_no_network"
-                android:visibility="gone" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_address"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="true" />
+    <include
+        android:id="@+id/lyt_no_item_category"
+        layout="@layout/include_no_item"
+        android:visibility="gone" />
 
-        </RelativeLayout>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <include
+        android:id="@+id/lyt_failed_category"
+        layout="@layout/include_no_network"
+        android:visibility="gone" />
 
 </LinearLayout>
-
+</android.support.design.widget.CoordinatorLayout>

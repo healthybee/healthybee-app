@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.healthybee.R;
+import com.app.healthybee.activities.MainActivity;
 
 
 public class FragmentNotification extends Fragment {
@@ -22,11 +25,25 @@ public class FragmentNotification extends Fragment {
     //private Call<CallbackCategories> callbackCall = null;
 //    private InterstitialAd interstitialAd;
     int counter = 1;
-
+    private Toolbar toolbar;
+    private ImageView ivBack;
+    public static FragmentNotification newInstance() {
+        return new FragmentNotification();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_notification, null);
+        toolbar = root_view.findViewById(R.id.toolbarNotification);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ivBack = root_view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).exitApp();
+                //finish();
+            }
+        });
 //        parent_view = getActivity().findViewById(R.id.main_content);
 //
 //        loadInterstitialAd();
@@ -122,7 +139,7 @@ public class FragmentNotification extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        swipeProgress(false);
+      //  swipeProgress(false);
       /*  if(callbackCall != null && callbackCall.isExecuted()){
             callbackCall.cancel();
         }*/
@@ -201,14 +218,11 @@ public class FragmentNotification extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        assert ((AppCompatActivity)getActivity()) != null;
-      //  ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        assert ((AppCompatActivity)getActivity()) != null;
-     //   ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+
     }
 }

@@ -9,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,12 +44,16 @@ public class FragmentHome extends Fragment {
     private ViewPagerAdapter adapter;
     private ArrayList<String> categoryList;
     private static int currentPosition = 0;
-
+    private Toolbar toolbar;
+    public static FragmentHome newInstance() {
+        return new FragmentHome();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, null);
-
+        toolbar = rootView.findViewById(R.id.toolbarHome);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
 
         categoryList = new ArrayList<>();
@@ -223,7 +229,7 @@ public class FragmentHome extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity) getActivity()).RefreshToolBar(true);
+      //  ((MainActivity) getActivity()).RefreshToolBar(true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

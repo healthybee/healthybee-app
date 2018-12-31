@@ -58,7 +58,9 @@ public class FragmentProfile extends Fragment {
     private CircularImageView civProfileImage;
     private Toolbar toolbar;
     private ImageView ivBack;
-
+    public static FragmentProfile newInstance() {
+        return new FragmentProfile();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -130,14 +132,14 @@ public class FragmentProfile extends Fragment {
                     fragmentTransaction.replace(R.id.container, f1);
                     fragmentTransaction.commit();
                 }
-//                else if (position == 4) {
-//                    // TODO: 20/9/18
-//                    FragmentManager fm = getActivity().getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
-//                    FragmentDeliverySupport f1 = new FragmentDeliverySupport();
-//                    fragmentTransaction.replace(R.id.container, f1);
-//                    fragmentTransaction.commit();
-//                }
+                else if (position == 4) {
+                    // TODO: 31/12/18 Add refund balance
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
+                    FragmentDeliverySupport f1 = new FragmentDeliverySupport();
+                    fragmentTransaction.replace(R.id.container, f1);
+                    fragmentTransaction.commit();
+                }
 
             }
         });

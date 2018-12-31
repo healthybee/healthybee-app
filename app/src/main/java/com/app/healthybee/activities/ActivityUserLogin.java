@@ -184,8 +184,8 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 });
     }
     private int ValidateUser(View v) {
-        strLoginId = edt_email_id.getText().toString().trim();
-        strPassword = edt_login_password.getText().toString().trim();
+        strLoginId = edt_email_id.getText().toString();
+        strPassword = edt_login_password.getText().toString();
         if (!isValidEmail(strLoginId)) {
             Toast.makeText(this, "Invalid Email Id", Toast.LENGTH_SHORT).show();
             return 0;
@@ -202,8 +202,8 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         if (NetworkConstants.isConnectingToInternet(activity)) {
             MyCustomProgressDialog.showDialog(activity, getString(R.string.please_wait));
             Map<String, String> params = new HashMap<>();
-            params.put("email",edt_email_id.getText().toString().trim());
-            params.put("password", edt_login_password.getText().toString().trim());
+            params.put("email",strLoginId);
+            params.put("password", strPassword);
             Log.d("4343", new JSONObject(params).toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
@@ -241,6 +241,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                                     SharedPrefUtil.setCreatedAt(activity,jsonObject.optString("createdAt"));
                                 }
                             }
+                            SharedPrefUtil.setUserPassword(activity,strPassword);
                             // for login session
                             SharedPrefUtil.setIsLogin(activity,true);
                             Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);

@@ -77,6 +77,17 @@ public class SharedPrefUtil {
         SharedPreferences prefs = context.getSharedPreferences("HealthyBee", Context.MODE_PRIVATE);
         return prefs.getString("UserEmail", "");
     }
+    public static void setUserPassword(Context context, String UserPassword) {
+        SharedPreferences preferences = context.getSharedPreferences("HealthyBee", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("UserPassword", UserPassword);
+        editor.apply();
+    }
+
+    public static String getUserPassword(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("HealthyBee", Context.MODE_PRIVATE);
+        return prefs.getString("UserPassword", "");
+    }
     public static void setUserMobile(Context context, String UserMobile) {
         SharedPreferences preferences = context.getSharedPreferences("HealthyBee", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

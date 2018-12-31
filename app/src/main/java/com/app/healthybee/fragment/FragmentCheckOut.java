@@ -99,7 +99,9 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         // Required empty public constructor
     }
 
-
+    public static FragmentCheckOut newInstance() {
+        return new FragmentCheckOut();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
