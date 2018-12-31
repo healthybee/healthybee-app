@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,7 +22,6 @@ import com.app.healthybee.R;
 import com.app.healthybee.activities.Applications;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.adapter.AdapterAddress;
-import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.listeners.CustomAddClickListener;
 import com.app.healthybee.models.AddressModule;
 import com.app.healthybee.utils.MyCustomProgressDialog;
@@ -44,12 +42,10 @@ public class FragmentAddress extends Fragment {
 
     private View root_view;
     private RecyclerView itemsList;
-   // private ArrayList<Address> data ;
     private AddressModule address;
     private Toolbar toolbar;
     private ImageView ivBack;
     private ImageView ivAddAddress;
-    //private DbHelper dbHelper;
     private AdapterAddress adapter;
     private ArrayList<AddressModule> dataList ;
 
@@ -60,19 +56,13 @@ public class FragmentAddress extends Fragment {
 
         toolbar = root_view.findViewById(R.id.toolbarAddress);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-       // data = new ArrayList<>();
         dataList= new ArrayList<>();
         address = new AddressModule();
-
-        //dbHelper = new DbHelper(getActivity());
 
         itemsList = (RecyclerView) root_view.findViewById(R.id.recycler_view_address);
         itemsList.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         itemsList.setLayoutManager(mLinearLayoutManager);
-        //let us add some items into the list
-        // TODO: 17/11/18  get address list from table
-      //  data.addAll(dbHelper.getAddressList());
         getSavedAddress();
         adapter = new AdapterAddress(getActivity(), dataList, new CustomAddClickListener() {
             @Override
@@ -102,7 +92,6 @@ public class FragmentAddress extends Fragment {
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).exitApp();
-                //finish();
             }
         });
         ivAddAddress = root_view.findViewById(R.id.ivAddAddress);
@@ -140,6 +129,7 @@ public class FragmentAddress extends Fragment {
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray jsonArray) {
+                            Log.d("TAG", jsonArray.toString());
                             MyCustomProgressDialog.dismissDialog();
                             for (int i=0;i<jsonArray.length();i++){
                                 try {
@@ -170,6 +160,7 @@ public class FragmentAddress extends Fragment {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
+                            Log.d("TAG", volleyError.getMessage());
                             MyCustomProgressDialog.dismissDialog();
                         }
                     }) {

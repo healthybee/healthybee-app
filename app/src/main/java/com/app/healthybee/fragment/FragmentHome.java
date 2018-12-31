@@ -1,6 +1,5 @@
 package com.app.healthybee.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -146,7 +145,6 @@ public class FragmentHome extends Fragment {
     }
 
 
-    @SuppressLint("StaticFieldLeak")
     class UploadCategoryFragment extends AsyncTask<String, Void, String> {
 
         @Override
