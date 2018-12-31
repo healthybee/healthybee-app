@@ -80,8 +80,6 @@ public class FragmentEditAddress extends Fragment {
         assert bundle != null;
         address= bundle.getParcelable("addressObj");
         operationType= bundle.getString("operationType");
-
-       // dbHelper = new DbHelper(getActivity());
         ivBack = root_view.findViewById(R.id.ivBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,14 +100,6 @@ public class FragmentEditAddress extends Fragment {
                     if (operationType.equalsIgnoreCase("EDIT")){
                         UpdateAddressData();
                     }
-
-
-//                    long isSaved = dbHelper.insertUpdateAddress(address);
-//                    if (isSaved > 0) {
-//                        ((MainActivity) getActivity()).exitApp();
-//                    }else {
-//                        Toast.makeText(getActivity(), "Address not saved please try again", Toast.LENGTH_SHORT).show();
-//                    }
                 }
             }
         });
