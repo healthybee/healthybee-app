@@ -6,68 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/rl1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:background="@color/grayLite"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:paddingStart="10dp"-->
-        <!--android:paddingLeft="10dp"-->
-        <!--tools:ignore="RtlSymmetry">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/tvLocation"-->
-            <!--style="@style/TextAppearance.AppCompat.Small.Inverse"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="0dp"-->
-            <!--android:layout_toEndOf="@+id/ivBack"-->
-            <!--android:layout_toRightOf="@+id/ivBack"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:text="@string/location"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:visibility="visible"-->
-            <!--tools:ignore="RelativeOverlap" />-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/ivDownArrow"-->
-            <!--style="@style/Widget.AppCompat.ActionButton"-->
-            <!--android:layout_width="?attr/actionBarSize"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:layout_toEndOf="@+id/tvLocation"-->
-            <!--android:layout_toRightOf="@+id/tvLocation"-->
-            <!--android:contentDescription="@string/todo"-->
-            <!--android:src="@drawable/dropdown" />-->
-
-        <!--&lt;!&ndash; This is a custom left side button &ndash;&gt;-->
-        <!--<ImageView-->
-            <!--android:id="@+id/ivBack"-->
-            <!--style="@style/Widget.AppCompat.ActionButton"-->
-            <!--android:layout_width="?attr/actionBarSize"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:layout_gravity="start"-->
-            <!--android:contentDescription="@string/todo"-->
-            <!--android:src="@drawable/ic_location_on_black_24dp"-->
-            <!--android:visibility="visible" />-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/ivSearch"-->
-            <!--style="@style/Widget.AppCompat.ActionButton"-->
-            <!--android:layout_width="?attr/actionBarSize"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:contentDescription="@string/todo"-->
-            <!--android:gravity="center"-->
-            <!--android:src="@drawable/ic_search_black_24dp" />-->
-
-    <!--</RelativeLayout>-->
-
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
