@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
                 android:textAllCaps="true"
-                android:textSize="12sp"
                 app:tabGravity="center"
                 app:tabIndicatorColor="@color/colorOrange"
                 app:tabMode="scrollable"

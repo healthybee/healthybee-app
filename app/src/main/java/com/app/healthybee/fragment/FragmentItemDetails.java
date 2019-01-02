@@ -54,7 +54,6 @@ public class FragmentItemDetails extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_item_details, container, false);
-        ((MainActivity) getActivity()).RefreshToolBar(false);
         sv = view.findViewById(R.id.sv);
         sv.post(new Runnable() {
             @Override

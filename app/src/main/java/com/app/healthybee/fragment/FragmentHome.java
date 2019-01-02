@@ -1,5 +1,6 @@
 package com.app.healthybee.fragment;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.app.healthybee.activities.ActivitySearch;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.MyCustomProgressDialog;
@@ -38,7 +40,7 @@ public class FragmentHome extends Fragment {
 
     private View rootView;
     private ImageView imageViewGrid, imageViewList;
-
+    private ImageView ivSearch;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SearchView searchView = null;
@@ -127,6 +129,15 @@ public class FragmentHome extends Fragment {
 //                Toast.makeText(getApplicationContext(),
 //                        "onPageScrollStateChanged",
 //                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ivSearch = rootView.findViewById(R.id.ivSearch);
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivitySearch.class);
+                startActivity(intent);
             }
         });
         getCategory();

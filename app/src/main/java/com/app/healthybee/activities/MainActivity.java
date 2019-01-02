@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private int count = 0;
     private DbHelper dbHelper;
     private ArrayList<CategoryItem> list;
-    //private ImageView ivSearch;
-    //private RelativeLayout tool_header;
-    //private RelativeLayout relativeLayout;
     public static boolean mFlagDisplayList = false;
 
     public static AddressModule address;
@@ -47,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mFlagDisplayList = false;
-        //tool_header=findViewById(R.id.rl1);
-       // relativeLayout=findViewById(R.id.relativeLayout);
         address=new AddressModule();
         setBottomNavigation();
     }
@@ -80,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         tvNotification.setTextColor(Color.parseColor("#C2C2C2"));
         tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
         tvMenu.setTextColor(Color.parseColor("#FF9900"));
-       // tool_header.setVisibility(View.VISIBLE);
         Fragment fragment;
         fragment = new FragmentHome();
         loadFragment(fragment,"FragmentHome");
@@ -96,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 tvNotification.setTextColor(Color.parseColor("#C2C2C2"));
                 tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
                 tvMenu.setTextColor(Color.parseColor("#FF9900"));
-               // tool_header.setVisibility(View.VISIBLE);
                 Fragment fragment;
                 fragment = new FragmentHome();
                 loadFragment(fragment, "FragmentHome");
@@ -114,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 tvNotification.setTextColor(Color.parseColor("#C2C2C2"));
                 tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
                 tvMenu.setTextColor(Color.parseColor("#C2C2C2"));
-               // tool_header.setVisibility(View.GONE);
-               // relativeLayout.setVisibility(View.GONE);
                 Fragment fragment;
                 fragment = new FragmentCheckOut();
                 loadFragment(fragment, "FragmentCheckOut");
@@ -136,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 fragment = new FragmentProfile();
                 loadFragment(fragment, "FragmentProfile");
-               // tool_header.setVisibility(View.GONE);
+
 
             }
         });
@@ -155,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 fragment = new FragmentMyOrder();
                 loadFragment(fragment, "FragmentMyOrder");
-              //  tool_header.setVisibility(View.GONE);
             }
         });
 
@@ -173,21 +163,10 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 fragment = new FragmentNotification();
                 loadFragment(fragment, "FragmentNotification");
-                //tool_header.setVisibility(View.GONE);
 
             }
         });
 
-
-//
-//        ivSearch = findViewById(R.id.ivSearch);
-//        ivSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), ActivitySearch.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     private void loadFragment(Fragment fragment, String fragmentTag) {
@@ -214,15 +193,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-    public void RefreshToolBar(boolean b) {
-//        if (b) {
-//            tool_header.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            tool_header.setVisibility(View.GONE);
-//        }
     }
     @Override
     protected void onResume() {
