@@ -6,78 +6,70 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-   <!-- <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/tab_appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
--->
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/tab_appbar_layout"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+
+        <include
+            android:id="@+id/toolbarHome"
+            layout="@layout/toolbar_home"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            app:tabTextAppearance="@style/AppTabTextAppearance"
+            app:tabGravity="center"
+            app:tabMode="scrollable"
+            style="@style/customTabLayout"/>
 
-
-            <include
-                android:id="@+id/toolbarHome"
-                layout="@layout/toolbar_home"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways" />
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:textAllCaps="true"
-                app:tabGravity="center"
-                app:tabIndicatorColor="@color/colorOrange"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/colorOrange"
-                app:tabTextColor="@color/tabTextColor" />
-
-            <RelativeLayout
-                android:id="@+id/rl1"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@color/colorWhite">
-
-                <ImageView
-                    android:id="@+id/imageViewList"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:contentDescription="@string/todo"
-                    android:padding="8dp"
-                    android:src="@drawable/list_view_gray" />
-
-                <ImageView
-                    android:id="@+id/imageViewGrid"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="9dp"
-                    android:layout_marginRight="9dp"
-                    android:layout_toStartOf="@+id/imageViewList"
-                    android:layout_toLeftOf="@+id/imageViewList"
-                    android:contentDescription="@string/todo"
-                    android:padding="8dp"
-                    android:src="@drawable/grid_view_dark" />
-
-            </RelativeLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
+      <!--  <RelativeLayout
+            android:id="@+id/rl1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="30dp"
+            android:background="@color/colorWhite">
 
-    <!--</LinearLayout>-->
+            <ImageView
+                android:id="@+id/imageViewList"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/todo"
+                android:padding="8dp"
+                android:src="@drawable/list_view_gray" />
+
+            <ImageView
+                android:id="@+id/imageViewGrid"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_toStartOf="@+id/imageViewList"
+                android:layout_toLeftOf="@+id/imageViewList"
+                android:contentDescription="@string/todo"
+                android:padding="8dp"
+                android:src="@drawable/grid_view_dark" />
+
+        </RelativeLayout>-->
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 </android.support.design.widget.CoordinatorLayout>

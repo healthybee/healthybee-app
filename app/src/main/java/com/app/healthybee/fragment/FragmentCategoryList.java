@@ -16,6 +16,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -48,7 +50,7 @@ public class FragmentCategoryList extends Fragment {
     private String category="";
     private DbHelper dbHelper;
     private SwipeRefreshLayout swipe_refresh;
-
+    private ImageView imageViewGrid, imageViewList;
     public FragmentCategoryList() {
         // Required empty public constructor
     }
@@ -66,6 +68,37 @@ public class FragmentCategoryList extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         swipe_refresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
         swipe_refresh.setColorSchemeResources(R.color.colorOrange, R.color.colorGreyDark, R.color.colorBlue, R.color.colorRed);
+
+        imageViewGrid = (ImageView) rootView.findViewById(R.id.imageViewGrid);
+        imageViewList = (ImageView) rootView.findViewById(R.id.imageViewList);
+        if (MainActivity.mFlagDisplayList) {
+            imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
+            imageViewList.setImageResource(R.drawable.ic_listview_enable);
+        } else {
+            imageViewList.setImageResource(R.drawable.ic_listview_disable);
+            imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
+        }
+        imageViewList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.mFlagDisplayList = true;
+                imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
+                imageViewList.setImageResource(R.drawable.ic_listview_enable);
+                refreshFragment();
+            }
+        });
+        imageViewGrid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.mFlagDisplayList = false;
+                imageViewList.setImageResource(R.drawable.ic_listview_disable);
+                imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
+                refreshFragment();
+
+            }
+        });
+
+
         dbHelper=new DbHelper(getActivity());
         categoryItemList = new ArrayList<>();
 
@@ -84,7 +117,7 @@ public class FragmentCategoryList extends Fragment {
             recyclerView.addItemDecoration(new GridSpacingItemDecoration(getActivity(),2, dpToPx(7), true));
         }
         recyclerView.setLayoutManager(mLayoutManager);
-
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
@@ -117,6 +150,11 @@ public class FragmentCategoryList extends Fragment {
 
 
         return rootView;
+    }
+
+    public void refreshFragment() {
+        FragmentHome.refreshFragment();
+        //recyclerView.setAdapter(adapter);
     }
 
     private void getCategoryList() {

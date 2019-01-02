@@ -39,12 +39,12 @@ import java.util.List;
 public class FragmentHome extends Fragment {
 
     private View rootView;
-    private ImageView imageViewGrid, imageViewList;
+   // private ImageView imageViewGrid, imageViewList;
     private ImageView ivSearch;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private static ViewPager viewPager;
     private SearchView searchView = null;
-    private ViewPagerAdapter adapter;
+    private static ViewPagerAdapter adapter;
     private ArrayList<String> categoryList;
     private static int currentPosition = 0;
     private Toolbar toolbar;
@@ -62,34 +62,34 @@ public class FragmentHome extends Fragment {
         categoryList = new ArrayList<>();
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
 
-        imageViewGrid = (ImageView) rootView.findViewById(R.id.imageViewGrid);
-        imageViewList = (ImageView) rootView.findViewById(R.id.imageViewList);
-        if (MainActivity.mFlagDisplayList) {
-            imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
-            imageViewList.setImageResource(R.drawable.ic_listview_enable);
-        } else {
-            imageViewList.setImageResource(R.drawable.ic_listview_disable);
-            imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
-        }
-        imageViewList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.mFlagDisplayList = true;
-                imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
-                imageViewList.setImageResource(R.drawable.ic_listview_enable);
-                refreshFragment();
-            }
-        });
-        imageViewGrid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.mFlagDisplayList = false;
-                imageViewList.setImageResource(R.drawable.ic_listview_disable);
-                imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
-                refreshFragment();
-
-            }
-        });
+//        imageViewGrid = (ImageView) rootView.findViewById(R.id.imageViewGrid);
+//        imageViewList = (ImageView) rootView.findViewById(R.id.imageViewList);
+//        if (MainActivity.mFlagDisplayList) {
+//            imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
+//            imageViewList.setImageResource(R.drawable.ic_listview_enable);
+//        } else {
+//            imageViewList.setImageResource(R.drawable.ic_listview_disable);
+//            imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
+//        }
+//        imageViewList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MainActivity.mFlagDisplayList = true;
+//                imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
+//                imageViewList.setImageResource(R.drawable.ic_listview_enable);
+//                refreshFragment();
+//            }
+//        });
+//        imageViewGrid.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MainActivity.mFlagDisplayList = false;
+//                imageViewList.setImageResource(R.drawable.ic_listview_disable);
+//                imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
+//                refreshFragment();
+//
+//            }
+//        });
         tabLayout.setupWithViewPager(viewPager);
 
         // Attach the page change listener inside the activity
@@ -145,7 +145,7 @@ public class FragmentHome extends Fragment {
         return rootView;
     }
 
-    public void refreshFragment() {
+    public static void refreshFragment() {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(currentPosition);
     }

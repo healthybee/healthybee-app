@@ -7,24 +7,66 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:overScrollMode="never"
+            android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:scrollbars="vertical" />
-            <include
-                android:id="@+id/lyt_no_item_category"
-                layout="@layout/include_no_item"
-                android:visibility="gone" />
-        </RelativeLayout>
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/rl1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/colorWhite">
 
+                    <ImageView
+                        android:id="@+id/imageViewList"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:contentDescription="@string/todo"
+                        android:padding="8dp"
+                        android:src="@drawable/list_view_gray" />
+
+                    <ImageView
+                        android:id="@+id/imageViewGrid"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginRight="9dp"
+                        android:layout_toStartOf="@+id/imageViewList"
+                        android:layout_toLeftOf="@+id/imageViewList"
+                        android:contentDescription="@string/todo"
+                        android:padding="8dp"
+                        android:src="@drawable/grid_view_dark" />
+
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_main_page"
+                    android:layout_below="@+id/rl1"
+                    android:clipToPadding="true"
+                    android:scrollbars="vertical" />
+
+                <include
+                    android:id="@+id/lyt_no_item_category"
+                    layout="@layout/include_no_item"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
