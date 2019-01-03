@@ -256,6 +256,21 @@
     <string name="change_password">Change Password</string>
     <string name="re_enter_password">Re-Enter Password</string>
     <string name="notifications">Notifications</string>
+    <string name="free_home_delivery">Free home delivery</string>
+    <string name="serves_100_hygienic_amp_delicious_food"><![CDATA[Serves 100% hygienic & delicious food]]></string>
+    <string name="best_affordable_subscription_plans">Best affordable subscription plans</string>
+    <string name="how_it_works">How it works</string>
+    <string name="simply_create_subscription_plan">Simply create subscription plan</string>
+    <string name="one_time_doorstep_service">One time doorstep service</string>
+    <string name="enjoy_healthy_food_from_specially_designed_menu">Enjoy healthy food from specially designed menu</string>
+    <string name="weekly_subscription_at">WEEKLY SUBSCRIPTION AT</string>
+    <string name="rs_100_per_meal">Rs. 100 PER MEAL</string>
+    <string name="free_delivery_free_cancellation">Free delivery | Free cancellation</string>
+    <string name="subscribe_now">Subscribe Now</string>
+    <string name="pause_resume_subscription_plan_any_time">Pause/Resume subscription plan any time</string>
+    <string name="hi">Hi,</string>
+    <string name="username">UserName</string>
+    <string name="why_healthybee">WHY HEALTHYBEE</string>
 
 
 </resources>
