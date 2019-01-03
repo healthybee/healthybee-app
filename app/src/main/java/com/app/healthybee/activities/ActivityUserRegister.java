@@ -99,7 +99,7 @@ public class ActivityUserRegister extends AppCompatActivity {
         });
 
 
-        setupToolbar();
+       // setupToolbar();
 
     }
 

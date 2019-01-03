@@ -34,11 +34,12 @@ import com.app.healthybee.activities.Applications;
 import com.app.healthybee.adapter.AdapterCategoryItem;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.models.CategoryItem;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 
 public class FragmentCategoryList extends Fragment {
@@ -47,10 +48,11 @@ public class FragmentCategoryList extends Fragment {
     private AdapterCategoryItem adapter;
     private ArrayList<CategoryItem> categoryItemList;
     private RecyclerView.LayoutManager mLayoutManager;
-    private String category="";
+    private String category = "";
     private DbHelper dbHelper;
     private SwipeRefreshLayout swipe_refresh;
     private ImageView imageViewGrid, imageViewList;
+
     public FragmentCategoryList() {
         // Required empty public constructor
     }
@@ -66,7 +68,7 @@ public class FragmentCategoryList extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.system_app_list, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        swipe_refresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh_layout);
+        swipe_refresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         swipe_refresh.setColorSchemeResources(R.color.colorOrange, R.color.colorGreyDark, R.color.colorBlue, R.color.colorRed);
 
         imageViewGrid = (ImageView) rootView.findViewById(R.id.imageViewGrid);
@@ -99,7 +101,7 @@ public class FragmentCategoryList extends Fragment {
         });
 
 
-        dbHelper=new DbHelper(getActivity());
+        dbHelper = new DbHelper(getActivity());
         categoryItemList = new ArrayList<>();
 
 
@@ -114,7 +116,7 @@ public class FragmentCategoryList extends Fragment {
         } else {
 
             mLayoutManager = new GridLayoutManager(getActivity(), 2);
-            recyclerView.addItemDecoration(new GridSpacingItemDecoration(getActivity(),2, dpToPx(7), true));
+            recyclerView.addItemDecoration(new GridSpacingItemDecoration(getActivity(), 2, dpToPx(7), true));
         }
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setNestedScrollingEnabled(false);
@@ -133,7 +135,7 @@ public class FragmentCategoryList extends Fragment {
         swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!categoryItemList.isEmpty()){
+                if (!categoryItemList.isEmpty()) {
                     categoryItemList.clear();
                     adapter.notifyDataSetChanged();
                 }
@@ -159,24 +161,24 @@ public class FragmentCategoryList extends Fragment {
 
     private void getCategoryList() {
         if (NetworkConstants.isConnectingToInternet(getActivity())) {
-            Log.e("4343",UrlConstants.getCategoryItemList+category);
+            Log.e("4343", UrlConstants.getCategoryItemList + category);
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                    UrlConstants.getCategoryItemList+category,
+                    UrlConstants.getCategoryItemList + category,
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
 
-                            int length=response.length();
-                            if (length==0){
+                            int length = response.length();
+                            if (length == 0) {
                                 showNoItemView(true);
                                 swipe_refresh.setRefreshing(false);
-                            }else {
+                            } else {
                                 showNoItemView(false);
                                 dbHelper.openDB();
-                                for(int i=0;i<length;i++){
+                                for (int i = 0; i < length; i++) {
                                     try {
-                                        JSONObject jsonObject= (JSONObject) response.get(i);
-                                        CategoryItem categoryItem=new CategoryItem();
+                                        JSONObject jsonObject = (JSONObject) response.get(i);
+                                        CategoryItem categoryItem = new CategoryItem();
                                         categoryItem.setItemId(jsonObject.optInt("id"));
                                         categoryItem.setPrice(jsonObject.optString("price"));
                                         categoryItem.setAdd_on(jsonObject.optString("add_on"));
@@ -204,25 +206,15 @@ public class FragmentCategoryList extends Fragment {
                                     public void onItemClick(View v, int position) {
                                         Log.d("TAG", "clicked position:" + position);
 
-//                                        Intent intent =new Intent(getActivity(),ActivityItemDetails.class);
-//                                        intent.putExtra("itemDetails",categoryItemList.get(position));
-//                                        intent.putParcelableArrayListExtra("itemList", (ArrayList<? extends Parcelable>) categoryItemList);
-//                                        startActivity(intent);
-
-
-                                    Bundle bundle=new Bundle();
-                                    bundle.putParcelable("itemDetails",categoryItemList.get(position));
-                                    bundle.putParcelableArrayList("itemList", (ArrayList<? extends Parcelable>) categoryItemList);
-                                    Fragment fragment = new FragmentItemDetails();
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    fragment.setArguments(bundle);
-                                    transaction.replace(R.id.container, fragment);
-                                    transaction.addToBackStack(null);
-                                    transaction.commit();
-
-
-
-
+                                        Bundle bundle = new Bundle();
+                                        bundle.putParcelable("itemDetails", categoryItemList.get(position));
+                                        bundle.putParcelableArrayList("itemList", (ArrayList<? extends Parcelable>) categoryItemList);
+                                        Fragment fragment = new FragmentItemDetails();
+                                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                        fragment.setArguments(bundle);
+                                        transaction.replace(R.id.container, fragment);
+                                        transaction.addToBackStack(null);
+                                        transaction.commit();
                                     }
                                 }, new UpdateCart() {
                                     @Override
@@ -237,9 +229,9 @@ public class FragmentCategoryList extends Fragment {
                             }
                         }
                     },
-                    new Response.ErrorListener(){
+                    new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error){
+                        public void onErrorResponse(VolleyError error) {
 
                         }
                     }
@@ -278,6 +270,7 @@ public class FragmentCategoryList extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -291,9 +284,10 @@ public class FragmentCategoryList extends Fragment {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
     private void showNoItemView(boolean show) {
         View lyt_no_item = rootView.findViewById(R.id.lyt_no_item_category);
-       // ((TextView) rootView.findViewById(R.id.no_item_message)).setText(message);
+        // ((TextView) rootView.findViewById(R.id.no_item_message)).setText(message);
         if (show) {
             recyclerView.setVisibility(View.GONE);
             lyt_no_item.setVisibility(View.VISIBLE);

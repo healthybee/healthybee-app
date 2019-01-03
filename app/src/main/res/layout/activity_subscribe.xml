@@ -3,7 +3,7 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@drawable/bc1"
+android:background="@drawable/subscriptionbg"
 android:gravity="bottom|center"
 android:orientation="vertical"
 tools:context="com.app.healthybee.activities.ActivitySubscribe">

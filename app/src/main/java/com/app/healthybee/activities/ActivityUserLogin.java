@@ -50,7 +50,6 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
     private String strPassword;
     private TextView tv_newUser;
     private Button bt_password,bt_otp;
-    private boolean isOtpSelected=false;
     private ImageView iv_google;
     private Activity activity;
     GoogleSignInClient mGoogleSignInClient;
@@ -99,12 +98,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.btn_login:
                 if (ValidateUser(v) == 1) {
-                    // getLogin();
-//                    Intent intent = new Intent(LoginActivity.this, SkipActivity.class);
                     AuthUser();
-//                    Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);
-//                    startActivity(intent);
-//                    finish();
                 }
                 break;
             case R.id.tv_newUser:
@@ -112,14 +106,12 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 startActivity(intent);
                 break;
             case R.id.bt_password:
-                isOtpSelected=false;
                 bt_otp.setBackground(getDrawable(R.drawable.button_shap_right_round));
                 bt_password.setBackground(getDrawable(R.drawable.button_shap_left_round_selected));
                 bt_otp.setTextColor(getResources().getColor(R.color.colorWhite));
                 bt_password.setTextColor(getResources().getColor(R.color.background_color));
                 break;
             case R.id.bt_otp:
-                isOtpSelected=true;
                 bt_password.setBackground(getDrawable(R.drawable.button_shap_left_round));
                 bt_otp.setBackground(getDrawable(R.drawable.button_shap_right_round_selected));
                 bt_password.setTextColor(getResources().getColor(R.color.colorWhite));

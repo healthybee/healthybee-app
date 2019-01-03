@@ -39,7 +39,6 @@ import java.util.List;
 public class FragmentHome extends Fragment {
 
     private View rootView;
-   // private ImageView imageViewGrid, imageViewList;
     private ImageView ivSearch;
     private TabLayout tabLayout;
     private static ViewPager viewPager;
@@ -168,8 +167,8 @@ public class FragmentHome extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            MyCustomProgressDialog.showDialog(getActivity(),
-                    getString(R.string.please_wait));
+          //  MyCustomProgressDialog.showDialog(getActivity(),
+          //          getString(R.string.please_wait));
         }
 
         @Override
@@ -191,7 +190,7 @@ public class FragmentHome extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             viewPager.setAdapter(adapter);
-            MyCustomProgressDialog.dismissDialog();
+            //MyCustomProgressDialog.dismissDialog();
         }
     }
 
@@ -270,7 +269,6 @@ public class FragmentHome extends Fragment {
         try {
             if (NetworkConstants.isConnectingToInternet(getActivity())) {
                 MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
-                // Initialize a new JsonArrayRequest instance
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                         UrlConstants.getCategory,
                         new Response.Listener<JSONArray>() {
