@@ -6,7 +6,6 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import com.app.healthybee.R;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.utils.SharedPrefUtil;
