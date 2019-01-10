@@ -271,6 +271,7 @@
     <string name="hi">Hi,</string>
     <string name="username">UserName</string>
     <string name="why_healthybee">WHY HEALTHYBEE</string>
+    <string name="resend_otp">Resend OTP</string>
 
 
 </resources>

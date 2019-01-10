@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,29 +38,30 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class ActivityUserLogin extends AppCompatActivity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 1;
-    private EditText edt_email_id;
+    GoogleSignInClient mGoogleSignInClient;
+    private EditText edt_email_id, edt_mobile,edt_otp;
     private EditText edt_login_password;
     private Button btn_login;
     private String strLoginId;
     private String strPassword;
-    private TextView tv_newUser;
-    private Button bt_password,bt_otp;
+    private TextView tv_newUser, tv_forgot_password,tv_resend_otp;
+    private Button bt_password, bt_otp, btn_generate_otp;
     private ImageView iv_google;
     private Activity activity;
-    GoogleSignInClient mGoogleSignInClient;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_login);
-        activity=ActivityUserLogin.this;
+        setContentView(R.layout.generate_otp);
+        activity = ActivityUserLogin.this;
         init();
     }
 
@@ -68,9 +70,15 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
     private void init() {
         edt_email_id = (EditText) findViewById(R.id.edt_email_id);
         edt_login_password = (EditText) findViewById(R.id.edt_login_password);
+        edt_mobile = (EditText) findViewById(R.id.edt_mobile);
+        edt_otp = (EditText) findViewById(R.id.edt_otp);
         btn_login = (Button) findViewById(R.id.btn_login);
+        btn_generate_otp = (Button) findViewById(R.id.btn_generate_otp);
+        btn_generate_otp.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         tv_newUser = (TextView) findViewById(R.id.tv_newUser);
+        tv_resend_otp = (TextView) findViewById(R.id.tv_resend_otp);
+        tv_forgot_password = (TextView) findViewById(R.id.tv_forgot_password);
         tv_newUser.setOnClickListener(this);
         bt_password = (Button) findViewById(R.id.bt_password);
         bt_password.setOnClickListener(this);
@@ -83,7 +91,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         bt_otp.setTextColor(getResources().getColor(R.color.colorWhite));
         bt_password.setTextColor(getResources().getColor(R.color.background_color));
 
-        iv_google=findViewById(R.id.iv_google);
+        iv_google = findViewById(R.id.iv_google);
         iv_google.setOnClickListener(this);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -110,13 +118,42 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 bt_password.setBackground(getDrawable(R.drawable.button_shap_left_round_selected));
                 bt_otp.setTextColor(getResources().getColor(R.color.colorWhite));
                 bt_password.setTextColor(getResources().getColor(R.color.background_color));
+                btn_generate_otp.setVisibility(View.GONE);
+                edt_mobile.setVisibility(View.GONE);
+                edt_email_id.setVisibility(View.VISIBLE);
+                edt_login_password.setVisibility(View.VISIBLE);
+                btn_login.setVisibility(View.VISIBLE);
+                tv_forgot_password.setVisibility(View.VISIBLE);
+                tv_resend_otp.setVisibility(View.GONE);
+                edt_otp.setVisibility(View.GONE);
+
                 break;
             case R.id.bt_otp:
                 bt_password.setBackground(getDrawable(R.drawable.button_shap_left_round));
                 bt_otp.setBackground(getDrawable(R.drawable.button_shap_right_round_selected));
                 bt_password.setTextColor(getResources().getColor(R.color.colorWhite));
                 bt_otp.setTextColor(getResources().getColor(R.color.background_color));
+                edt_email_id.setVisibility(View.GONE);
+                edt_login_password.setVisibility(View.GONE);
+                btn_generate_otp.setVisibility(View.VISIBLE);
+                edt_mobile.setVisibility(View.VISIBLE);
+                btn_login.setVisibility(View.INVISIBLE);
+                tv_forgot_password.setVisibility(View.INVISIBLE);
+                tv_resend_otp.setVisibility(View.GONE);
+                edt_otp.setVisibility(View.GONE);
                 break;
+
+            case R.id.btn_generate_otp:
+                edt_email_id.setVisibility(View.GONE);
+                edt_login_password.setVisibility(View.GONE);
+                btn_generate_otp.setVisibility(View.GONE);
+                edt_mobile.setVisibility(View.VISIBLE);
+                btn_login.setVisibility(View.VISIBLE);
+                tv_forgot_password.setVisibility(View.GONE);
+                tv_resend_otp.setVisibility(View.VISIBLE);
+                edt_otp.setVisibility(View.VISIBLE);
+                break;
+
             case R.id.iv_google:
                 signInGoogle();
                 break;
@@ -129,6 +166,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -141,6 +179,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
             handleSignInResult(task);
         }
     }
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -154,6 +193,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
             updateUI(null);
         }
     }
+
     private void updateUI(@Nullable GoogleSignInAccount account) {
         if (account != null) {
             Log.e("TAG", account.getDisplayName());
@@ -164,6 +204,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
             // TODO: 4/10/18 sign out
         }
     }
+
     private void signOut() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
@@ -175,6 +216,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                     }
                 });
     }
+
     private int ValidateUser(View v) {
         strLoginId = edt_email_id.getText().toString();
         strPassword = edt_login_password.getText().toString();
@@ -187,14 +229,16 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         }
         return 1;
     }
+
     public boolean isValidEmail(CharSequence target) {
         return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
+
     private void AuthUser() {
         if (NetworkConstants.isConnectingToInternet(activity)) {
             MyCustomProgressDialog.showDialog(activity, getString(R.string.please_wait));
             Map<String, String> params = new HashMap<>();
-            params.put("email",strLoginId);
+            params.put("email", strLoginId);
             params.put("password", strPassword);
             Log.d("4343", new JSONObject(params).toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -208,39 +252,39 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
 
-                             if (response.has("token")){
-                                 SharedPrefUtil.setToken(activity,response.optString("token"));
-                                 Log.d("4343", response.optString("token"));
-                             }
-                            if (response.has("user")){
-                                JSONObject jsonObject=response.optJSONObject("user");
-                                if (jsonObject.has("id")){
-                                    SharedPrefUtil.setUserId(activity,jsonObject.optString("id"));
+                            if (response.has("token")) {
+                                SharedPrefUtil.setToken(activity, response.optString("token"));
+                                Log.d("4343", response.optString("token"));
+                            }
+                            if (response.has("user")) {
+                                JSONObject jsonObject = response.optJSONObject("user");
+                                if (jsonObject.has("id")) {
+                                    SharedPrefUtil.setUserId(activity, jsonObject.optString("id"));
                                 }
-                                if (jsonObject.has("name")){
-                                    SharedPrefUtil.setUserName(activity,jsonObject.optString("name"));
+                                if (jsonObject.has("name")) {
+                                    SharedPrefUtil.setUserName(activity, jsonObject.optString("name"));
                                 }
-                                if (jsonObject.has("picture")){
-                                    SharedPrefUtil.setUserPicture(activity,jsonObject.optString("picture"));
+                                if (jsonObject.has("picture")) {
+                                    SharedPrefUtil.setUserPicture(activity, jsonObject.optString("picture"));
                                 }
-                                if (jsonObject.has("email")){
-                                    SharedPrefUtil.setUserEmail(activity,jsonObject.optString("email"));
+                                if (jsonObject.has("email")) {
+                                    SharedPrefUtil.setUserEmail(activity, jsonObject.optString("email"));
                                 }
-                                if (jsonObject.has("mobile")){
-                                    SharedPrefUtil.setUserMobile(activity,jsonObject.optString("mobile"));
+                                if (jsonObject.has("mobile")) {
+                                    SharedPrefUtil.setUserMobile(activity, jsonObject.optString("mobile"));
                                 }
-                                if (jsonObject.has("createdAt")){
-                                    SharedPrefUtil.setCreatedAt(activity,jsonObject.optString("createdAt"));
+                                if (jsonObject.has("createdAt")) {
+                                    SharedPrefUtil.setCreatedAt(activity, jsonObject.optString("createdAt"));
                                 }
                             }
-                            SharedPrefUtil.setUserPassword(activity,strPassword);
+                            SharedPrefUtil.setUserPassword(activity, strPassword);
                             // for login session
-                            SharedPrefUtil.setIsLogin(activity,true);
+                            SharedPrefUtil.setIsLogin(activity, true);
                             Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);
                             startActivity(intent);
                             finish();
 
-                          //  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMjM1NzZiNzNhN2FhMDAxN2RkNjY2ZSIsImlhdCI6MTU0NTgyMjcwMX0.ekBniz5xdlYHjDy3rKV4AUWIA3Lupek1Jn3LcHxWGPo",
+                            //  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMjM1NzZiNzNhN2FhMDAxN2RkNjY2ZSIsImlhdCI6MTU0NTgyMjcwMX0.ekBniz5xdlYHjDy3rKV4AUWIA3Lupek1Jn3LcHxWGPo",
                             // "user":{"id":"5c23576b73a7aa0017dd666e",
                             // "name":"amod2android",
                             // "picture":"https:\/\/gravatar.com\/avatar\/e0ced4403e76e8bc5cdea71754834388?d=identicon",
@@ -260,10 +304,10 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
-                    String credentials = edt_email_id.getText().toString().trim()+":"+edt_login_password.getText().toString().trim();
+                    String credentials = edt_email_id.getText().toString().trim() + ":" + edt_login_password.getText().toString().trim();
                     String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                    headers.put("Content-Type","application/json");
-                    headers.put("Authorization","Basic " + base64EncodedCredentials);
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Basic " + base64EncodedCredentials);
 
                     return headers;
                 }
