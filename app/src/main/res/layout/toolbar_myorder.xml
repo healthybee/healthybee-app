@@ -29,6 +29,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:text="@string/my_order"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:visibility="visible"
             tools:ignore="RelativeOverlap" />
@@ -37,7 +38,7 @@
         <ImageView
             android:id="@+id/ivBack"
             style="@style/Widget.AppCompat.ActionButton"
-            android:layout_width="?attr/actionBarSize"
+            android:layout_width="30dp"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="start"
             android:contentDescription="@string/todo"

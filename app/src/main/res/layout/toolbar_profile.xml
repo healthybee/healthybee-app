@@ -22,6 +22,7 @@
             android:layout_alignParentTop="true"
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
+            android:textSize="16sp"
             android:layout_toEndOf="@+id/ivBack"
             android:layout_toRightOf="@+id/ivBack"
             android:gravity="center_vertical"
@@ -34,20 +35,22 @@
         <ImageView
             android:id="@+id/ivEditProfile"
             style="@style/Widget.AppCompat.ActionButton"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:layout_toEndOf="@+id/tvProfile"
             android:layout_toRightOf="@+id/tvProfile"
             android:contentDescription="@string/todo"
-            android:gravity="center_vertical"
+            android:gravity="center_horizontal"
             android:src="@drawable/ic_edit" />
         <!-- This is a custom left side button -->
         <ImageView
             android:id="@+id/ivBack"
+            android:layout_marginTop="3dp"
             style="@style/Widget.AppCompat.ActionButton"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="start"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:contentDescription="@string/todo"
             android:src="@drawable/ic_back_arrow"
             android:visibility="visible" />
