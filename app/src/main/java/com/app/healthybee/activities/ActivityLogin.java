@@ -33,7 +33,6 @@ private ImageView imageView;
                 ll_login.setVisibility(View.GONE);
                 ll_otp.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
-
             }
         });
 

@@ -11,34 +11,67 @@ import java.util.ArrayList;
 
 
 public class CategoryItem implements Parcelable {
-    private int itemId;
-    private String price;
+    private String id;
     private String add_on;
-    private String description;
-    private String image_url;
-    private String food_type;
-    private String old_price;
-    private String nutrition;
-    private String name;
+    private String add_on_price;
     private String category;
+    private String description;
+    private String food_type;
+    private String image_url;
+    private String name;
+    private String nutrition;
+    private String old_price;
+    private String price;
+    private String createdAt;
+    private String updatedAt;
     private int count;
+
     private ArrayList<String> mSpinnerData = new ArrayList<>();
 
     public CategoryItem() {
     }
 
+
     protected CategoryItem(Parcel in) {
-        itemId = in.readInt();
-        price = in.readString();
+        id = in.readString();
         add_on = in.readString();
-        description = in.readString();
-        image_url = in.readString();
-        food_type = in.readString();
-        old_price = in.readString();
-        nutrition = in.readString();
-        name = in.readString();
+        add_on_price = in.readString();
         category = in.readString();
+        description = in.readString();
+        food_type = in.readString();
+        image_url = in.readString();
+        name = in.readString();
+        nutrition = in.readString();
+        old_price = in.readString();
+        price = in.readString();
+        createdAt = in.readString();
+        updatedAt = in.readString();
         count = in.readInt();
+        mSpinnerData = in.createStringArrayList();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(add_on);
+        dest.writeString(add_on_price);
+        dest.writeString(category);
+        dest.writeString(description);
+        dest.writeString(food_type);
+        dest.writeString(image_url);
+        dest.writeString(name);
+        dest.writeString(nutrition);
+        dest.writeString(old_price);
+        dest.writeString(price);
+        dest.writeString(createdAt);
+        dest.writeString(updatedAt);
+        dest.writeInt(count);
+        dest.writeStringList(mSpinnerData);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<CategoryItem> CREATOR = new Creator<CategoryItem>() {
@@ -53,28 +86,12 @@ public class CategoryItem implements Parcelable {
         }
     };
 
-    public ArrayList<String> getmSpinnerData() {
-        return mSpinnerData;
+    public String getId() {
+        return id;
     }
 
-    public void setmSpinnerData(ArrayList<String> mSpinnerData) {
-        this.mSpinnerData = mSpinnerData;
-    }
-
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAdd_on() {
@@ -85,52 +102,12 @@ public class CategoryItem implements Parcelable {
         this.add_on = add_on;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAdd_on_price() {
+        return add_on_price;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
-
-    public String getFood_type() {
-        return food_type;
-    }
-
-    public void setFood_type(String food_type) {
-        this.food_type = food_type;
-    }
-
-    public String getOld_price() {
-        return old_price;
-    }
-
-    public void setOld_price(String old_price) {
-        this.old_price = old_price;
-    }
-
-    public String getNutrition() {
-        return nutrition;
-    }
-
-    public void setNutrition(String nutrition) {
-        this.nutrition = nutrition;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setAdd_on_price(String add_on_price) {
+        this.add_on_price = add_on_price;
     }
 
     public String getCategory() {
@@ -141,6 +118,78 @@ public class CategoryItem implements Parcelable {
         this.category = category;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getFood_type() {
+        return food_type;
+    }
+
+    public void setFood_type(String food_type) {
+        this.food_type = food_type;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNutrition() {
+        return nutrition;
+    }
+
+    public void setNutrition(String nutrition) {
+        this.nutrition = nutrition;
+    }
+
+    public String getOld_price() {
+        return old_price;
+    }
+
+    public void setOld_price(String old_price) {
+        this.old_price = old_price;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public int getCount() {
         return count;
     }
@@ -149,24 +198,12 @@ public class CategoryItem implements Parcelable {
         this.count = count;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public ArrayList<String> getmSpinnerData() {
+        return mSpinnerData;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(itemId);
-        parcel.writeString(price);
-        parcel.writeString(add_on);
-        parcel.writeString(description);
-        parcel.writeString(image_url);
-        parcel.writeString(food_type);
-        parcel.writeString(old_price);
-        parcel.writeString(nutrition);
-        parcel.writeString(name);
-        parcel.writeString(category);
-        parcel.writeInt(count);
+    public void setmSpinnerData(ArrayList<String> mSpinnerData) {
+        this.mSpinnerData = mSpinnerData;
     }
 }
 

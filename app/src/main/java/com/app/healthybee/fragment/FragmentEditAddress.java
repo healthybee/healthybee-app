@@ -190,7 +190,7 @@ public class FragmentEditAddress extends Fragment {
             }) {
 
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type","application/json");
                     headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));

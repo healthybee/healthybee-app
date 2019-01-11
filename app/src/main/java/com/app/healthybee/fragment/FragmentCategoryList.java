@@ -2,8 +2,11 @@ package com.app.healthybee.fragment;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,7 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -29,25 +32,25 @@ import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.R;
 import com.app.healthybee.listeners.UpdateCart;
+import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
 import com.app.healthybee.activities.Applications;
 import com.app.healthybee.adapter.AdapterCategoryItem;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.models.CategoryItem;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class FragmentCategoryList extends Fragment {
     private View rootView;
     private RecyclerView recyclerView;
     private AdapterCategoryItem adapter;
     private ArrayList<CategoryItem> categoryItemList;
-    private RecyclerView.LayoutManager mLayoutManager;
     private String category = "";
     private DbHelper dbHelper;
     private SwipeRefreshLayout swipe_refresh;
@@ -62,17 +65,17 @@ public class FragmentCategoryList extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.system_app_list, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        swipe_refresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
+        recyclerView =  rootView.findViewById(R.id.recycler_view);
+        swipe_refresh =  rootView.findViewById(R.id.swipe_refresh_layout);
         swipe_refresh.setColorSchemeResources(R.color.colorOrange, R.color.colorGreyDark, R.color.colorBlue, R.color.colorRed);
-
-        imageViewGrid = (ImageView) rootView.findViewById(R.id.imageViewGrid);
-        imageViewList = (ImageView) rootView.findViewById(R.id.imageViewList);
+        imageViewGrid =  rootView.findViewById(R.id.imageViewGrid);
+        imageViewList =  rootView.findViewById(R.id.imageViewList);
         if (MainActivity.mFlagDisplayList) {
             imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
             imageViewList.setImageResource(R.drawable.ic_listview_enable);
@@ -100,28 +103,25 @@ public class FragmentCategoryList extends Fragment {
             }
         });
 
-
         dbHelper = new DbHelper(getActivity());
         categoryItemList = new ArrayList<>();
-
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             category = bundle.getString("category", null);
         }
 
+        RecyclerView.LayoutManager mLayoutManager;
         if (MainActivity.mFlagDisplayList) {
             mLayoutManager = new LinearLayoutManager(getActivity());
             recyclerView.addItemDecoration(new ListPaddingDecoration(getActivity()));
         } else {
-
             mLayoutManager = new GridLayoutManager(getActivity(), 2);
             recyclerView.addItemDecoration(new GridSpacingItemDecoration(getActivity(), 2, dpToPx(7), true));
         }
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
 
         if (NetworkConstants.isConnectingToInternet(getActivity())) {
             try {
@@ -149,8 +149,6 @@ public class FragmentCategoryList extends Fragment {
                 }
             }
         });
-
-
         return rootView;
     }
 
@@ -159,11 +157,12 @@ public class FragmentCategoryList extends Fragment {
         //recyclerView.setAdapter(adapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getCategoryList() {
-        if (NetworkConstants.isConnectingToInternet(getActivity())) {
+        if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
             Log.e("4343", UrlConstants.getCategoryItemList + category);
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                    UrlConstants.getCategoryItemList + category,
+                    (UrlConstants.getCategoryItemList + category+"&page=1&limit=5").replace(" ", "%20"),
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
@@ -179,7 +178,8 @@ public class FragmentCategoryList extends Fragment {
                                     try {
                                         JSONObject jsonObject = (JSONObject) response.get(i);
                                         CategoryItem categoryItem = new CategoryItem();
-                                        categoryItem.setItemId(jsonObject.optInt("id"));
+                                        categoryItem.setId(jsonObject.optString("id"));
+                                        categoryItem.setAdd_on_price(jsonObject.optString("add_on_price"));
                                         categoryItem.setPrice(jsonObject.optString("price"));
                                         categoryItem.setAdd_on(jsonObject.optString("add_on"));
                                         categoryItem.setDescription(jsonObject.optString("description"));
@@ -189,7 +189,9 @@ public class FragmentCategoryList extends Fragment {
                                         categoryItem.setNutrition(jsonObject.optString("nutrition"));
                                         categoryItem.setName(jsonObject.optString("name"));
                                         categoryItem.setCategory(jsonObject.optString("category"));
-                                        // TODO: 13/11/18
+                                        categoryItem.setCreatedAt(jsonObject.optString("createdAt"));
+                                        categoryItem.setUpdatedAt(jsonObject.optString("updatedAt"));
+                                        //  13/11/18
                                         categoryItem.setCount(dbHelper.getCartCount(jsonObject.optString("name")));
 
                                         categoryItemList.add(categoryItem);
@@ -235,7 +237,15 @@ public class FragmentCategoryList extends Fragment {
 
                         }
                     }
-            );
+            ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type","application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+                    return headers;
+                }
+            };
 
             // Add JsonArrayRequest to the RequestQueue
             Applications.getInstance().addToRequestQueue(jsonArrayRequest);
@@ -287,7 +297,6 @@ public class FragmentCategoryList extends Fragment {
 
     private void showNoItemView(boolean show) {
         View lyt_no_item = rootView.findViewById(R.id.lyt_no_item_category);
-        // ((TextView) rootView.findViewById(R.id.no_item_message)).setText(message);
         if (show) {
             recyclerView.setVisibility(View.GONE);
             lyt_no_item.setVisibility(View.VISIBLE);

@@ -1,15 +1,17 @@
 package com.app.healthybee.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -18,38 +20,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.healthybee.activities.ActivitySearch;
-import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.R;
+import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
 import com.app.healthybee.activities.Applications;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class FragmentHome extends Fragment {
 
     private View rootView;
     private ImageView ivSearch;
     private TabLayout tabLayout;
+    @SuppressLint("StaticFieldLeak")
     private static ViewPager viewPager;
     private SearchView searchView = null;
     private static ViewPagerAdapter adapter;
     private ArrayList<String> categoryList;
     private static int currentPosition = 0;
     private Toolbar toolbar;
+
     public static FragmentHome newInstance() {
         return new FragmentHome();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,11 +97,9 @@ public class FragmentHome extends Fragment {
 //            }
 //        });
         tabLayout.setupWithViewPager(viewPager);
-
         // Attach the page change listener inside the activity
         viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
             // This method will be invoked when a new page becomes selected.
             @Override
             public void onPageSelected(int position) {
@@ -167,8 +172,8 @@ public class FragmentHome extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-          //  MyCustomProgressDialog.showDialog(getActivity(),
-          //          getString(R.string.please_wait));
+            //  MyCustomProgressDialog.showDialog(getActivity(),
+            //          getString(R.string.please_wait));
         }
 
         @Override
@@ -181,7 +186,6 @@ public class FragmentHome extends Fragment {
                 bundle.putString("category", categoryList.get(i));
                 fragmentCategoryList.setArguments(bundle);
                 adapter.addFrag(fragmentCategoryList, categoryList.get(i));
-
             }
             return null;
         }
@@ -240,7 +244,6 @@ public class FragmentHome extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-      //  ((MainActivity) getActivity()).RefreshToolBar(true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -265,9 +268,10 @@ public class FragmentHome extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getCategory() {
         try {
-            if (NetworkConstants.isConnectingToInternet(getActivity())) {
+            if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
                 MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                         UrlConstants.getCategory,
@@ -275,19 +279,15 @@ public class FragmentHome extends Fragment {
                             @Override
                             public void onResponse(JSONArray response) {
                                 MyCustomProgressDialog.dismissDialog();
-                                // Do something with response
                                 for (int i = 0; i < response.length(); i++) {
                                     try {
                                         categoryList.add((String) response.get(i));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-
                                 }
                                 setupViewPager();
                             }
-
-
                         },
                         new Response.ErrorListener() {
                             @Override
@@ -295,15 +295,20 @@ public class FragmentHome extends Fragment {
                                 MyCustomProgressDialog.dismissDialog();
                             }
                         }
-                );
-
-                // Add JsonArrayRequest to the RequestQueue
+                ){
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<>();
+                        headers.put("Content-Type","application/json");
+                        headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+                        return headers;
+                    }
+                };
                 Applications.getInstance().addToRequestQueue(jsonArrayRequest);
-
             } else {
                 MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
             }
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
     }

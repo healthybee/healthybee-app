@@ -18,11 +18,11 @@ public class UrlConstants {
     public static String createAddresses = baseUrl +"addresses";
     public static String updateAddresses = baseUrl +"addresses/";
     public static String updatePassword = baseUrl+users+"/";
+    public static String getCategory = "https://healthybee-mob-api.herokuapp.com/menus/categories";
+    public static String getCategoryItemList = "https://healthybee-mob-api.herokuapp.com/menus?category=";
 
-
-
-    public static String getCategory = "https://us-central1-healthybee-subscription.cloudfunctions.net/api/menu/category";
-    public static String getCategoryItemList = "https://us-central1-healthybee-subscription.cloudfunctions.net/api/menu?category=";
+    //public static String getCategory = "https://us-central1-healthybee-subscription.cloudfunctions.net/api/menu/category";
+   // public static String getCategoryItemList = "https://us-central1-healthybee-subscription.cloudfunctions.net/api/menu?category=";
 
 
 }

@@ -185,7 +185,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         }else {
             //insert new record
-            values.put(item_id, categoryItem.getItemId());
+            values.put(item_id, categoryItem.getId());
             values.put(price, categoryItem.getPrice());
             values.put(add_on, categoryItem.getAdd_on());
             values.put(description, categoryItem.getDescription());
@@ -212,8 +212,9 @@ public class DbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 CategoryItem categoryItem = new CategoryItem();
-                categoryItem.setItemId(cursor.getInt(cursor
-                        .getColumnIndex(item_id)));
+                categoryItem.setId(String.valueOf(Integer.parseInt(String.valueOf(cursor.getInt(cursor.getColumnIndex(item_id))))));
+//                categoryItem.setId(cursor.getInt(cursor
+//                        .getColumnIndex(item_id)));
                 categoryItem.setPrice(cursor.getString(cursor
                         .getColumnIndex(price)));
                 categoryItem.setAdd_on(cursor.getString(cursor
