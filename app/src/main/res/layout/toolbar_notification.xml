@@ -37,7 +37,7 @@
         <ImageView
             android:id="@+id/ivBack"
             style="@style/Widget.AppCompat.ActionButton"
-            android:layout_width="?attr/actionBarSize"
+            android:layout_width="30dp"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="start"
             android:contentDescription="@string/todo"

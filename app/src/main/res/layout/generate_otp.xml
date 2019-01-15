@@ -41,7 +41,10 @@
                 android:id="@+id/edt_email_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:textColor="@color/colorWhite"
                 android:background="@drawable/edit_text_bg_transparent"
                 android:gravity="center"
@@ -55,7 +58,10 @@
                 android:id="@+id/edt_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:background="@drawable/edit_text_bg_transparent"
                 android:gravity="center"
                 android:hint="@string/password"
@@ -72,8 +78,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:textColor="@color/colorWhite"
                 android:background="@drawable/edit_text_bg_transparent"
                 android:gravity="center"
@@ -90,8 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:textColor="@color/colorWhite"
                 android:background="@drawable/edit_text_bg_transparent"
                 android:gravity="center"
@@ -108,7 +114,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -119,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:visibility="visible"
+                    android:layout_marginLeft="25dp"
                     android:text="@string/forgot_password"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
@@ -129,6 +137,7 @@
                     android:layout_weight="1"
                     android:visibility="gone"
                     android:text="@string/resend_otp"
+                    android:layout_marginLeft="25dp"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
 
@@ -141,7 +150,7 @@
                     <Button
                         android:id="@+id/bt_password"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         android:background="@drawable/button_shap_left_round"
                         android:text="@string/password"
@@ -151,7 +160,8 @@
                     <Button
                         android:id="@+id/bt_otp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="25dp"
                         android:layout_weight="1"
                         android:background="@drawable/button_shap_right_round"
                         android:text="@string/otp"
@@ -162,29 +172,29 @@
             <Button
                 android:visibility="gone"
                 android:id="@+id/btn_generate_otp"
-                android:layout_width="190dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_background"
                 android:gravity="center"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="@string/generate_otp"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="190dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_background"
                 android:gravity="center"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="@string/sign_in"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
@@ -212,7 +222,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/or"
                     android:textColor="@color/colorWhite"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     />
 
                 <View
@@ -237,8 +247,8 @@
                 <ImageView
                     android:contentDescription="@string/todo"
                     android:id="@+id/iv_fb"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_fb" />
@@ -246,8 +256,8 @@
                 <ImageView
                     android:contentDescription="@string/todo"
                     android:id="@+id/iv_google"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
                     android:src="@drawable/ic_g" />

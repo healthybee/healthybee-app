@@ -33,12 +33,12 @@
             android:name=".activities.ActivityUserLogin"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".activities.ActivityUserRegister"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".activities.ActivityForgotPassword"
             android:configChanges="orientation|keyboardHidden|screenSize"

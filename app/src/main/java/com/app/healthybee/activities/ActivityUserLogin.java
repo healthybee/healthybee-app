@@ -118,7 +118,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 bt_password.setBackground(getDrawable(R.drawable.button_shap_left_round_selected));
                 bt_otp.setTextColor(getResources().getColor(R.color.colorWhite));
                 bt_password.setTextColor(getResources().getColor(R.color.background_color));
-                btn_generate_otp.setVisibility(View.GONE);
+                btn_generate_otp.setVisibility(View.INVISIBLE);
                 edt_mobile.setVisibility(View.GONE);
                 edt_email_id.setVisibility(View.VISIBLE);
                 edt_login_password.setVisibility(View.VISIBLE);
