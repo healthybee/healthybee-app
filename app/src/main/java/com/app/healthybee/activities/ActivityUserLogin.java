@@ -198,10 +198,10 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         if (account != null) {
             Log.e("TAG", account.getDisplayName());
 
-// TODO: 4/10/18 sign in
+//  4/10/18 sign in
 
         } else {
-            // TODO: 4/10/18 sign out
+            //  4/10/18 sign out
         }
     }
 
