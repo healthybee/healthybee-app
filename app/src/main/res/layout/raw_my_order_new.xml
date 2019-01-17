@@ -38,7 +38,7 @@
                         android:layout_height="80dp"
                         android:layout_margin="5dp"
                         android:elevation="10dp"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="3dp">
 
                         <ImageView
                             android:id="@+id/img_profile2"
@@ -64,7 +64,7 @@
                             android:layout_marginTop="6dp"
                             android:text="@string/menu"
                             android:textColor="#000000"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/tvItemPrice"

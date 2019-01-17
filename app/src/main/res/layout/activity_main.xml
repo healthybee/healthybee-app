@@ -75,7 +75,7 @@
                     android:layout_marginTop="0dp"
                     android:contentDescription="@string/app_name"
                     android:padding="@dimen/eight"
-                    android:src="@drawable/ic_notification_unselected" />
+                    android:src="@drawable/ic_drawer_favorite" />
 
                 <TextView
                     android:id="@+id/tvNotification"
