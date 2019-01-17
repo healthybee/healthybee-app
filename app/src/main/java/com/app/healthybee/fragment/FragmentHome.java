@@ -182,17 +182,17 @@ public class FragmentHome extends Fragment {
             int size = categoryList.size();
 
             for (int i = 0; i < size; i++) {
-//                FragmentCategoryList fragmentCategoryList = new FragmentCategoryList();
+                FragmentCategoryList fragmentCategoryList = new FragmentCategoryList();
+                Bundle bundle = new Bundle();
+                bundle.putString("category", categoryList.get(i));
+                fragmentCategoryList.setArguments(bundle);
+                adapter.addFrag(fragmentCategoryList, categoryList.get(i));
+
+//                FragmentRecent fragmentCategoryList = new FragmentRecent();
 //                Bundle bundle = new Bundle();
 //                bundle.putString("category", categoryList.get(i));
 //                fragmentCategoryList.setArguments(bundle);
 //                adapter.addFrag(fragmentCategoryList, categoryList.get(i));
-
-                FragmentRecent fragmentCategoryList = new FragmentRecent();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("category", categoryList.get(i));
-//                fragmentCategoryList.setArguments(bundle);
-                adapter.addFrag(fragmentCategoryList, categoryList.get(i));
 
             }
             return null;
