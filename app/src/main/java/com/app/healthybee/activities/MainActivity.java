@@ -36,17 +36,25 @@ public class MainActivity extends AppCompatActivity {
     public static boolean mFlagDisplayList = false;
 
     public static AddressModule address;
-
+//    private Fragment mContent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        if (null!=savedInstanceState)
+//        mContent = getSupportFragmentManager().getFragment(savedInstanceState, "");
         mFlagDisplayList = false;
         address=new AddressModule();
         setBottomNavigation();
     }
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        getSupportFragmentManager().putFragment(outState, "", mContent);
+//    }
 
     private void setBottomNavigation() {
         rlMenu = findViewById(R.id.rlMenu);
@@ -200,24 +208,27 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                setCountText();
+                setCountText(0);
             }
         }, Constant.CARD_UPDATE_TIME_RESUME);
     }
 
 
-    public void setCountText() {
-        list = new ArrayList<>();
-        list.addAll(dbHelper.getCartList());
-        if (!list.isEmpty()) {
-            count = 0;
-            for (int i = 0; i < list.size(); i++) {
-                CategoryItem categoryItem = list.get(i);
-                count = count + categoryItem.getCount();
-            }
-        } else {
-            count = 0;
-        }
+    public void setCountText(int count) {
+//        list = new ArrayList<>();
+//        list.addAll(dbHelper.getCartList());
+//        if (!list.isEmpty()) {
+//            count = 0;
+//            for (int i = 0; i < list.size(); i++) {
+//                CategoryItem categoryItem = list.get(i);
+//                count = count + categoryItem.getCount();
+//            }
+//        } else {
+//            count = 0;
+//        }
         tvCart.setText("" + count);
+    }
+    public int getCount() {
+        return Integer.parseInt(tvCart.getText().toString().trim());
     }
 }

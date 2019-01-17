@@ -97,10 +97,10 @@ public class FragmentItemDetails extends Fragment {
                 Log.d("TAG", "add to cart" + categoryItem.getName());
                 if (card_plus_minus==-1){
                     dbHelper.deleteCartRow(categoryItem.getName());
-                    ((MainActivity) getActivity()).setCountText();
+                    ((MainActivity) getActivity()).setCountText(0);
                 }else {
                     dbHelper.insertUpdateCart(categoryItem);
-                    ((MainActivity) getActivity()).setCountText();
+                    ((MainActivity) getActivity()).setCountText(0);
                 }
             }
         });

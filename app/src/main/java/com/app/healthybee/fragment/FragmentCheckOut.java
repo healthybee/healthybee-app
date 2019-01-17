@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -42,6 +43,7 @@ import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
 import com.app.healthybee.models.TimeSlot;
 import com.app.healthybee.utils.Tools;
+import com.google.android.gms.ads.InterstitialAd;
 import com.paytm.pgsdk.PaytmMerchant;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
@@ -64,7 +66,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactionCallback {
-
     private RecyclerView recyclerViewItemsList;
     private AdapterCheckOut adapter;
     private AdapterTimeSlot adapterTimeSlot;
@@ -92,7 +93,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     private Toolbar toolbar;
 
     ArrayList<String> mSpinnerData = new ArrayList<>();
-
+    Calendar cal;
 
 
     public FragmentCheckOut() {
@@ -102,11 +103,14 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     public static FragmentCheckOut newInstance() {
         return new FragmentCheckOut();
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_check_out, container, false);
+        cal= Calendar.getInstance();
+
         toolbar = view.findViewById(R.id.toolbarCheckout);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         dbHelper=new DbHelper(getActivity());
@@ -130,7 +134,16 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         tv_checkout=view.findViewById(R.id.tv_checkout);
         tvAddress=view.findViewById(R.id.tvAddress);
 
-        tvAddress.setText(MainActivity.address.getAddressType());
+
+        if (null!=MainActivity.address.getAddressType()){
+            tvAddress.setText(MainActivity.address.getAddressType());
+            tv_checkout.setText("Pay");
+        }else {
+            tvAddress.setHint("Please select address");
+            tv_checkout.setText("Select address");
+
+        }
+
 
 
         sv=view.findViewById(R.id.nsv);
@@ -144,7 +157,6 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         rlAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 FragmentManager fm =getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
                 FragmentAddress f1 = new FragmentAddress();
@@ -161,7 +173,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         });
 
 
-        recyclerViewItemsList = (RecyclerView)view.findViewById(R.id.recyclerView);
+        recyclerViewItemsList = view.findViewById(R.id.recyclerView);
         recyclerViewItemsList.setHasFixedSize(true);
 
 
@@ -186,7 +198,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                 Log.d("TAG", "add to cart" + categoryItem.getName());
                 if (card_plus_minus==-1){
                     dbHelper.deleteCartRow(categoryItem.getName());
-                    ((MainActivity) getActivity()).setCountText();
+                    ((MainActivity) getActivity()).setCountText(0);
                     if (!data.isEmpty()){
                         data.clear();
                     }
@@ -196,7 +208,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                     tvNoOfItemInCart.setText(Html.fromHtml(data.size()+" Item in cart"));
                 }else {
                     dbHelper.insertUpdateCart(categoryItem);
-                    ((MainActivity) getActivity()).setCountText();
+                    ((MainActivity) getActivity()).setCountText(0);
 
                     if (!data.isEmpty()){
                         data.clear();
@@ -218,7 +230,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         });
         recyclerViewItemsList.setAdapter(adapter);
 
-        recyclerViewTimeSlot = (RecyclerView)view.findViewById(R.id.recyclerViewTimeSlot);
+        recyclerViewTimeSlot = view.findViewById(R.id.recyclerViewTimeSlot);
         recyclerViewTimeSlot.setHasFixedSize(true);
         mLayoutManagerTimeSlot = new GridLayoutManager(getActivity(), 2);
         recyclerViewTimeSlot.setLayoutManager(mLayoutManagerTimeSlot);
@@ -283,32 +295,45 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             public void onClick(View view) {
                 //calling the method generateCheckSum() which will generate the paytm checksum for payment
                // generateCheckSum();
-                Intent intent =new Intent(getActivity(),ActivityCheckOut.class);
-                startActivity(intent);
+                if (null!=MainActivity.address.getAddressType()){
+                    Intent intent =new Intent(getActivity(),ActivityCheckOut.class);
+                    startActivity(intent);
+                }else {
+                    FragmentManager fm =getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
+                    FragmentAddress f1 = new FragmentAddress();
+                    fragmentTransaction.replace(R.id.container, f1);
+                    fragmentTransaction.commit();
+                }
             }
         });
+
+        selectedDate = Tools.formatDateForDisplay(cal.getTime(), "yyyy-MMM-dd");
+        tv_date.setText(Html.fromHtml(Tools.convertDateyyyymmddToddmmyyyy(selectedDate)));
         return view;
     }
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
     }
+
+
     private void selectDatePicker(Context context) {
         Calendar c = Calendar.getInstance();
         DatePickerDialog dlg = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar cal = Calendar.getInstance();
                 cal.set(Calendar.YEAR, year);
                 cal.set(Calendar.MONTH, monthOfYear);
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                selectedDate = Tools.formatDateForDisplay(cal.getTime(), "yyyy-MM-dd");
+                selectedDate = Tools.formatDateForDisplay(cal.getTime(), "yyyy-MMM-dd");
                 tv_date.setText(Html.fromHtml(Tools.convertDateyyyymmddToddmmyyyy(selectedDate)));
 
             }
@@ -328,7 +353,6 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             basicPrice=basicPrice+(price*cartCount);
         }
         double gst=(basicPrice*12)/100;
-
 
         tvBasicPrice.setText(Html.fromHtml(getResources().getString(R.string.rs)+" "+String.format("%.2f", basicPrice)));
         tvTotal.setText(Html.fromHtml(getResources().getString(R.string.rs)+" "+String.format("%.2f", basicPrice+gst)));

@@ -24,6 +24,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.app.healthybee.Common;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.utils.GridSpacingItemDecoration;
@@ -222,8 +223,21 @@ public class FragmentCategoryList extends Fragment {
                                     @Override
                                     public void OnAddItemToCart(CategoryItem categoryItem, int count, int card_plus_minus) {
                                         Log.d("TAG", "add to cart" + categoryItem.getName());
-                                        dbHelper.insertUpdateCart(categoryItem);
-                                        ((MainActivity) getActivity()).setCountText();
+                                       // dbHelper.insertUpdateCart(categoryItem);
+                                        int CartCount=((MainActivity) getActivity()).getCount();
+                                        if (card_plus_minus==1){
+                                            Common.AddCart(getActivity(),categoryItem,CartCount+1);
+                                            ((MainActivity) getActivity()).setCountText(CartCount+1);
+                                        }
+                                        if (card_plus_minus==0){
+                                            if (CartCount-1==0){
+                                                // TODO: 12/1/19  delete cart call API
+                                            }else {
+                                                Common.AddCart(getActivity(), categoryItem, CartCount - 1);
+                                                ((MainActivity) getActivity()).setCountText(CartCount - 1);
+                                            }
+                                        }
+
                                     }
                                 });
                                 recyclerView.setAdapter(adapter);

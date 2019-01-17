@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.healthybee.activities.ActivitySearch;
+import com.app.healthybee.testcode.FragmentRecent;
 import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
@@ -181,11 +182,18 @@ public class FragmentHome extends Fragment {
             int size = categoryList.size();
 
             for (int i = 0; i < size; i++) {
-                FragmentCategoryList fragmentCategoryList = new FragmentCategoryList();
-                Bundle bundle = new Bundle();
-                bundle.putString("category", categoryList.get(i));
-                fragmentCategoryList.setArguments(bundle);
+//                FragmentCategoryList fragmentCategoryList = new FragmentCategoryList();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("category", categoryList.get(i));
+//                fragmentCategoryList.setArguments(bundle);
+//                adapter.addFrag(fragmentCategoryList, categoryList.get(i));
+
+                FragmentRecent fragmentCategoryList = new FragmentRecent();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("category", categoryList.get(i));
+//                fragmentCategoryList.setArguments(bundle);
                 adapter.addFrag(fragmentCategoryList, categoryList.get(i));
+
             }
             return null;
         }

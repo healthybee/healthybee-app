@@ -68,8 +68,8 @@ public class Tools {
     public static String convertDateyyyymmddToddmmyyyy(String yyyymmdd) {
         String ddmmyyyy;
         Locale locale = new Locale("en", "UK");
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",locale);
-        DateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy",locale);
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MMM-dd",locale);
+        DateFormat outputFormat = new SimpleDateFormat("dd-MMM-yyyy",locale);
         Date date = null;
         try {
             date = inputFormat.parse(yyyymmdd);

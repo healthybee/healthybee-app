@@ -19,11 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.app.healthybee.RoundedCornersTransformation;
-import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
 import com.app.healthybee.listeners.UpdateCart;
-import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Constant;
 import com.bumptech.glide.Glide;
@@ -36,7 +34,6 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
     private List<CategoryItem> categoryItemList;
     private CustomItemClickListener listener;
     private UpdateCart updateCart;
-    private DbHelper dbHelper;
 
     public AdapterCategoryItem(Context mContext, List<CategoryItem> categoryItemList1, CustomItemClickListener listener1, UpdateCart updateCart) {
         this.mContext = mContext;
@@ -176,7 +173,7 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
 //                holder.tvAddItem.setVisibility(View.GONE);
 //                holder.llAddRemove.setVisibility(View.VISIBLE);
 //                holder.tvCount.setText(Html.fromHtml(categoryItem.getCount() + ""));
-                updateCart.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount() + 1, Constant.CARD_PLUS);
+                updateCart.OnAddItemToCart(categoryItem, categoryItem.getCount() + 1, Constant.CARD_PLUS);
                // notifyDataSetChanged();
             }
         });
