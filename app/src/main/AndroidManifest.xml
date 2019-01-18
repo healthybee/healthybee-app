@@ -19,7 +19,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppMaterialTheme"
-        tools:replace="android:theme">
+        tools:replace="android:theme"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".activities.ActivitySplash"
             android:configChanges="orientation|keyboardHidden|screenSize">
@@ -96,6 +97,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
+
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
     </application>
 
 </manifest>

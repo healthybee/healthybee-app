@@ -37,7 +37,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:12.0.1'
         implementation 'com.google.android.exoplayer:exoplayer:r2.5.4'
         implementation 'com.google.android.exoplayer:extension-rtmp:r2.5.4'
-        implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+        implementation 'com.squareup.okhttp3:okhttp:3.10.0'
         implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
         implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
@@ -46,24 +46,24 @@ dependencies {
     //    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     //    implementation 'com.google.android.ads.consent:consent-library:1.0.6'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'com.google.android.gms:play-services-auth:12.0.1'
-    implementation 'com.mcxiaoke.volley:library-aar:1.0.0'
+    implementation 'com.mcxiaoke.volley:library-aar:1.0.1'
     implementation files('libs/PGSDK_v1.0.jar')
     /*implementation('com.paytm:pgplussdk:1.2.3') {
                                         transitive = true;
                                     }*/
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.payu.custombrowser:payu-custom-browser:7.2.2'
-    implementation 'com.payu.india:payu-sdk:4.4.4'
+    implementation 'com.payu.custombrowser:payu-custom-browser:7.2.5'
+    implementation 'com.payu.india:payu-sdk:4.4.5'
     implementation 'com.payu.samsungpay:samsungpay:1.0'
     implementation project(':sdkui')
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
-    implementation 'com.google.android.ads.consent:consent-library:1.0.6'
+    implementation 'com.google.android.ads.consent:consent-library:1.0.7'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

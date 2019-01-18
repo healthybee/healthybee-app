@@ -47,7 +47,7 @@
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="@color/colorWhite"
                     app:cardCornerRadius="6dp"
-                    card_view:cardElevation="6sp"
+                    card_view:cardElevation="6dp"
                     card_view:cardPreventCornerOverlap="false"
                     card_view:cardUseCompatPadding="true">
 

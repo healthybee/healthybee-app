@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -63,7 +64,7 @@ public class FragmentProfile extends Fragment {
     }
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_profile, null);
         lyt_root = root_view.findViewById(R.id.root_layout);
         toolbar = root_view.findViewById(R.id.toolbarProfile);
@@ -133,7 +134,7 @@ public class FragmentProfile extends Fragment {
                     fragmentTransaction.commit();
                 }
                 else if (position == 4) {
-                    // TODO: 31/12/18 Add refund balance
+                    //  31/12/18 Add refund balance
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction().addToBackStack("null");
                     FragmentDeliverySupport f1 = new FragmentDeliverySupport();
