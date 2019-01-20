@@ -29,7 +29,8 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:text="@string/edit_address"
-            android:textSize="16sp"
+            android:textSize="14sp"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:visibility="visible"
             tools:ignore="RelativeOverlap" />

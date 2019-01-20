@@ -74,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
+            android:textSize="@dimen/text_size_12"
             android:text="TextView"
             android:alpha=".8"
             android:textColor="@color/color_dark" />

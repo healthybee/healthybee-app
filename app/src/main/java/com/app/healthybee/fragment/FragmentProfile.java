@@ -65,7 +65,7 @@ public class FragmentProfile extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root_view = inflater.inflate(R.layout.fragment_profile, null);
+        root_view = inflater.inflate(R.layout.raw_pro, null);
         lyt_root = root_view.findViewById(R.id.root_layout);
         toolbar = root_view.findViewById(R.id.toolbarProfile);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);

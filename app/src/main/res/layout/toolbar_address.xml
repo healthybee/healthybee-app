@@ -29,9 +29,10 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:text="@string/saved_address"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/black"
             android:visibility="visible"
+            android:textStyle="bold"
             tools:ignore="RelativeOverlap" />
 
         <!-- This is a custom left side button -->
