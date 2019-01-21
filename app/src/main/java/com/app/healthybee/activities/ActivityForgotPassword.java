@@ -1,214 +1,126 @@
 package com.app.healthybee.activities;
 
+import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.R;
-import com.app.healthybee.utils.Constant;
-import com.app.healthybee.utils.NetworkCheck;
+import com.app.healthybee.utils.MyCustomProgressDialog;
+import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.UrlConstants;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ActivityForgotPassword extends AppCompatActivity  {
+import java.util.HashMap;
+import java.util.Map;
 
+public class ActivityForgotPassword extends AppCompatActivity {
 
-    EditText edtEmail;
-    String strEmail, strMessage;
+    private EditText etUserEmail;
+    private Activity activity;
 
-    Button btn_forgot;
-    ProgressBar progressBar;
-    LinearLayout layout;
+    private String strUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_forgot);
-
+        activity = ActivityForgotPassword.this;
         if (Config.ENABLE_RTL_MODE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             }
         }
 
-        edtEmail = findViewById(R.id.etUserName);
-        btn_forgot = findViewById(R.id.btnForgot);
-        progressBar = findViewById(R.id.progressBar);
-        layout = findViewById(R.id.view);
-
-//        btn_forgot.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                validator.validateAsync();
-//            }
-//        });
-//
-//        validator = new Validator(this);
-//        validator.setValidationListener(this);
-
-       // setupToolbar();
-
-    }
-
-//    public void setupToolbar() {
-//        final Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        final ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//            getSupportActionBar().setHomeButtonEnabled(false);
-//            getSupportActionBar().setTitle("");
-//        }
-//
-//        AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
-//        if (appBarLayout.getLayoutParams() != null) {
-//            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-//            AppBarLayout.Behavior appBarLayoutBehaviour = new AppBarLayout.Behavior();
-//            appBarLayoutBehaviour.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
-//                @Override
-//                public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
-//                    return false;
-//                }
-//            });
-//            layoutParams.setBehavior(appBarLayoutBehaviour);
-//        }
-//    }
-
-//    @Override
-//    public void onValidationSucceeded() {
-//        strEmail = edtEmail.getText().toString();
-//        if (NetworkCheck.isNetworkAvailable(ActivityForgotPassword.this)) {
-//            new MyTaskForgot().execute(Constant.FORGET_PASSWORD_URL + strEmail);
-//        } else {
-//            Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_no_network), Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    @Override
-//    public void onValidationFailed(View failedView, Rule<?> failedRule) {
-//        String message = failedRule.getFailureMessage();
-//        if (failedView instanceof EditText) {
-//            failedView.requestFocus();
-//            ((EditText) failedView).setError(message);
-//        } else {
-//            Toast.makeText(this, "Record Not Saved", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
-    private class MyTaskForgot extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-            layout.setVisibility(View.INVISIBLE);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            return NetworkCheck.getJSONString(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            if (null == result || result.length() == 0) {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_no_network), Toast.LENGTH_SHORT).show();
-
-            } else {
-
-                try {
-                    JSONObject mainJson = new JSONObject(result);
-                    JSONArray jsonArray = mainJson.getJSONArray(Constant.CATEGORY_ARRAY_NAME);
-                    JSONObject objJson = null;
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        objJson = jsonArray.getJSONObject(i);
-                        strMessage = objJson.getString(Constant.MSG);
-                        Constant.GET_SUCCESS_MSG = objJson.getInt(Constant.SUCCESS);
+        etUserEmail = findViewById(R.id.etUserEmail);
+        Button btnForgot = findViewById(R.id.btnForgot);
+        btnForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strUserEmail = etUserEmail.getText().toString();
+                if (!strUserEmail.isEmpty()) {
+                    Toast.makeText(ActivityForgotPassword.this, "Please enter email id", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (!isValidEmail(strUserEmail)) {
+                        Toast.makeText(ActivityForgotPassword.this, "Please enter valid email id", Toast.LENGTH_SHORT).show();
+                    } else {
+                        SendEmailForForgotPassword();
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressBar.setVisibility(View.GONE);
-                        setResult();
-                    }
-                }, Constant.DELAY_PROGRESS_DIALOG);
             }
+        });
 
-        }
     }
 
-    public void setResult() {
+    private void SendEmailForForgotPassword() {
+        if (NetworkConstants.isConnectingToInternet(activity)) {
+            MyCustomProgressDialog.showDialog(activity, getString(R.string.please_wait));
+            Map<String, String> params = new HashMap<>();
+            params.put("email", strUserEmail);
+            params.put("link", "");// TODO: 21/1/19  add linc for forgot password
+            Log.d("4343", new JSONObject(params).toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    UrlConstants.SendEmail,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
 
-        if (Constant.GET_SUCCESS_MSG == 0) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setTitle(R.string.whops);
-            dialog.setMessage(R.string.forgot_failed_message);
-            dialog.setPositiveButton(R.string.dialog_ok, null);
-            dialog.setCancelable(false);
-            dialog.show();
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            MyCustomProgressDialog.dismissDialog();
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+                            dialog.setTitle(R.string.register_title);
+                            dialog.setMessage(R.string.register_success);
+                            dialog.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
+                                }
+                            });
+                            dialog.setCancelable(false);
+                            dialog.show();
 
-            layout.setVisibility(View.VISIBLE);
-            edtEmail.setText("");
-            edtEmail.requestFocus();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    Toast.makeText(activity, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
-
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setTitle(R.string.dialog_success);
-            dialog.setMessage(R.string.forgot_success_message);
-            dialog.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent intent = new Intent(ActivityForgotPassword.this, ActivityUserLogin.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-            dialog.setCancelable(false);
-            dialog.show();
-
+            MyCustomProgressDialog.showAlertDialogMessage(activity, getString(R.string.network_title), getString(R.string.network_message));
         }
-
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-            default:
-                return super.onOptionsItemSelected(menuItem);
-        }
-        return true;
+    public boolean isValidEmail(CharSequence target) {
+        return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }
 

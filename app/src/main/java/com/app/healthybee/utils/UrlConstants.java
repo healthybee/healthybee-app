@@ -21,6 +21,8 @@ public class UrlConstants {
     public static String getCategory = "https://healthybee-mob-api.herokuapp.com/menus/categories";
     public static String getCategoryItemList = "https://healthybee-mob-api.herokuapp.com/menus?category=";
     public static String CreateCart = "https://healthybee-mob-api.herokuapp.com/carts";
+    public static String SendEmail = "https://healthybee-mob-api.herokuapp.com/password-resets?access_token="+token;
+
 
     //public static String getCategory = "https://us-central1-healthybee-subscription.cloudfunctions.net/api/menu/category";
    // public static String getCategoryItemList = "https://us-central1-healthybee-subscription.cloudfunctions.net/api/menu?category=";
