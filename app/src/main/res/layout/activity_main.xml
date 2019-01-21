@@ -84,7 +84,7 @@
                     android:layout_below="@+id/ivNotification"
                     android:layout_alignParentBottom="true"
                     android:gravity="center_horizontal"
-                    android:text="@string/notification"
+                    android:text="@string/title_nav_favorite"
                     android:textSize="@dimen/text_size_12"
                     />
             </RelativeLayout>

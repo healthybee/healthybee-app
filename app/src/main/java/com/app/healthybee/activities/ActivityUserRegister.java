@@ -103,29 +103,29 @@ public class ActivityUserRegister extends AppCompatActivity {
 
     }
 
-    public void setupToolbar() {
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setHomeButtonEnabled(false);
-            getSupportActionBar().setTitle("");
-        }
-
-        AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
-        if (appBarLayout.getLayoutParams() != null) {
-            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-            AppBarLayout.Behavior appBarLayoutBehaviour = new AppBarLayout.Behavior();
-            appBarLayoutBehaviour.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
-                @Override
-                public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
-                    return false;
-                }
-            });
-            layoutParams.setBehavior(appBarLayoutBehaviour);
-        }
-    }
+//    public void setupToolbar() {
+//        final Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        final ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//            getSupportActionBar().setHomeButtonEnabled(false);
+//            getSupportActionBar().setTitle("");
+//        }
+//
+//        AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
+//        if (appBarLayout.getLayoutParams() != null) {
+//            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+//            AppBarLayout.Behavior appBarLayoutBehaviour = new AppBarLayout.Behavior();
+//            appBarLayoutBehaviour.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+//                @Override
+//                public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+//                    return false;
+//                }
+//            });
+//            layoutParams.setBehavior(appBarLayoutBehaviour);
+//        }
+//    }
 
 
     private class MyTaskRegister extends AsyncTask<String, Void, String> {

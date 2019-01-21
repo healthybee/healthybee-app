@@ -214,7 +214,7 @@
     <string name="title_activity_payments">PaymentsActivity</string>
     <string name="pay_now">Pay</string>
     <string name="cancel">Cancel</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="click_here">Click here</string>
     <string name="if_cvv_and_expiry_on_card"> &#160;if you have CVV and Expiry on your card</string>
     <string name="if_dont_cvv_and_expiry_on_card"> &#160;if you don\'t have CVV and Expiry on your card</string>

@@ -46,13 +46,19 @@ import java.util.Map;
 public class ActivityUserLogin extends AppCompatActivity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
-    private EditText edt_email_id, edt_mobile,edt_otp;
+    private EditText edt_email_id;
+    private EditText edt_mobile;
+    private EditText edt_otp;
     private EditText edt_login_password;
     private Button btn_login;
     private String strLoginId;
     private String strPassword;
-    private TextView tv_newUser, tv_forgot_password,tv_resend_otp;
-    private Button bt_password, bt_otp, btn_generate_otp;
+    private TextView tv_newUser;
+    private TextView tv_forgot_password;
+    private TextView tv_resend_otp;
+    private Button bt_password;
+    private Button bt_otp;
+    private Button btn_generate_otp;
     private ImageView iv_google;
     private Activity activity;
 
@@ -68,22 +74,23 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void init() {
-        edt_email_id = (EditText) findViewById(R.id.edt_email_id);
-        edt_login_password = (EditText) findViewById(R.id.edt_login_password);
-        edt_mobile = (EditText) findViewById(R.id.edt_mobile);
-        edt_otp = (EditText) findViewById(R.id.edt_otp);
-        btn_login = (Button) findViewById(R.id.btn_login);
-        btn_generate_otp = (Button) findViewById(R.id.btn_generate_otp);
+        edt_email_id = findViewById(R.id.edt_email_id);
+        edt_login_password = findViewById(R.id.edt_login_password);
+        edt_mobile = findViewById(R.id.edt_mobile);
+        edt_otp = findViewById(R.id.edt_otp);
+        btn_login = findViewById(R.id.btn_login);
+        btn_generate_otp = findViewById(R.id.btn_generate_otp);
         btn_generate_otp.setOnClickListener(this);
         btn_login.setOnClickListener(this);
-        tv_newUser = (TextView) findViewById(R.id.tv_newUser);
-        tv_resend_otp = (TextView) findViewById(R.id.tv_resend_otp);
-        tv_forgot_password = (TextView) findViewById(R.id.tv_forgot_password);
+        tv_newUser = findViewById(R.id.tv_newUser);
+        tv_resend_otp = findViewById(R.id.tv_resend_otp);
+        tv_forgot_password = findViewById(R.id.tv_forgot_password);
         tv_newUser.setOnClickListener(this);
-        bt_password = (Button) findViewById(R.id.bt_password);
+        bt_password = findViewById(R.id.bt_password);
         bt_password.setOnClickListener(this);
-        bt_otp = (Button) findViewById(R.id.bt_otp);
+        bt_otp = findViewById(R.id.bt_otp);
         bt_otp.setOnClickListener(this);
+        tv_forgot_password.setOnClickListener(this);
 
         //set default Selected
         bt_otp.setBackground(getDrawable(R.drawable.button_shap_right_round));
@@ -153,10 +160,14 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 tv_resend_otp.setVisibility(View.VISIBLE);
                 edt_otp.setVisibility(View.VISIBLE);
                 break;
-
+            case R.id.tv_forgot_password:
+                Intent intent1 = new Intent(ActivityUserLogin.this, ActivityForgotPassword.class);
+                startActivity(intent1);
+                break;
             case R.id.iv_google:
                 signInGoogle();
                 break;
+
             default:
                 break;
         }

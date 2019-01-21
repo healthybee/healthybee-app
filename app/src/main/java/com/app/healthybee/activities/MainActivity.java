@@ -27,9 +27,20 @@ import com.app.healthybee.utils.Constant;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private RelativeLayout rlMenu, rlCart, rlProfile,rlMyOrder,rlNotification;
-    private ImageView ivMenu, ivProfile,ivMyOrder,ivNotification;
-    private TextView tvProfile, tvCart, tvMenu,tvMyOrder,tvNotification;
+    private RelativeLayout rlMenu;
+    private RelativeLayout rlCart;
+    private RelativeLayout rlProfile;
+    private RelativeLayout rlMyOrder;
+    private RelativeLayout rlNotification;
+    private ImageView ivMenu;
+    private ImageView ivProfile;
+    private ImageView ivMyOrder;
+    private ImageView ivNotification;
+    private TextView tvProfile;
+    private TextView tvCart;
+    private TextView tvMenu;
+    private TextView tvMyOrder;
+    private TextView tvNotification;
     private long exitTime = 0;
     private int count = 0;
     private DbHelper dbHelper;
