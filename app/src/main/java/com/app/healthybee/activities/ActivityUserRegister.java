@@ -49,7 +49,10 @@ import java.util.Map;
 public class ActivityUserRegister extends AppCompatActivity {
 
 
-    private EditText edt_password, edt_mobile, edt_email, edt_re_enter_password;
+    private EditText edt_password;
+    private EditText edt_mobile;
+    private EditText edt_email;
+    private EditText edt_re_enter_password;
     private Activity activity;
     private Button btn_register, btn_login;
     private TextView txt_terms;
