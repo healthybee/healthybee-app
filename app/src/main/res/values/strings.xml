@@ -24,6 +24,7 @@
     <string name="whops">Whoops!</string>
     <string name="cannot_add_to_favorite">Cannot Add to Favorite</string>
     <string name="favorite_added">Added to Favorite</string>
+    <string name="favorite">Favorite</string>
     <string name="favorite_removed">Removed from Favorite</string>
     <string name="no_favorite_found">Your favorite list is empty because you don\'t add any Item in the favorite menu.</string>
 
@@ -264,7 +265,7 @@
     <string name="one_time_doorstep_service">One time doorstep service</string>
     <string name="enjoy_healthy_food_from_specially_designed_menu">Enjoy healthy food from specially designed menu</string>
     <string name="weekly_subscription_at">WEEKLY SUBSCRIPTION AT</string>
-    <string name="rs_100_per_meal">Rs. 100 PER MEAL</string>
+    <string name="rs_100_per_meal">Rs.100 PER MEAL</string>
     <string name="free_delivery_free_cancellation">Free delivery | Free cancellation</string>
     <string name="subscribe_now">Subscribe Now</string>
     <string name="pause_resume_subscription_plan_any_time">Pause/Resume subscription plan any time</string>

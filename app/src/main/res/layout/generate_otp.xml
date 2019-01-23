@@ -21,7 +21,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="70dp" />
+                android:layout_height="100dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -39,12 +39,12 @@
                 android:text="@string/sign_in_to_continue"
                 android:textColor="@color/colorWhite" />
 
-            <EditText
+            <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_email_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_bg_transparent"
@@ -56,10 +56,10 @@
                 android:visibility="visible" />
 
 
-            <EditText
+            <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_login_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
@@ -74,7 +74,7 @@
                 android:textColorHint="@color/colorWhite"
                 android:visibility="visible" />
 
-            <EditText
+            <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,12 +92,12 @@
                 android:textColorHint="@color/colorWhite"
                 android:visibility="gone" />
 
-            <EditText
+            <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_otp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_bg_transparent"
@@ -113,9 +113,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dip"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -124,9 +128,8 @@
                     android:id="@+id/tv_forgot_password"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginLeft="25dp"
                     android:layout_weight="1"
+                    android:gravity="start"
                     android:text="@string/forgot_password"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
@@ -136,8 +139,6 @@
                     android:id="@+id/tv_resend_otp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginLeft="25dp"
                     android:layout_weight="1"
                     android:text="@string/resend_otp"
                     android:textColor="@color/colorWhite"
@@ -158,13 +159,14 @@
                         android:background="@drawable/button_shap_left_round"
                         android:text="@string/password"
                         android:textAllCaps="false"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="@color/colorPrimaryDark"
+                        tools:ignore="ButtonStyle,NestedWeights" />
 
                     <Button
                         android:id="@+id/bt_otp"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginRight="25dp"
+                        tools:ignore="ButtonStyle"
                         android:layout_weight="1"
                         android:background="@drawable/button_shap_right_round"
                         android:text="@string/otp"
@@ -190,7 +192,7 @@
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_background"
                 android:gravity="center"
@@ -215,7 +217,8 @@
                     android:layout_marginRight="10dp"
                     android:layout_toStartOf="@+id/or"
                     android:layout_toLeftOf="@+id/or"
-                    android:background="#c0c0c0" />
+                    android:background="#c0c0c0"
+                    tools:ignore="RtlHardcoded" />
 
                 <TextView
                     android:id="@+id/or"
@@ -235,7 +238,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toEndOf="@+id/or"
                     android:layout_toRightOf="@+id/or"
-                    android:background="#c0c0c0" />
+                    android:background="#c0c0c0"
+                    tools:ignore="RtlHardcoded" />
             </RelativeLayout>
 
 
@@ -253,7 +257,8 @@
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
                     android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_fb" />
+                    android:src="@drawable/ic_fb"
+                    tools:ignore="RtlHardcoded" />
 
                 <ImageView
                     android:id="@+id/iv_google"
@@ -262,7 +267,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:contentDescription="@string/todo"
-                    android:src="@drawable/ic_g" />
+                    android:src="@drawable/ic_g"
+                    tools:ignore="RtlHardcoded" />
             </LinearLayout>
 
             <TextView

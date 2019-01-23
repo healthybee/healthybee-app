@@ -87,7 +87,7 @@ public class NetworkConstants {
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     HashMap<String, String> hashMap;
                     hashMap = param;
                     return hashMap;

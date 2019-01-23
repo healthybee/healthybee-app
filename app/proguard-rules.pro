@@ -15,7 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-
+-dontwarn okhttp3.internal.platform.*
 -keep class org.apache.http.** { *; }
 -dontwarn org.apache.http.**
 -dontwarn android.net.**
@@ -26,3 +26,4 @@
 -keepclassmembers class com.paytm.pgsdk.PaytmWebView$PaytmJavaScriptInterface {
    public *;
 }
+-dontwarn io.realm.**

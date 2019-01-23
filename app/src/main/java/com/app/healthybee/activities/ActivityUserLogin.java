@@ -1,13 +1,9 @@
 package com.app.healthybee.activities;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -19,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,13 +24,6 @@ import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import org.json.JSONObject;
 
@@ -45,7 +33,7 @@ import java.util.Map;
 
 public class ActivityUserLogin extends AppCompatActivity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 1;
-    GoogleSignInClient mGoogleSignInClient;
+    //GoogleSignInClient mGoogleSignInClient;
     private EditText edt_email_id;
     private EditText edt_mobile;
     private EditText edt_otp;
@@ -61,18 +49,18 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
     private Button btn_generate_otp;
     private ImageView iv_google;
     private Activity activity;
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generate_otp);
         activity = ActivityUserLogin.this;
+//        progressBar= findViewById(R.id.progressBar);
+
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     private void init() {
         edt_email_id = findViewById(R.id.edt_email_id);
         edt_login_password = findViewById(R.id.edt_login_password);
@@ -100,19 +88,18 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
 
         iv_google = findViewById(R.id.iv_google);
         iv_google.setOnClickListener(this);
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+       // mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                if (ValidateUser(v) == 1) {
+                if (ValidateUser() == 1) {
                     AuthUser();
                 }
                 break;
@@ -125,7 +112,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 bt_password.setBackground(getDrawable(R.drawable.button_shap_left_round_selected));
                 bt_otp.setTextColor(getResources().getColor(R.color.colorWhite));
                 bt_password.setTextColor(getResources().getColor(R.color.background_color));
-                btn_generate_otp.setVisibility(View.INVISIBLE);
+                btn_generate_otp.setVisibility(View.GONE);
                 edt_mobile.setVisibility(View.GONE);
                 edt_email_id.setVisibility(View.VISIBLE);
                 edt_login_password.setVisibility(View.VISIBLE);
@@ -133,7 +120,6 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 tv_forgot_password.setVisibility(View.VISIBLE);
                 tv_resend_otp.setVisibility(View.GONE);
                 edt_otp.setVisibility(View.GONE);
-
                 break;
             case R.id.bt_otp:
                 bt_password.setBackground(getDrawable(R.drawable.button_shap_left_round));
@@ -144,7 +130,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 edt_login_password.setVisibility(View.GONE);
                 btn_generate_otp.setVisibility(View.VISIBLE);
                 edt_mobile.setVisibility(View.VISIBLE);
-                btn_login.setVisibility(View.INVISIBLE);
+                btn_login.setVisibility(View.GONE);
                 tv_forgot_password.setVisibility(View.INVISIBLE);
                 tv_resend_otp.setVisibility(View.GONE);
                 edt_otp.setVisibility(View.GONE);
@@ -165,7 +151,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                 startActivity(intent1);
                 break;
             case R.id.iv_google:
-                signInGoogle();
+               // signInGoogle();
                 break;
 
             default:
@@ -173,62 +159,62 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void signInGoogle() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+//    private void signInGoogle() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            // The Task returned from this call is always completed, no need to attach
+//            // a listener.
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            handleSignInResult(task);
+//        }
+//    }
+//
+//    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+//        try {
+//            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+//
+//            // Signed in successfully, show authenticated UI.
+//            updateUI(account);
+//        } catch (ApiException e) {
+//            // The ApiException status code indicates the detailed failure reason.
+//            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+//            Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
+//            updateUI(null);
+//        }
+//    }
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
+//    private void updateUI(@Nullable GoogleSignInAccount account) {
+//        if (account != null) {
+//            Log.e("TAG", account.getDisplayName());
+//
+////  4/10/18 sign in
+//
+//        } else {
+//            //  4/10/18 sign out
+//        }
+//    }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+//    private void signOut() {
+//        mGoogleSignInClient.signOut()
+//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        // [START_EXCLUDE]
+//                        updateUI(null);
+//                        // [END_EXCLUDE]
+//                    }
+//                });
+//    }
 
-            // Signed in successfully, show authenticated UI.
-            updateUI(account);
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
-            updateUI(null);
-        }
-    }
-
-    private void updateUI(@Nullable GoogleSignInAccount account) {
-        if (account != null) {
-            Log.e("TAG", account.getDisplayName());
-
-//  4/10/18 sign in
-
-        } else {
-            //  4/10/18 sign out
-        }
-    }
-
-    private void signOut() {
-        mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // [START_EXCLUDE]
-                        updateUI(null);
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
-
-    private int ValidateUser(View v) {
+    private int ValidateUser() {
         strLoginId = edt_email_id.getText().toString();
         strPassword = edt_login_password.getText().toString();
         if (!isValidEmail(strLoginId)) {
@@ -313,7 +299,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
             }) {
 
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
                     String credentials = edt_email_id.getText().toString().trim() + ":" + edt_login_password.getText().toString().trim();
                     String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);

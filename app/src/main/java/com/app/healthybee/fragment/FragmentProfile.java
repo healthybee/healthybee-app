@@ -54,7 +54,7 @@ public class FragmentProfile extends Fragment {
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
     private AdapterAbout adapterAbout;
-    private LinearLayout lyt_root;
+   // private LinearLayout lyt_root;
     //private ImageView ivPauseNextDay;
     private CircularImageView civProfileImage;
     private Toolbar toolbar;
@@ -66,7 +66,7 @@ public class FragmentProfile extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.raw_pro, null);
-        lyt_root = root_view.findViewById(R.id.root_layout);
+       // lyt_root = root_view.findViewById(R.id.root_layout);
         toolbar = root_view.findViewById(R.id.toolbarProfile);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ivBack = root_view.findViewById(R.id.ivBack);
@@ -98,9 +98,9 @@ public class FragmentProfile extends Fragment {
 
         setProfileData();
 
-        if (Config.ENABLE_RTL_MODE) {
-            lyt_root.setRotationY(180);
-        }
+//        if (Config.ENABLE_RTL_MODE) {
+//            lyt_root.setRotationY(180);
+//        }
 
         adapterAbout.setOnItemClickListener(new AdapterAbout.OnItemClickListener() {
             @Override

@@ -8,7 +8,7 @@
 
     <color name="color_dark">#000000</color>
     <!--swipe down refresh animation color-->
-    <color name="colorOrange">#FF9900</color>
+    <color name="colorOrange">#ffae35</color>
     <color name="colorGreen">#009900</color>
     <color name="colorBlue">#000099</color>
     <color name="colorRed">#ff0015</color>

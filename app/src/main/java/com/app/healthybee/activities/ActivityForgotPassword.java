@@ -51,7 +51,7 @@ public class ActivityForgotPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 strUserEmail = etUserEmail.getText().toString();
-                if (!strUserEmail.isEmpty()) {
+                if (strUserEmail.isEmpty()) {
                     Toast.makeText(ActivityForgotPassword.this, "Please enter email id", Toast.LENGTH_SHORT).show();
                 } else {
                     if (!isValidEmail(strUserEmail)) {
@@ -70,7 +70,7 @@ public class ActivityForgotPassword extends AppCompatActivity {
             MyCustomProgressDialog.showDialog(activity, getString(R.string.please_wait));
             Map<String, String> params = new HashMap<>();
             params.put("email", strUserEmail);
-            params.put("link", "");// TODO: 21/1/19  add linc for forgot password
+            params.put("link", "test");// TODO: 21/1/19  add linc for forgot password
             Log.d("4343", new JSONObject(params).toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,

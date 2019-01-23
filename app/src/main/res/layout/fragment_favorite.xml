@@ -1,29 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_layout"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_marginBottom="72dp"
+android:background="@color/colorWhite"
+android:orientation="vertical"
+tools:context="com.app.healthybee.fragment.FragmentFavorite">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grayLite"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/tab_appbar_layout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include
+            android:id="@+id/toolbarFavorite"
+            layout="@layout/toolbar_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:background="@android:color/white"
-            android:scrollbars="vertical"
-            android:scrollingCache="true" />
-
+            android:clipToPadding="false" />
         <include
             android:id="@+id/lyt_no_item_later"
             layout="@layout/include_no_favorite"
             android:visibility="gone" />
+    </LinearLayout>
 
-    </RelativeLayout>
-
+</LinearLayout>
 </LinearLayout>

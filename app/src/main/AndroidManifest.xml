@@ -19,8 +19,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppMaterialTheme"
-        tools:replace="android:theme"
-        android:usesCleartextTraffic="true">
+        tools:replace="android:theme">
         <activity
             android:name=".activities.ActivitySplash"
             android:configChanges="orientation|keyboardHidden|screenSize">
