@@ -67,6 +67,12 @@
             android:value="GlideModule"
             tools:node="remove" />
 
+
+        <!--replace value with actual id in ads-->
+        <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true"/>
+
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
@@ -99,6 +105,7 @@
 
         <uses-library android:name="org.apache.http.legacy"
             android:required="false"/>
+
     </application>
 
 </manifest>
