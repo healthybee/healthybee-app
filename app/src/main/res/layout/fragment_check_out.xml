@@ -68,9 +68,10 @@
 
                             <ImageView
                                 android:contentDescription="@string/todo"
+                                android:layout_marginTop="2dp"
                                 android:id="@+id/iv_address"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:src="@drawable/ic_address_location" />
 
                             <TextView
@@ -127,10 +128,11 @@
                             android:layout_margin="5dp">
 
                             <ImageView
+                                android:layout_marginTop="2dp"
                                 android:contentDescription="@string/todo"
                                 android:id="@+id/iv_date"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:src="@drawable/ic_date_orange_24dp" />
 
                             <TextView
@@ -189,8 +191,8 @@
                             <ImageView
                                 android:contentDescription="@string/todo"
                                 android:id="@+id/iv_delivery_slot"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:src="@drawable/ic_checkut_delivery_slot" />
 
                             <TextView
@@ -227,8 +229,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_item"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:contentDescription="@string/todo"
                                 android:src="@drawable/ic_item_in_cart" />
 
