@@ -28,17 +28,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.app.healthybee.Api;
 import com.app.healthybee.Checksum;
 import com.app.healthybee.Common;
 import com.app.healthybee.Constants;
 import com.app.healthybee.Paytm;
 import com.app.healthybee.activities.ActivityCheckOut;
-import com.app.healthybee.activities.Applications;
 import com.app.healthybee.activities.MainActivity;
-import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.adapter.AdapterTimeSlot;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.listeners.UpdateCart1;
@@ -51,28 +47,19 @@ import com.app.healthybee.R;
 import com.app.healthybee.models.TimeSlot;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.Tools;
-//import com.google.android.gms.ads.InterstitialAd;
 import com.app.healthybee.utils.UrlConstants;
-import com.app.healthybee.volleyrequest.GsonRequest;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.paytm.pgsdk.PaytmMerchant;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -90,7 +77,6 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     private ArrayList<TimeSlot> timeSlotArrayList;
 
     private SwipeRefreshLayout swipe_refresh;
-    private DbHelper dbHelper;
     private String selectedDate;
     private TextView tv_date;
     private RelativeLayout rlDate, rlAddress;
@@ -130,7 +116,6 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
 
         toolbar = view.findViewById(R.id.toolbarCheckout);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        dbHelper = new DbHelper(getActivity());
         data = new ArrayList<>();
         mSpinnerData = new ArrayList<>();
         mSpinnerData.add("Monthly Subscription");
