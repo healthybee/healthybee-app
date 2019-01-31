@@ -1,6 +1,5 @@
 package com.app.healthybee.listeners;
 
-import com.app.healthybee.models.Cart;
 import com.app.healthybee.models.CategoryItem;
 
 public interface UpdateCart {
