@@ -68,19 +68,23 @@ public class NetworkConstants {
                     if (progress) {
                         MyCustomProgressDialog.dismissDialog();
                     }
-                    try {
-                        jsonArray1 = new JSONArray(response);
-                        GsonBuilder gsonBuilder = new GsonBuilder();
-                        Gson gson = gsonBuilder.create();
-                        Object[] object = gson.fromJson(String.valueOf(jsonArray1), aClass);
-                        listener.onResponse(object, "");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        if (progress) {
-                            MyCustomProgressDialog.dismissDialog();
-                            Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
-                            listener.onError(context.getString(R.string.something_went_wrong));
+                    if (!response.equalsIgnoreCase("[]")) {
+                        try {
+                            jsonArray1 = new JSONArray(response);
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            Gson gson = gsonBuilder.create();
+                            Object[] object = gson.fromJson(String.valueOf(jsonArray1), aClass);
+                            listener.onResponse(object, "");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            if (progress) {
+                                MyCustomProgressDialog.dismissDialog();
+                                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+                                listener.onError(context.getString(R.string.something_went_wrong));
+                            }
                         }
+                    } else {
+                        listener.onError(context.getString(R.string.something_went_wrong));
                     }
                 }
             }, new Response.ErrorListener() {
@@ -91,13 +95,18 @@ public class NetworkConstants {
                     }
                     listener.onError(error.toString());
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String> header= new HashMap<>();
-                    header.put("Content-Type","application/json");
+                    Map<String, String> header = new HashMap<>();
+                    header.put("Content-Type", "application/json");
                     header.put("Authorization", "Bearer " + SharedPrefUtil.getToken(context));
                     return header;
+                }
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    return param;
                 }
             };
             Applications.getInstance().addToRequestQueue(stringRequest);

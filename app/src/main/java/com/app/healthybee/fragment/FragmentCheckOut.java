@@ -181,44 +181,6 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerViewItemsList.setLayoutManager(mLinearLayoutManager);
-//        data.addAll(dbHelper.getCartList());
-
-
-//        adapter = new AdapterCheckOut(getActivity(), data,mSpinnerData, new CustomItemClickListener() {
-//            @Override
-//            public void onItemClick(View v, int position) {
-//                Log.d("TAG", "clicked position:" + position);
-//                String name = data.get(position).getName();
-//            }
-//        }, new UpdateCart() {
-//            @Override
-//            public void OnAddItemToCart(CategoryItem categoryItem, int i1, int card_plus_minus) {
-//                Log.d("TAG", "add to cart" + categoryItem.getName());
-//                if (card_plus_minus==-1){
-//                    dbHelper.deleteCartRow(categoryItem.getName());
-//                    ((MainActivity) getActivity()).setCountText(0);
-//                    if (!data.isEmpty()){
-//                        data.clear();
-//                    }
-//                    data.addAll(dbHelper.getCartList());
-//                    recyclerViewItemsList.setAdapter(adapter);
-//                    calculateTotalPrice(data);
-//                    tvNoOfItemInCart.setText(Html.fromHtml(data.size()+" Item in cart"));
-//                }else {
-//                    dbHelper.insertUpdateCart(categoryItem);
-//                    ((MainActivity) getActivity()).setCountText(0);
-//
-//                    if (!data.isEmpty()){
-//                        data.clear();
-//                    }
-//                    data.addAll(dbHelper.getCartList());
-//                    recyclerViewItemsList.setAdapter(adapter);
-//                    calculateTotalPrice(data);
-//                    tvNoOfItemInCart.setText(Html.fromHtml(data.size()+" Item in cart"));
-//                }
-//
-//            }
-//        });
         ivBack = view.findViewById(R.id.ivBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -261,7 +223,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                 if (!data.isEmpty()) {
                     data.clear();
                 }
-//                data.addAll(dbHelper.getCartList());
+                RetrieveCarts();
 //                tvNoOfItemInCart.setText(Html.fromHtml(data.size()+" Item in cart"));
 //                recyclerViewItemsList.setAdapter(adapter);
 //                calculateTotalPrice(data);
@@ -526,6 +488,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Cart[] object, String message) {
+                swipe_refresh.setRefreshing(false);
                 if (object[0] != null) {
                     data.addAll(Arrays.asList(object));
                     adapter = new AdapterCheckOut(getActivity(), data, mSpinnerData, new CustomItemClickListener() {
@@ -575,6 +538,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
 
             @Override
             public void onError(String message) {
+                swipe_refresh.setRefreshing(false);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
             }
         }, Cart[].class);
