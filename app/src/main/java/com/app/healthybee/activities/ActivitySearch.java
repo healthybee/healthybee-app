@@ -3,6 +3,7 @@ package com.app.healthybee.activities;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,10 +24,15 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.app.healthybee.testcode.ApiInterface;
+import com.app.healthybee.testcode.CallbackRecent;
+import com.app.healthybee.testcode.RestAdapter;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.R;
 import com.app.healthybee.adapter.AdapterSearch;
+import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.NetworkCheck;
 
 
@@ -55,9 +61,7 @@ public class ActivitySearch extends AppCompatActivity {
         parent_view = findViewById(android.R.id.content);
 
         if (Config.ENABLE_RTL_MODE) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            }
+            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
         initComponent();
@@ -102,7 +106,7 @@ public class ActivitySearch extends AppCompatActivity {
                 et_search.setText(viewModel);
                 lyt_suggestion.setVisibility(View.GONE);
                 hideKeyboard();
-               // searchAction();
+               searchAction();
             }
         });
 
@@ -165,30 +169,30 @@ public class ActivitySearch extends AppCompatActivity {
         }
     };
 
-   /* private void requestSearchApi(final String query) {
-        ApiInterface apiInterface = RestAdapter.createAPI();
-        callbackCall = apiInterface.getSearchPosts(query, Constant.MAX_SEARCH_RESULT);
-        callbackCall.enqueue(new Callback<CallbackRecent>() {
-            @Override
-            public void onResponse(Call<CallbackRecent> call, Response<CallbackRecent> response) {
-                CallbackRecent resp = response.body();
-                if (resp != null && resp.status.equals("ok")) {
-                   // mAdapter.insertData(resp.posts);
-                    //if (resp.posts.size() == 0) showNotFoundView(true);
-                } else {
-                    onFailRequest();
-                }
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onFailure(Call<CallbackRecent> call, Throwable t) {
-                onFailRequest();
-                progressBar.setVisibility(View.GONE);
-            }
-
-        });
-    }*/
+//    private void requestSearchApi(final String query) {
+//        ApiInterface apiInterface = RestAdapter.createAPI();
+//        callbackCall = apiInterface.getSearchPosts(query, Constant.MAX_SEARCH_RESULT);
+//        callbackCall.enqueue(new Callback<CallbackRecent>() {
+//            @Override
+//            public void onResponse(Call<CallbackRecent> call, Response<CallbackRecent> response) {
+//                CallbackRecent resp = response.body();
+//                if (resp != null && resp.status.equals("ok")) {
+//                   // mAdapter.insertData(resp.posts);
+//                    //if (resp.posts.size() == 0) showNotFoundView(true);
+//                } else {
+//                    onFailRequest();
+//                }
+//                progressBar.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CallbackRecent> call, Throwable t) {
+//                onFailRequest();
+//                progressBar.setVisibility(View.GONE);
+//            }
+//
+//        });
+//    }
 
     private void onFailRequest() {
         if (NetworkCheck.isConnect(this)) {
@@ -198,7 +202,7 @@ public class ActivitySearch extends AppCompatActivity {
         }
     }
 
-   /* private void searchAction() {
+    private void searchAction() {
         lyt_suggestion.setVisibility(View.GONE);
         showFailedView(false, "");
         showNotFoundView(false);
@@ -210,14 +214,13 @@ public class ActivitySearch extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                   // requestSearchApi(query);
+                    //requestSearchApi(query);
                 }
             }, 10000);
         } else {
             Toast.makeText(this, R.string.msg_search_input, Toast.LENGTH_SHORT).show();
         }
     }
-*/
     private void showSuggestionSearch() {
         mAdapterSuggestion.refreshItems();
         lyt_suggestion.setVisibility(View.VISIBLE);

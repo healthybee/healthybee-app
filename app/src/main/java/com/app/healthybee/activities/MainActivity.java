@@ -18,15 +18,16 @@ import com.app.healthybee.fragment.FragmentCheckOut;
 import com.app.healthybee.fragment.FragmentFavorite;
 import com.app.healthybee.fragment.FragmentHome;
 import com.app.healthybee.fragment.FragmentMyOrder;
-import com.app.healthybee.fragment.FragmentNotification;
 import com.app.healthybee.fragment.FragmentProfile;
 import com.app.healthybee.models.AddressModule;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Constant;
+import com.app.healthybee.utils.SharedPrefUtil;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    public static String strToken;
     private RelativeLayout rlMenu;
     private RelativeLayout rlCart;
     private RelativeLayout rlProfile;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         mFlagDisplayList = false;
         address=new AddressModule();
         setBottomNavigation();
+        strToken=SharedPrefUtil.getToken(MainActivity.this);
     }
 
 //    @Override
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         tvMenu.setTextColor(Color.parseColor("#FF9900"));
         Fragment fragment;
         fragment = new FragmentHome();
-        loadFragment(fragment,"FragmentHome");
+        loadFragmentHome(fragment,"FragmentHome");
 
         rlMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,10 +195,16 @@ public class MainActivity extends AppCompatActivity {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment,fragmentTag);
+        //transaction.addToBackStack(null);
+        transaction.commit();
+    }
+    private void loadFragmentHome(Fragment fragment, String fragmentTag) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment,fragmentTag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
     @Override
     public void onBackPressed() {
        exitApp();

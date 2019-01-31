@@ -7,23 +7,39 @@ package com.app.healthybee.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 
 public class CategoryItem implements Parcelable {
+    @SerializedName("id")
     private String id;
+    @SerializedName("add_on")
     private String add_on;
+    @SerializedName("add_on_price")
     private String add_on_price;
+    @SerializedName("category")
     private String category;
+    @SerializedName("description")
     private String description;
+    @SerializedName("food_type")
     private String food_type;
+    @SerializedName("image_url")
     private String image_url;
+    @SerializedName("name")
     private String name;
+    @SerializedName("nutrition")
     private String nutrition;
+    @SerializedName("old_price")
     private String old_price;
+    @SerializedName("price")
     private String price;
+    @SerializedName("createdAt")
     private String createdAt;
+    @SerializedName("updatedAt")
     private String updatedAt;
+    @SerializedName("count")
     private int count;
 
     private ArrayList<String> mSpinnerData = new ArrayList<>();

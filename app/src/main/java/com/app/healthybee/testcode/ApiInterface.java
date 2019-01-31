@@ -1,13 +1,14 @@
 package com.app.healthybee.testcode;
 
 
-
+import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Config;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -17,7 +18,7 @@ public interface ApiInterface {
     String CACHE = "Cache-Control: max-age=0";
     String AGENT = "Data-Agent: Healthy Bee";
 
-//    @Headers({CACHE, AGENT})
+    //    @Headers({CACHE, AGENT})
 //    @GET("api/get_news_detail/?id=")
 //    Call<PushNotif> getNotificationDetail(
 //            @Query("id") long id
@@ -28,16 +29,29 @@ public interface ApiInterface {
 //    Call<CallbackNewsDetail> getPostDetail(
 //            @Query("id") long id
 //    );
-   // https://healthybee-mob-api.herokuapp.com/menus?category=
+    // https://healthybee-mob-api.herokuapp.com/menus?category=
+/*
     @Headers({CACHE, AGENT})
-    @GET("api/get_recent_posts/?api_key=" + Config.API_KEY )
+    @GET("menus?category=" + "SANDWHICHES")
     Call<CallbackRecent> getRecentPost(
             @Query("page") int page,
-            @Query("count") int count
-    );
+            @Query("limit") int count,
+            String strToken);
+
+*/
+
+
+    @GET("menus?category=" + "SANDWHICHES")
+    Call<CategoryItem> getRecentPost(
+            @Query("page") int page,
+            @Query("limit") int count,
+            @Header("Content-Type") String contentType,
+            @Header("Authorization") String authHeader);
+
+
 
     @Headers({CACHE, AGENT})
-    @GET("api/get_video_posts/?api_key=" + Config.API_KEY )
+    @GET("api/get_video_posts/?api_key=" + Config.API_KEY)
     Call<CallbackRecent> getVideoPost(
             @Query("page") int page,
             @Query("count") int count

@@ -78,8 +78,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/seven"
-                                android:layout_marginLeft="@dimen/seven"
-                                android:layout_toRightOf="@+id/iv_address"
                                 android:text="Address"
                                 android:textColor="@color/colorOrange"
                                 android:textStyle="bold"

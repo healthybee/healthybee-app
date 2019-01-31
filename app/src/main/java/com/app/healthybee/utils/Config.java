@@ -20,7 +20,7 @@ public class Config {
 
 
     //load more for next channel list
-    public static final int LOAD_MORE = 15;
+    public static final int LOAD_MORE = 5;
     //put your admin panel url here
     public static final String ADMIN_PANEL_URL = "https://healthybee-mob-api.herokuapp.com";
     public static final String API_KEY = "3biGa1hRAPnwN7Ad9hdMOhm6NGBGC4MU";

@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.healthybee.listeners.UpdateCart;
+import com.app.healthybee.listeners.UpdateCart1;
+import com.app.healthybee.models.Cart;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
@@ -34,12 +36,12 @@ import java.util.List;
 public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyViewHolder> {
 
     private Context mContext;
-    private List<CategoryItem> categoryItemList;
-    ArrayList<String> mSpinnerDataList;
+    private List<Cart> categoryItemList;
+    private ArrayList<String> mSpinnerDataList;
     private CustomItemClickListener listener;
-    private UpdateCart updateCart;
+    private UpdateCart1 updateCart;
 
-    public AdapterCheckOut(Context context, ArrayList<CategoryItem> data,ArrayList<String> mSpinnerData, CustomItemClickListener tag, UpdateCart updateCart1) {
+    public AdapterCheckOut(Context context, ArrayList<Cart> data,ArrayList<String> mSpinnerData, CustomItemClickListener tag, UpdateCart1 updateCart1) {
         this.mContext = context;
         this.categoryItemList = data;
         this.mSpinnerDataList=mSpinnerData;
@@ -50,7 +52,6 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tvItemName, tvItemPrice,tv_quantity;
-
         private ImageView tvMinus;
         private TextView  tvCount;
         private ImageView tvPlus;
@@ -60,18 +61,16 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
 
         MyViewHolder(View view) {
             super(view);
-            tvItemName = (TextView) view.findViewById(R.id.tvItemName);
-            tvItemPrice = (TextView) view.findViewById(R.id.tvItemPrice);
-            tv_quantity = (TextView) view.findViewById(R.id.tv_quantity);
-            spWeakMonth = (Spinner) view.findViewById(R.id.spWeakMonth);
-            tvWeakMonthPrice= (TextView) view.findViewById(R.id.tvWeakMonthPrice);
-
-            tvMinus= (ImageView) view.findViewById(R.id.tvMinus);
-            tvCount= (TextView) view.findViewById(R.id.tvCount);
-            tvPlus= (ImageView) view.findViewById(R.id.tvPlus);
-
-            llAddRemove = (LinearLayout) view.findViewById(R.id.llAddRemove);
-            tvAddItem = (TextView) view.findViewById(R.id.tvAddItem);
+            tvItemName =  view.findViewById(R.id.tvItemName);
+            tvItemPrice =  view.findViewById(R.id.tvItemPrice);
+            tv_quantity =  view.findViewById(R.id.tv_quantity);
+            spWeakMonth =  view.findViewById(R.id.spWeakMonth);
+            tvWeakMonthPrice=  view.findViewById(R.id.tvWeakMonthPrice);
+            tvMinus=  view.findViewById(R.id.tvMinus);
+            tvCount=  view.findViewById(R.id.tvCount);
+            tvPlus=  view.findViewById(R.id.tvPlus);
+            llAddRemove =  view.findViewById(R.id.llAddRemove);
+            tvAddItem =  view.findViewById(R.id.tvAddItem);
 
 
         }
@@ -97,16 +96,16 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final AdapterCheckOut.MyViewHolder holder, final int position) {
-        final CategoryItem categoryItem = categoryItemList.get(position);
-        holder.tvItemName.setText(Html.fromHtml(categoryItem.getName()));
-        holder.tvItemPrice.setText(Html.fromHtml(mContext.getResources().getString(R.string.rs)+" "+categoryItem.getPrice())+"/Meal");
+        final Cart cart = categoryItemList.get(position);
+        holder.tvItemName.setText(Html.fromHtml(cart.getResult().get(0).getName()));
+        holder.tvItemPrice.setText(Html.fromHtml(mContext.getResources().getString(R.string.rs)+" "+cart.getResult().get(0).getPrice())+"/Meal");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, mSpinnerDataList);
         holder.spWeakMonth.setAdapter(adapter);
         holder.spWeakMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(holder.itemView.getContext(), position+" : "+ holder.spWeakMonth.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(holder.itemView.getContext(), position+" : "+ holder.spWeakMonth.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
               // spinnerData.setSelectedData(position, binding.optionSpinner.getSelectedItem().toString());
             }
 
@@ -115,46 +114,49 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
 
             }
         });
-        if (categoryItem.getCount()==0){
+        if (cart.getQuantity()==0){
             holder.tvAddItem.setVisibility(View.VISIBLE);
             holder.llAddRemove.setVisibility(View.GONE);
         }else {
             holder.tvAddItem.setVisibility(View.GONE);
             holder.llAddRemove.setVisibility(View.VISIBLE);
         }
-        holder.tvCount.setText(Html.fromHtml(categoryItem.getCount()+""));
+        holder.tvCount.setText(Html.fromHtml(cart.getQuantity()+""));
         holder.tvPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                categoryItem.setCount(categoryItem.getCount()+1);
-                holder.tvCount.setText(Html.fromHtml(categoryItem.getCount()+""));
-                updateCart.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount() + 1,Constant.CARD_PLUS);
+                // TODO: 31/1/19 web call
+                cart.setQuantity(cart.getQuantity()+1);
+                holder.tvCount.setText(Html.fromHtml(cart.getQuantity()+""));
+                updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity() + 1,Constant.CARD_PLUS);
             }
         });
         holder.tvMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (categoryItem.getCount()!=0) {
-                    categoryItem.setCount(categoryItem.getCount() - 1);
+                if (cart.getQuantity()!=0) {
+                    // TODO: 31/1/19 web call
+                    cart.setQuantity(cart.getQuantity() - 1);
                 }
-                if (!(categoryItem.getCount()==0)) {
-                    holder.tvCount.setText(Html.fromHtml(categoryItem.getCount()+""));
-                    updateCart.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount() + 1,Constant.CARD_MINUS);
+                if (!(cart.getQuantity()==0)) {
+                    holder.tvCount.setText(Html.fromHtml(cart.getQuantity()+""));
+                    updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity() + 1,Constant.CARD_MINUS);
                 }else {
                     holder.tvAddItem.setVisibility(View.VISIBLE);
                     holder.llAddRemove.setVisibility(View.GONE);
-                    updateCart.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount() + 1,Constant.CARD_DELETE);
+                    updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity() + 1,Constant.CARD_DELETE);
                 }
             }
         });
         holder.tvAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                categoryItem.setCount(categoryItem.getCount()+1);
+                // TODO: 31/1/19 web call
+                cart.setQuantity(cart.getQuantity()+1);
                 holder.tvAddItem.setVisibility(View.GONE);
                 holder.llAddRemove.setVisibility(View.VISIBLE);
-                holder.tvCount.setText(Html.fromHtml(categoryItem.getCount()+""));
-                updateCart.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount() + 1,Constant.CARD_PLUS);
+                holder.tvCount.setText(Html.fromHtml(cart.getQuantity()+""));
+                updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity() + 1,Constant.CARD_PLUS);
                 notifyDataSetChanged();
             }
         });

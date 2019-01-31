@@ -1,10 +1,12 @@
 package com.app.healthybee.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -15,6 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.app.healthybee.activities.Applications;
 import com.app.healthybee.adapter.AdapterItemsList;
 import com.app.healthybee.R;
 import com.app.healthybee.activities.MainActivity;
@@ -22,10 +30,18 @@ import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.models.CategoryItem;
+import com.app.healthybee.utils.MyCustomProgressDialog;
+import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.UrlConstants;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -39,6 +55,7 @@ public class FragmentItemDetails extends Fragment {
     private ArrayList<CategoryItem> data = new ArrayList<>();
     private CategoryItem itemDetails = new CategoryItem();
     private ImageView my_image;
+    private ImageView IvFavorite;
     private TextView tv_itemTitle;
     private TextView tvCalories;
     private TextView tvProtein;
@@ -50,7 +67,7 @@ public class FragmentItemDetails extends Fragment {
         // Required empty public constructor
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_item_details, container, false);
@@ -63,15 +80,15 @@ public class FragmentItemDetails extends Fragment {
         });
 
         dbHelper=new DbHelper(getActivity());
-        my_image= (ImageView) view.findViewById(R.id.my_image);
-        tvCalories= (TextView) view.findViewById(R.id.tvCalories);
-        tv_itemTitle= (TextView)view. findViewById(R.id.tv_itemTitle);
-        tvProtein= (TextView) view.findViewById(R.id.tvProtein);
-        tvFat= (TextView) view.findViewById(R.id.tvFat);
-        tvCarbs= (TextView) view.findViewById(R.id.tvCarbs);
-        IvBack= (ImageView) view.findViewById(R.id.IvBack);
-
-        itemsList = (RecyclerView) view.findViewById(R.id.recycler_view);
+        my_image=  view.findViewById(R.id.my_image);
+        tvCalories=  view.findViewById(R.id.tvCalories);
+        tv_itemTitle= view. findViewById(R.id.tv_itemTitle);
+        tvProtein=  view.findViewById(R.id.tvProtein);
+        tvFat=  view.findViewById(R.id.tvFat);
+        tvCarbs=  view.findViewById(R.id.tvCarbs);
+        IvBack=  view.findViewById(R.id.IvBack);
+        IvFavorite=  view.findViewById(R.id.IvFavorite);
+        itemsList =  view.findViewById(R.id.recycler_view);
         itemsList.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         itemsList.setLayoutManager(mLinearLayoutManager);
@@ -79,7 +96,7 @@ public class FragmentItemDetails extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             itemDetails = bundle.getParcelable("itemDetails");
-            data.addAll(bundle.<CategoryItem>getParcelableArrayList("itemList"));
+            data.addAll(Objects.requireNonNull(bundle.<CategoryItem>getParcelableArrayList("itemList")));
         }
 
         adapter = new AdapterItemsList(getActivity(), data, new CustomItemClickListener() {
@@ -97,10 +114,10 @@ public class FragmentItemDetails extends Fragment {
                 Log.d("TAG", "add to cart" + categoryItem.getName());
                 if (card_plus_minus==-1){
                     dbHelper.deleteCartRow(categoryItem.getName());
-                    ((MainActivity) getActivity()).setCountText(0);
+                    ((MainActivity) Objects.requireNonNull(getActivity())).setCountText(0);
                 }else {
                     dbHelper.insertUpdateCart(categoryItem);
-                    ((MainActivity) getActivity()).setCountText(0);
+                    ((MainActivity) Objects.requireNonNull(getActivity())).setCountText(0);
                 }
             }
         });
@@ -108,13 +125,18 @@ public class FragmentItemDetails extends Fragment {
         IvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).exitApp();
-
+                ((MainActivity) Objects.requireNonNull(getActivity())).exitApp();
+            }
+        });
+        IvFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateFavorite();
             }
         });
         //  set item details
         tv_itemTitle.setText(Html.fromHtml(itemDetails.getAdd_on()));
-        Glide.with(getActivity())
+        Glide.with(Objects.requireNonNull(getActivity()))
                 .load(itemDetails.getImage_url().replace(" ", "%20"))
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.load)
@@ -136,18 +158,70 @@ public class FragmentItemDetails extends Fragment {
         tvCarbs.setText(Html.fromHtml(Carbs));
         return view;
     }
+
+    private void CreateFavorite() {
+        if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
+            MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
+            Map<String, String> params = new HashMap<>();
+//            params.put("email", edt_email.getText().toString());
+//            params.put("password", edt_password.getText().toString());
+//            params.put("mobile", edt_mobile.getText().toString());
+            Log.d("4343", new JSONObject(params).toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    UrlConstants.createUser,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            MyCustomProgressDialog.dismissDialog();
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                            dialog.setTitle(R.string.register_title);
+                            dialog.setMessage(R.string.register_success);
+                            dialog.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                            dialog.setCancelable(false);
+                            dialog.show();
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        assert ((AppCompatActivity)getActivity()) != null;
-//       ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        assert ((AppCompatActivity)getActivity()) != null;
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
 }

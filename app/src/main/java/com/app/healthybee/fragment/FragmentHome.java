@@ -168,6 +168,7 @@ public class FragmentHome extends Fragment {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     class UploadCategoryFragment extends AsyncTask<String, Void, String> {
 
         @Override
@@ -188,11 +189,11 @@ public class FragmentHome extends Fragment {
                 fragmentCategoryList.setArguments(bundle);
                 adapter.addFrag(fragmentCategoryList, categoryList.get(i));
 
-//                FragmentRecent fragmentCategoryList = new FragmentRecent();
+//                FragmentRecent fragmentRecent = new FragmentRecent();
 //                Bundle bundle = new Bundle();
 //                bundle.putString("category", categoryList.get(i));
-//                fragmentCategoryList.setArguments(bundle);
-//                adapter.addFrag(fragmentCategoryList, categoryList.get(i));
+//                fragmentRecent.setArguments(bundle);
+//                adapter.addFrag(fragmentRecent, categoryList.get(i));
 
             }
             return null;

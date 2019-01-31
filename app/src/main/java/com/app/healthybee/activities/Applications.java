@@ -12,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.app.healthybee.utils.FontsOverride;
+import com.app.healthybee.volleyrequest.WebServiceProvider;
 
 public class Applications extends Application {
 
@@ -24,6 +25,12 @@ public class Applications extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Applications mInstance;
     private RequestQueue mRequestQueue;
+
+    private static WebServiceProvider webServiceProvider;
+
+    public static WebServiceProvider getWebServiceProvider() {
+        return webServiceProvider;
+    }
 
     public static synchronized Applications getInstance() {
         return mInstance;
@@ -40,6 +47,9 @@ public class Applications extends Application {
         FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/Roboto-Regular.ttf");
         FontsOverride.setDefaultFont(this, "SERIF", "fonts/Roboto-Regular.ttf");
         FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Regular.ttf");
+
+        webServiceProvider=WebServiceProvider.getInstance(this);
+
     }
 
 

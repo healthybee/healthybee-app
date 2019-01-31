@@ -12,6 +12,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.app.healthybee.R;
 import com.app.healthybee.activities.Applications;
 import com.app.healthybee.listeners.VolleyResponseListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,7 +69,11 @@ public class NetworkConstants {
                         MyCustomProgressDialog.dismissDialog();
                     }
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
+                        jsonArray1 = new JSONArray(response);
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        Gson gson = gsonBuilder.create();
+                        Object[] object = gson.fromJson(String.valueOf(jsonArray1), aClass);
+                        listener.onResponse(object, "");
                     } catch (JSONException e) {
                         e.printStackTrace();
                         if (progress) {
@@ -85,12 +91,13 @@ public class NetworkConstants {
                     }
                     listener.onError(error.toString());
                 }
-            }) {
+            }){
                 @Override
-                protected Map<String, String> getParams() {
-                    HashMap<String, String> hashMap;
-                    hashMap = param;
-                    return hashMap;
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> header= new HashMap<>();
+                    header.put("Content-Type","application/json");
+                    header.put("Authorization", "Bearer " + SharedPrefUtil.getToken(context));
+                    return header;
                 }
             };
             Applications.getInstance().addToRequestQueue(stringRequest);

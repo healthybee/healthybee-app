@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.healthybee.R;
+import com.google.gson.Gson;
 //import com.google.gson.Gson;
 
 import java.io.Serializable;
@@ -94,19 +95,19 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.ViewHolder
     /**
      * To save last state request
      */
-//    public void addSearchHistory(String s) {
-//        SearchObject searchObject = new SearchObject(getSearchHistory());
-//        if (searchObject.items.contains(s)) searchObject.items.remove(s);
-//        searchObject.items.add(s);
-//        if (searchObject.items.size() > MAX_HISTORY_ITEMS) searchObject.items.remove(0);
-//        String json = new Gson().toJson(searchObject, SearchObject.class);
-//        prefs.edit().putString(SEARCH_HISTORY_KEY, json).apply();
-//    }
-//
-//    private List<String> getSearchHistory() {
-//        String json = prefs.getString(SEARCH_HISTORY_KEY, "");
-//        if (json.equals("")) return new ArrayList<>();
-//        SearchObject searchObject = new Gson().fromJson(json, SearchObject.class);
-//        return searchObject.items;
-//    }
+    public void addSearchHistory(String s) {
+        SearchObject searchObject = new SearchObject(getSearchHistory());
+        if (searchObject.items.contains(s)) searchObject.items.remove(s);
+        searchObject.items.add(s);
+        if (searchObject.items.size() > MAX_HISTORY_ITEMS) searchObject.items.remove(0);
+        String json = new Gson().toJson(searchObject, SearchObject.class);
+        prefs.edit().putString(SEARCH_HISTORY_KEY, json).apply();
+    }
+
+    private List<String> getSearchHistory() {
+        String json = prefs.getString(SEARCH_HISTORY_KEY, "");
+        if (json.equals("")) return new ArrayList<>();
+        SearchObject searchObject = new Gson().fromJson(json, SearchObject.class);
+        return searchObject.items;
+    }
 }

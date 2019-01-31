@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.healthybee.R;
+import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.NetworkCheck;
+import com.app.healthybee.utils.SharedPrefUtil;
 import com.google.ads.mediation.admob.AdMobAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -39,7 +41,7 @@ public class FragmentRecent extends Fragment {
     private RecyclerView recyclerView;
     private AdapterRecent mAdapter;
     private SwipeRefreshLayout swipe_refresh;
-    private Call<CallbackRecent> callbackCall = null;
+    private Call<CategoryItem> callbackCall = null;
     private int post_total = 0;
     private int failed_page = 0;
     private InterstitialAd interstitialAd;
@@ -114,21 +116,21 @@ public class FragmentRecent extends Fragment {
 
     private void requestListPostApi(final int page_no) {
         ApiInterface apiInterface = RestAdapter.createAPI();
-        callbackCall = apiInterface.getRecentPost(page_no, Config.LOAD_MORE);
-        callbackCall.enqueue(new Callback<CallbackRecent>() {
+        callbackCall = apiInterface.getRecentPost(1, Config.LOAD_MORE, "application/json","Bearer " + SharedPrefUtil.getToken(getActivity()));
+        callbackCall.enqueue(new Callback<CategoryItem>() {
             @Override
-            public void onResponse(Call<CallbackRecent> call, Response<CallbackRecent> response) {
-                CallbackRecent resp = response.body();
-                if (resp != null && resp.status.equals("ok")) {
-                    post_total = resp.count_total;
-                    displayApiResult(resp.posts);
-                } else {
-                    onFailRequest(page_no);
-                }
+            public void onResponse(Call<CategoryItem> call, Response<CategoryItem> response) {
+                CategoryItem resp = response.body();
+//                if (resp != null && resp.status.equals("ok")) {
+//                    post_total = resp.count_total;
+//                    displayApiResult(resp.posts);
+//                } else {
+//                    onFailRequest(page_no);
+//                }
             }
 
             @Override
-            public void onFailure(Call<CallbackRecent> call, Throwable t) {
+            public void onFailure(Call<CategoryItem> call, Throwable t) {
                 if (!call.isCanceled()) onFailRequest(page_no);
             }
 

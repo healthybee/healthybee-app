@@ -1,48 +1,39 @@
 package com.app.healthybee.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
-public class Cart implements Parcelable {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+public class Cart{
+    @SerializedName("_id")
+    @Expose
     private String id;
+    @SerializedName("quantity")
+    @Expose
+    private Integer quantity;
+    @SerializedName("productId")
+    @Expose
     private String productId;
-    private int quantity;
+    @SerializedName("user")
+    @Expose
+    private String user;
+    @SerializedName("createdAt")
+    @Expose
     private String createdAt;
+    @SerializedName("updatedAt")
+    @Expose
     private String updatedAt;
+    @SerializedName("__v")
+    @Expose
+    private Integer v;
+    @SerializedName("result")
+    @Expose
+    private List<Result> result = null;
 
-    protected Cart(Parcel in) {
-        id = in.readString();
-        productId = in.readString();
-        quantity = in.readInt();
-        createdAt = in.readString();
-        updatedAt = in.readString();
+    public Cart() {
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(productId);
-        dest.writeInt(quantity);
-        dest.writeString(createdAt);
-        dest.writeString(updatedAt);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Cart> CREATOR = new Creator<Cart>() {
-        @Override
-        public Cart createFromParcel(Parcel in) {
-            return new Cart(in);
-        }
-
-        @Override
-        public Cart[] newArray(int size) {
-            return new Cart[size];
-        }
-    };
 
     public String getId() {
         return id;
@@ -50,6 +41,14 @@ public class Cart implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getProductId() {
@@ -60,12 +59,12 @@ public class Cart implements Parcelable {
         this.productId = productId;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getUser() {
+        return user;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getCreatedAt() {
@@ -83,4 +82,21 @@ public class Cart implements Parcelable {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public Integer getV() {
+        return v;
+    }
+
+    public void setV(Integer v) {
+        this.v = v;
+    }
+
+    public List<Result> getResult() {
+        return result;
+    }
+
+    public void setResult(List<Result> result) {
+        this.result = result;
+    }
+
 }
