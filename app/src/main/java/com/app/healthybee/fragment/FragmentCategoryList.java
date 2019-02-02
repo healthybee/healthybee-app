@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -25,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.healthybee.Common;
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.utils.GridSpacingItemDecoration;
@@ -35,7 +35,6 @@ import com.app.healthybee.R;
 import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
-import com.app.healthybee.activities.Applications;
 import com.app.healthybee.adapter.AdapterCategoryItem;
 import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.models.CategoryItem;
@@ -211,7 +210,7 @@ public class FragmentCategoryList extends Fragment {
 
                                         Bundle bundle = new Bundle();
                                         bundle.putParcelable("itemDetails", categoryItemList.get(position));
-                                        bundle.putParcelableArrayList("itemList", (ArrayList<? extends Parcelable>) categoryItemList);
+                                        bundle.putParcelableArrayList("itemList", categoryItemList);
                                         Fragment fragment = new FragmentItemDetails();
                                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                         fragment.setArguments(bundle);
@@ -262,7 +261,7 @@ public class FragmentCategoryList extends Fragment {
             };
 
             // Add JsonArrayRequest to the RequestQueue
-            Applications.getInstance().addToRequestQueue(jsonArrayRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonArrayRequest);
 
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));

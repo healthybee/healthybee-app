@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -27,9 +26,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.R;
 import com.app.healthybee.RoundedCornersTransformation;
-import com.app.healthybee.activities.Applications;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
@@ -118,7 +117,7 @@ public class FragmentEditProfile extends Fragment {
             //https://healthybee-mob-api.herokuapp.com/users/5c208b7d3233c40017aa4058/password?access_token=3biGa1hRAPnwN7Ad9hdMOhm6NGBGC4MU
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.PUT,
-                    UrlConstants.updatePassword + "/" + SharedPrefUtil.getUserId(getActivity()) + "/password?" + UrlConstants.access_token + "=" + SharedPrefUtil.getToken(getActivity()),
+                    UrlConstants.updatePassword + SharedPrefUtil.getUserId(getActivity()) + "/password?" + UrlConstants.access_token + "=" + SharedPrefUtil.getToken(getActivity()),
                     new JSONObject(params),
                     new Response.Listener<JSONObject>() {
 
@@ -170,7 +169,7 @@ public class FragmentEditProfile extends Fragment {
                 }
             };
             Log.d("4343", jsonObjectRequest.toString());
-            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
@@ -249,7 +248,7 @@ public class FragmentEditProfile extends Fragment {
                 }
             };
             Log.d("4343", jsonObjectRequest.toString());
-            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));

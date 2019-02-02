@@ -1,7 +1,7 @@
 package com.app.healthybee.listeners;
 
-import com.app.healthybee.models.Cart;
+import com.app.healthybee.models.CartModule;
 
 public interface UpdateCart1 {
-    void OnAddItemToCart(int position,Cart categoryItem, int i1, int card_plus_minus);
+    void OnAddItemToCart(int position, CartModule categoryItem, int i1, int card_plus_minus);
 }

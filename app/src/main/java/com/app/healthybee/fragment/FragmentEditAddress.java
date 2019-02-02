@@ -1,6 +1,5 @@
 package com.app.healthybee.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -8,16 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,12 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.R;
-import com.app.healthybee.activities.ActivitySubscribe;
-import com.app.healthybee.activities.ActivityUserLogin;
-import com.app.healthybee.activities.Applications;
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.activities.MainActivity;
-import com.app.healthybee.dboperation.DbHelper;
-import com.app.healthybee.models.Address;
 import com.app.healthybee.models.AddressModule;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
@@ -150,7 +142,7 @@ public class FragmentEditAddress extends Fragment {
                 }
             };
             Log.d("4343", jsonObjectRequest.toString());
-            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
@@ -199,7 +191,7 @@ public class FragmentEditAddress extends Fragment {
                 }
             };
             Log.d("4343", jsonObjectRequest.toString());
-            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));

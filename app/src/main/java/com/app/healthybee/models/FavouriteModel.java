@@ -1,42 +1,85 @@
 package com.app.healthybee.models;
-
+import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 public class FavouriteModel {
 
-    String title;
-    String old_price;
-    String new_price;
+    @SerializedName("_id")
+    @Expose
+    private String id;
+    @SerializedName("productId")
+    @Expose
+    private String productId;
+    @SerializedName("user")
+    @Expose
+    private String user;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
+    @SerializedName("updatedAt")
+    @Expose
+    private String updatedAt;
+    @SerializedName("__v")
+    @Expose
+    private Integer v;
+    @SerializedName("result")
+    @Expose
+    private List<ResultFavorite> result = null;
 
-
-    public FavouriteModel(String title, String old_price, String new_price) {
-        this.title = title;
-        this.old_price = old_price;
-        this.new_price = new_price;
+    public String getId() {
+        return id;
     }
 
-    public FavouriteModel() {
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
-    public String getOld_price() {
-        return old_price;
+    public String getUser() {
+        return user;
     }
 
-    public void setOld_price(String old_price) {
-        this.old_price = old_price;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public String getNew_price() {
-        return new_price;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setNew_price(String new_price) {
-        this.new_price = new_price;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Integer getV() {
+        return v;
+    }
+
+    public void setV(Integer v) {
+        this.v = v;
+    }
+
+    public List<ResultFavorite> getResult() {
+        return result;
+    }
+
+    public void setResult(List<ResultFavorite> result) {
+        this.result = result;
+    }
+
 }

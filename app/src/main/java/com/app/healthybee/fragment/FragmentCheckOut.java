@@ -36,10 +36,9 @@ import com.app.healthybee.Paytm;
 import com.app.healthybee.activities.ActivityCheckOut;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.adapter.AdapterTimeSlot;
-import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.listeners.UpdateCart1;
 import com.app.healthybee.listeners.VolleyResponseListener;
-import com.app.healthybee.models.Cart;
+import com.app.healthybee.models.CartModule;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.adapter.AdapterCheckOut;
 import com.app.healthybee.listeners.CustomItemClickListener;
@@ -73,7 +72,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     private AdapterCheckOut adapter;
     private AdapterTimeSlot adapterTimeSlot;
     private NestedScrollView sv;
-    private ArrayList<Cart> data;
+    private ArrayList<CartModule> data;
     private ArrayList<TimeSlot> timeSlotArrayList;
 
     private SwipeRefreshLayout swipe_refresh;
@@ -467,12 +466,12 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     }
 
     private void RetrieveCarts() {
-//        Cart cart=new Cart();
+//        CartModule cart=new CartModule();
 //        String requestBody= new GsonBuilder().create().toJson(cart);
-//        GsonRequest<Cart> cartGsonRequest=GsonRequest.getGsonRequest(getActivity(), GsonRequest.REQ_TYPE.RETRIEVE_CARTS, requestBody, Cart.class,
-//                new Response.Listener<Cart>() {
+//        GsonRequest<CartModule> cartGsonRequest=GsonRequest.getGsonRequest(getActivity(), GsonRequest.REQ_TYPE.RETRIEVE_CARTS, requestBody, CartModule.class,
+//                new Response.Listener<CartModule>() {
 //                    @Override
-//                    public void onResponse(Cart response) {
+//                    public void onResponse(CartModule response) {
 //
 //                    }
 //                }, new Response.ErrorListener() {
@@ -481,13 +480,13 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
 //
 //                    }
 //                });
-//        Applications.getWebServiceProvider().addToRequestQueue(cartGsonRequest);
+//        MyApplication.getWebServiceProvider().addToRequestQueue(cartGsonRequest);
         HashMap<String, String> hashMap = new HashMap<>();
 
-        NetworkConstants.getWebservice(true, getActivity(), Request.Method.GET, UrlConstants.RetrieveCart, hashMap, new VolleyResponseListener<Cart>() {
+        NetworkConstants.getWebservice(true, getActivity(), Request.Method.GET, UrlConstants.RetrieveCart, hashMap, new VolleyResponseListener<CartModule>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Cart[] object, String message) {
+            public void onResponse(CartModule[] object, String message) {
                 swipe_refresh.setRefreshing(false);
                 if (object[0] != null) {
                     data.addAll(Arrays.asList(object));
@@ -499,7 +498,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                         }
                     }, new UpdateCart1() {
                         @Override
-                        public void OnAddItemToCart(int position, Cart categoryItem, int i1, int card_plus_minus) {
+                        public void OnAddItemToCart(int position, CartModule categoryItem, int i1, int card_plus_minus) {
                             Log.d("TAG", "add to cart" + categoryItem.getId());
                             if (card_plus_minus == -1) {
                                 Common.DeleteCart(getActivity(),categoryItem.getId());
@@ -541,6 +540,6 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                 swipe_refresh.setRefreshing(false);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
             }
-        }, Cart[].class);
+        }, CartModule[].class);
     }
 }

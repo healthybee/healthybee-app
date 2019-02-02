@@ -22,7 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.app.healthybee.activities.Applications;
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.adapter.AdapterItemsList;
 import com.app.healthybee.R;
 import com.app.healthybee.activities.MainActivity;
@@ -32,6 +32,7 @@ import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -163,13 +164,11 @@ public class FragmentItemDetails extends Fragment {
         if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
             MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
             Map<String, String> params = new HashMap<>();
-//            params.put("email", edt_email.getText().toString());
-//            params.put("password", edt_password.getText().toString());
-//            params.put("mobile", edt_mobile.getText().toString());
+            params.put("productId",itemDetails.getId());
             Log.d("4343", new JSONObject(params).toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    UrlConstants.createUser,
+                    UrlConstants.CreateFavourite,
                     new JSONObject(params),
                     new Response.Listener<JSONObject>() {
 
@@ -177,17 +176,16 @@ public class FragmentItemDetails extends Fragment {
                         public void onResponse(JSONObject response) {
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
-                            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                            dialog.setTitle(R.string.register_title);
-                            dialog.setMessage(R.string.register_success);
-                            dialog.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage("Item added in favorite");
+                            builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-
+                                    dialogInterface.dismiss();
                                 }
                             });
-                            dialog.setCancelable(false);
-                            dialog.show();
+                            builder.setCancelable(false);
+                            builder.show();
 
                         }
                     }, new Response.ErrorListener() {
@@ -203,11 +201,12 @@ public class FragmentItemDetails extends Fragment {
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
                     return headers;
                 }
             };
             Log.d("4343", jsonObjectRequest.toString());
-            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));

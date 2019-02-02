@@ -18,8 +18,8 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.R;
-import com.app.healthybee.activities.Applications;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.adapter.AdapterAddress;
 import com.app.healthybee.listeners.CustomAddClickListener;
@@ -173,7 +173,7 @@ public class FragmentAddress extends Fragment {
                 }
             };
 
-            Applications.getInstance().addToRequestQueue(jsonArrayRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonArrayRequest);
 
 
         } else {

@@ -77,7 +77,7 @@ public class FragmentProfile extends Fragment {
                 //finish();
             }
         });
-       // myApplication = Applications.getInstance();
+       // myApplication = MyApplication.getInstance();
         txtUserEmail= root_view.findViewById(R.id.txtUserEmail);
         civProfileImage= root_view.findViewById(R.id.civProfileImage);
         txtUserMobile= root_view.findViewById(R.id.txtUserMobile);

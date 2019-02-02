@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.MyCustomProgressDialog;
@@ -112,7 +113,7 @@ public class ActivityForgotPassword extends AppCompatActivity {
                 }
             };
             Log.d("4343", jsonObjectRequest.toString());
-            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(activity, getString(R.string.network_title), getString(R.string.network_message));

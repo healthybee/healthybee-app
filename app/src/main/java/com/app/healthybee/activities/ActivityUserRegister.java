@@ -8,13 +8,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,13 +18,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.Constant;
@@ -283,7 +278,7 @@ public class ActivityUserRegister extends AppCompatActivity {
                 }
             };
             Log.d("4343", jsonObjectRequest.toString());
-            Applications.getInstance().addToRequestQueue(jsonObjectRequest);
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
 
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(activity, getString(R.string.network_title), getString(R.string.network_message));

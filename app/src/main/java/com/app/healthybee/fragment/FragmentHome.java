@@ -24,14 +24,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.healthybee.activities.ActivitySearch;
-import com.app.healthybee.testcode.FragmentRecent;
 import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
-import com.app.healthybee.activities.Applications;
+import com.app.healthybee.MyApplication;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
@@ -313,7 +312,7 @@ public class FragmentHome extends Fragment {
                         return headers;
                     }
                 };
-                Applications.getInstance().addToRequestQueue(jsonArrayRequest);
+                MyApplication.getInstance().addToRequestQueue(jsonArrayRequest);
             } else {
                 MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
             }

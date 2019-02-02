@@ -5,19 +5,17 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.app.healthybee.R;
-import com.app.healthybee.activities.Applications;
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.listeners.VolleyResponseListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +35,6 @@ public class NetworkConstants {
                     if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
-
         }
         return false;
     }
@@ -97,7 +94,7 @@ public class NetworkConstants {
                 }
             }) {
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders()  {
                     Map<String, String> header = new HashMap<>();
                     header.put("Content-Type", "application/json");
                     header.put("Authorization", "Bearer " + SharedPrefUtil.getToken(context));
@@ -105,11 +102,11 @@ public class NetworkConstants {
                 }
 
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams()   {
                     return param;
                 }
             };
-            Applications.getInstance().addToRequestQueue(stringRequest);
+            MyApplication.getInstance().addToRequestQueue(stringRequest);
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(context, context.getString(R.string.network_title), context.getString(R.string.network_message));
         }

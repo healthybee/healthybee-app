@@ -2,7 +2,6 @@ package com.app.healthybee.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -10,18 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.listeners.UpdateCart1;
-import com.app.healthybee.models.Cart;
-import com.app.healthybee.models.CategoryItem;
+import com.app.healthybee.models.CartModule;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.Constant;
@@ -36,12 +31,12 @@ import java.util.List;
 public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyViewHolder> {
 
     private Context mContext;
-    private List<Cart> categoryItemList;
+    private List<CartModule> categoryItemList;
     private ArrayList<String> mSpinnerDataList;
     private CustomItemClickListener listener;
     private UpdateCart1 updateCart;
 
-    public AdapterCheckOut(Context context, ArrayList<Cart> data,ArrayList<String> mSpinnerData, CustomItemClickListener tag, UpdateCart1 updateCart1) {
+    public AdapterCheckOut(Context context, ArrayList<CartModule> data, ArrayList<String> mSpinnerData, CustomItemClickListener tag, UpdateCart1 updateCart1) {
         this.mContext = context;
         this.categoryItemList = data;
         this.mSpinnerDataList=mSpinnerData;
@@ -96,7 +91,7 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final AdapterCheckOut.MyViewHolder holder, final int position) {
-        final Cart cart = categoryItemList.get(position);
+        final CartModule cart = categoryItemList.get(position);
         holder.tvItemName.setText(Html.fromHtml(cart.getResult().get(0).getName()));
         holder.tvItemPrice.setText(Html.fromHtml(mContext.getResources().getString(R.string.rs)+" "+cart.getResult().get(0).getPrice())+"/Meal");
 

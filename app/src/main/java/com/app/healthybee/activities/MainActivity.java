@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         tvMenu.setTextColor(Color.parseColor("#FF9900"));
         Fragment fragment;
         fragment = new FragmentHome();
-        loadFragmentHome(fragment,"FragmentHome");
+        loadFragment(fragment,"FragmentHome");
 
         rlMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,16 +195,16 @@ public class MainActivity extends AppCompatActivity {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment,fragmentTag);
-        //transaction.addToBackStack(null);
-        transaction.commit();
-    }
-    private void loadFragmentHome(Fragment fragment, String fragmentTag) {
-        // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment,fragmentTag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
+//    private void loadFragmentHome(Fragment fragment, String fragmentTag) {
+//        // load fragment
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.container, fragment,fragmentTag);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+//    }
     @Override
     public void onBackPressed() {
        exitApp();

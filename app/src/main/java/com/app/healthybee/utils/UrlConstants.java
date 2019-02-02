@@ -23,9 +23,12 @@ public class UrlConstants {
     public static String CreateCart = "https://healthybee-mob-api.herokuapp.com/carts";
     public static String UpdateCart = "https://healthybee-mob-api.herokuapp.com/carts/";
     public static String DeleteCart = "https://healthybee-mob-api.herokuapp.com/carts/";
+    public static String CreateFavourite = "https://healthybee-mob-api.herokuapp.com/favourites";
+    public static String RetrieveFavourite = "https://healthybee-mob-api.herokuapp.com/favourites";
+
+
 
     public static String SendEmail = "https://healthybee-mob-api.herokuapp.com/password-resets?access_token="+token;
-    public static String CreateFavourite = baseUrl;
     public static String RetrieveCart = baseUrl+"carts";
 
 

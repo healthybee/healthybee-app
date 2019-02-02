@@ -8,20 +8,28 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.healthybee.R;
+import com.app.healthybee.RoundedCornersTransformation;
+import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.models.FavouriteModel;
+import com.app.healthybee.models.ResultFavorite;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
 public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.ViewHolder> {
-    Context context;
-    ArrayList<FavouriteModel> list;
+    private Context context;
+    private ArrayList<FavouriteModel> list;
+    private CustomItemClickListener customItemClickListener;
 
-    public AdapterFavourite(Context context, ArrayList<FavouriteModel> list) {
+    public AdapterFavourite(Context context, ArrayList<FavouriteModel> list, CustomItemClickListener customItemClickListener1) {
         this.context = context;
         this.list = list;
+        this.customItemClickListener = customItemClickListener1;
     }
 
     @NonNull
@@ -34,11 +42,17 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
 
     @Override
     public void onBindViewHolder(@NonNull AdapterFavourite.ViewHolder holder, int position) {
-        FavouriteModel pos = list.get(position);
-        holder.title.setText(Html.fromHtml(pos.getTitle()));
-        holder.tv_old_price.setText(Html.fromHtml(context.getResources().getString(R.string.rs)+" "+pos.getOld_price()));
+        FavouriteModel favouriteModel = list.get(position);
+        holder.title.setText(Html.fromHtml(favouriteModel.getResult().get(0).getName()));
+        holder.tv_old_price.setText(Html.fromHtml(context.getResources().getString(R.string.rs) + " " + favouriteModel.getResult().get(0).getOldPrice()));
         holder.tv_old_price.setPaintFlags(holder.tv_old_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_new_price.setText(Html.fromHtml(context.getResources().getString(R.string.rs)+" "+pos.getNew_price()+".00/Meal"));
+        holder.tv_new_price.setText(Html.fromHtml(context.getResources().getString(R.string.rs) + " " + favouriteModel.getResult().get(0).getPrice() + ".00/Meal"));
+        Glide.with(context)
+                .load(favouriteModel.getResult().get(0).getImageUrl().replace(" ", "%20"))
+                .apply(RequestOptions
+                        .bitmapTransform(new RoundedCornersTransformation( context,10, 0))
+                        .error(R.drawable.ic_no_item))
+                .into(holder.thumbnail);
     }
 
     @Override
@@ -47,13 +61,17 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, tv_old_price, tv_new_price;
+        TextView title;
+        TextView tv_old_price;
+        TextView tv_new_price;
+        ImageView thumbnail;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title= itemView.findViewById(R.id.title);
-            tv_old_price= itemView.findViewById(R.id.tv_old_price);
-            tv_new_price= itemView.findViewById(R.id.tv_new_price);
+            title = itemView.findViewById(R.id.title);
+            tv_old_price = itemView.findViewById(R.id.tv_old_price);
+            tv_new_price = itemView.findViewById(R.id.tv_new_price);
+            thumbnail= itemView.findViewById(R.id.thumbnail);
 
         }
     }

@@ -27,3 +27,4 @@
    public *;
 }
 -dontwarn io.realm.**
+-dontwarn javax.xml.stream.events.**

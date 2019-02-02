@@ -1,4 +1,4 @@
-package com.app.healthybee.activities;
+package com.app.healthybee;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -12,27 +12,21 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.app.healthybee.utils.FontsOverride;
-import com.app.healthybee.volleyrequest.WebServiceProvider;
 
-public class Applications extends Application {
+public class MyApplication extends Application {
 
     public Typeface font = null;
-    public static final String TAG = Applications.class.getSimpleName();
+    public static final String TAG = MyApplication.class.getSimpleName();
     @SuppressLint("StaticFieldLeak")
     public static volatile Context mMainContext;
     public static volatile Handler mMainHandler;
     public static volatile LayoutInflater mMainLayoutInflater;
     @SuppressLint("StaticFieldLeak")
-    private static Applications mInstance;
+    private static MyApplication mInstance;
     private RequestQueue mRequestQueue;
 
-    private static WebServiceProvider webServiceProvider;
 
-    public static WebServiceProvider getWebServiceProvider() {
-        return webServiceProvider;
-    }
-
-    public static synchronized Applications getInstance() {
+    public static synchronized MyApplication getInstance() {
         return mInstance;
     }
 
@@ -43,12 +37,11 @@ public class Applications extends Application {
         mMainContext = getApplicationContext();
         mMainHandler = new Handler(getMainLooper());
         mMainLayoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-       FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/Roboto-Regular.ttf");
-        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/Roboto-Regular.ttf");
-        FontsOverride.setDefaultFont(this, "SERIF", "fonts/Roboto-Regular.ttf");
-        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Regular.ttf");
-
-        webServiceProvider=WebServiceProvider.getInstance(this);
+        FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/Roboto-Regular.ttf");
+//        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/Roboto-Regular.ttf");
+//        FontsOverride.setDefaultFont(this, "SERIF", "fonts/Roboto-Regular.ttf");
+//        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Regular.ttf");
+//
 
     }
 
@@ -73,6 +66,5 @@ public class Applications extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//        MultiDex.install(this);
     }
 }

@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.R;
-import com.app.healthybee.activities.Applications;
 import com.app.healthybee.fragment.FragmentProfile;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class AdapterAbout extends RecyclerView.Adapter<AdapterAbout.UserViewHold
 
     private List<FragmentProfile.Data> dataList;
     private Context context;
-    Applications myApplication;
+    MyApplication myApplication;
     private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
@@ -40,7 +40,7 @@ public class AdapterAbout extends RecyclerView.Adapter<AdapterAbout.UserViewHold
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.lsv_item_about, null);
         UserViewHolder userViewHolder = new UserViewHolder(view);
-        myApplication = Applications.getInstance();
+        myApplication = MyApplication.getInstance();
         return userViewHolder;
     }
 

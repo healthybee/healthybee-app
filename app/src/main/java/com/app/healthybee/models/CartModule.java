@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Cart{
+public class CartModule {
     @SerializedName("_id")
     @Expose
     private String id;
@@ -32,7 +32,7 @@ public class Cart{
     @Expose
     private List<Result> result = null;
 
-    public Cart() {
+    public CartModule() {
     }
 
     public String getId() {
