@@ -42,8 +42,6 @@ public class FragmentFavorite extends Fragment {
     private View root_view;
     private RecyclerView recyclerView;
     private AdapterFavourite mAdapter;
-    private ImageView ivBack;
-    private Toolbar toolbar;
 
     public FragmentFavorite() {
         // Required empty public constructor
@@ -60,7 +58,7 @@ public class FragmentFavorite extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.fragment_favorite, null);
-        toolbar = root_view.findViewById(R.id.toolbarFavorite);
+        Toolbar toolbar = root_view.findViewById(R.id.toolbarFavorite);
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
         list = new ArrayList<>();
         recyclerView = root_view.findViewById(R.id.recyclerView);
@@ -69,7 +67,7 @@ public class FragmentFavorite extends Fragment {
         recyclerView.setHasFixedSize(true);
         RetrieveFavorite();
 
-        ivBack = root_view.findViewById(R.id.ivBack);
+        ImageView ivBack = root_view.findViewById(R.id.ivBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
