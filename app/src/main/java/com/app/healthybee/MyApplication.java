@@ -38,10 +38,10 @@ public class MyApplication extends Application {
         mMainHandler = new Handler(getMainLooper());
         mMainLayoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/Roboto-Regular.ttf");
-//        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/Roboto-Regular.ttf");
-//        FontsOverride.setDefaultFont(this, "SERIF", "fonts/Roboto-Regular.ttf");
-//        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Regular.ttf");
-//
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/Roboto-Regular.ttf");
+        FontsOverride.setDefaultFont(this, "SERIF", "fonts/Roboto-Regular.ttf");
+        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Regular.ttf");
+
 
     }
 

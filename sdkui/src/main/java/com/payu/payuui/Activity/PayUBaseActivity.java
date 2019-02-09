@@ -113,7 +113,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
             merchantKey = mPaymentParams.getKey();
             userCredentials = mPaymentParams.getUserCredentials();
 
-            oneClickCardTokens = (HashMap<String, String>) bundle.getSerializable(PayuConstants.ONE_CLICK_CARD_TOKENS);
+          //  oneClickCardTokens = (HashMap<String, String>) bundle.getSerializable(PayuConstants.ONE_CLICK_CARD_TOKENS);
 
          // Call back method of PayU custom browser to check availability of Samsung Pay
 

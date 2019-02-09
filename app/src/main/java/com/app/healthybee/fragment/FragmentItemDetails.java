@@ -97,31 +97,31 @@ public class FragmentItemDetails extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             itemDetails = bundle.getParcelable("itemDetails");
-            data.addAll(Objects.requireNonNull(bundle.<CategoryItem>getParcelableArrayList("itemList")));
+          //  data.addAll(Objects.requireNonNull(bundle.<CategoryItem>getParcelableArrayList("itemList")));
         }
 
-        adapter = new AdapterItemsList(getActivity(), data, new CustomItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                Log.d("TAG", "clicked position:" + position);
-                String postId = data.get(position).getName();
-                Toast.makeText(getActivity(), postId, Toast.LENGTH_SHORT).show();
-
-                // do what ever you want to do with it
-            }
-        }, new UpdateCart() {
-            @Override
-            public void OnAddItemToCart(CategoryItem categoryItem, int i1, int card_plus_minus) {
-                Log.d("TAG", "add to cart" + categoryItem.getName());
-                if (card_plus_minus==-1){
-                    dbHelper.deleteCartRow(categoryItem.getName());
-                    ((MainActivity) Objects.requireNonNull(getActivity())).setCountText(0);
-                }else {
-                    dbHelper.insertUpdateCart(categoryItem);
-                    ((MainActivity) Objects.requireNonNull(getActivity())).setCountText(0);
-                }
-            }
-        });
+//        adapter = new AdapterItemsList(getActivity(), data, new CustomItemClickListener() {
+//            @Override
+//            public void onItemClick(View v, int position) {
+//                Log.d("TAG", "clicked position:" + position);
+//                String postId = data.get(position).getName();
+//                Toast.makeText(getActivity(), postId, Toast.LENGTH_SHORT).show();
+//
+//                // do what ever you want to do with it
+//            }
+//        }, new UpdateCart() {
+//            @Override
+//            public void OnAddItemToCart(CategoryItem categoryItem, int i1, int card_plus_minus) {
+//                Log.d("TAG", "add to cart" + categoryItem.getName());
+//                if (card_plus_minus==-1){
+//                    dbHelper.deleteCartRow(categoryItem.getName());
+//                    ((MainActivity) Objects.requireNonNull(getActivity())).setCountText(0);
+//                }else {
+//                    dbHelper.insertUpdateCart(categoryItem);
+//                    ((MainActivity) Objects.requireNonNull(getActivity())).setCountText(0);
+//                }
+//            }
+//        });
 
         IvBack.setOnClickListener(new View.OnClickListener() {
             @Override

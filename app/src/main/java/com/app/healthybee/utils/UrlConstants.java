@@ -25,7 +25,7 @@ public class UrlConstants {
     public static String DeleteCart = "https://healthybee-mob-api.herokuapp.com/carts/";
     public static String CreateFavourite = "https://healthybee-mob-api.herokuapp.com/favourites";
     public static String RetrieveFavourite = "https://healthybee-mob-api.herokuapp.com/favourites";
-
+    public static String DeleteFavourite = "https://healthybee-mob-api.herokuapp.com/favourites/";
 
 
     public static String SendEmail = "https://healthybee-mob-api.herokuapp.com/password-resets?access_token="+token;

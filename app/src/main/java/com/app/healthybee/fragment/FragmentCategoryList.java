@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -27,6 +26,7 @@ import com.app.healthybee.Common;
 import com.app.healthybee.MyApplication;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.listeners.CustomItemClickListener;
+import com.app.healthybee.models.CartModule;
 import com.app.healthybee.utils.GridSpacingItemDecoration;
 import com.app.healthybee.utils.ListPaddingDecoration;
 import com.app.healthybee.utils.MyCustomProgressDialog;
@@ -36,7 +36,6 @@ import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
 import com.app.healthybee.adapter.AdapterCategoryItem;
-import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.models.CategoryItem;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,10 +51,12 @@ public class FragmentCategoryList extends Fragment {
     private AdapterCategoryItem adapter;
     private ArrayList<CategoryItem> categoryItemList;
     private String category = "";
-    private DbHelper dbHelper;
+    //private DbHelper dbHelper;
     private SwipeRefreshLayout swipe_refresh;
     private ImageView imageViewGrid, imageViewList;
+    private ArrayList<CartModule> cartModuleArrayList;
 
+    private  MainActivity mainActivity;
     public FragmentCategoryList() {
         // Required empty public constructor
     }
@@ -76,6 +77,12 @@ public class FragmentCategoryList extends Fragment {
         swipe_refresh.setColorSchemeResources(R.color.colorOrange, R.color.colorGreyDark, R.color.colorBlue, R.color.colorRed);
         imageViewGrid =  rootView.findViewById(R.id.imageViewGrid);
         imageViewList =  rootView.findViewById(R.id.imageViewList);
+        ///////////
+        mainActivity=new MainActivity();
+        cartModuleArrayList=new ArrayList<>();
+        cartModuleArrayList=mainActivity.getCartModuleArrayList();
+        ///////////////////
+
         if (MainActivity.mFlagDisplayList) {
             imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
             imageViewList.setImageResource(R.drawable.ic_listview_enable);
@@ -103,7 +110,7 @@ public class FragmentCategoryList extends Fragment {
             }
         });
 
-        dbHelper = new DbHelper(getActivity());
+        //dbHelper = new DbHelper(getActivity());
         categoryItemList = new ArrayList<>();
 
         Bundle bundle = this.getArguments();
@@ -162,7 +169,7 @@ public class FragmentCategoryList extends Fragment {
         if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
             Log.e("4343", UrlConstants.getCategoryItemList + category);
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                    (UrlConstants.getCategoryItemList + category+"&page=1&limit=5").replace(" ", "%20"),
+                    (UrlConstants.getCategoryItemList + category+"&page=1&limit=10").replace(" ", "%20"),
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
@@ -173,7 +180,7 @@ public class FragmentCategoryList extends Fragment {
                                 swipe_refresh.setRefreshing(false);
                             } else {
                                 showNoItemView(false);
-                                dbHelper.openDB();
+                             //   dbHelper.openDB();
                                 for (int i = 0; i < length; i++) {
                                     try {
                                         JSONObject jsonObject = (JSONObject) response.get(i);
@@ -192,17 +199,17 @@ public class FragmentCategoryList extends Fragment {
                                         categoryItem.setCreatedAt(jsonObject.optString("createdAt"));
                                         categoryItem.setUpdatedAt(jsonObject.optString("updatedAt"));
                                         //  13/11/18
-                                        categoryItem.setCount(dbHelper.getCartCount(jsonObject.optString("name")));
+                                      //  categoryItem.setCount(dbHelper.getCartCount(jsonObject.optString("name")));
 
                                         categoryItemList.add(categoryItem);
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                                        dbHelper.closeDB();
+                                        //dbHelper.closeDB();
                                     }
 
                                 }
-                                dbHelper.closeDB();
+                               // dbHelper.closeDB();
                                 adapter = new AdapterCategoryItem(getActivity(), categoryItemList, new CustomItemClickListener() {
                                     @Override
                                     public void onItemClick(View v, int position) {
@@ -223,17 +230,17 @@ public class FragmentCategoryList extends Fragment {
                                     public void OnAddItemToCart(CategoryItem categoryItem, int count, int card_plus_minus) {
                                         Log.d("TAG", "add to cart" + categoryItem.getName());
                                        // dbHelper.insertUpdateCart(categoryItem);
-                                        int CartCount=((MainActivity) getActivity()).getCount();
+                                        //int CartCount=((MainActivity) getActivity()).getCount();
                                         if (card_plus_minus==1){
-                                            Common.AddCart(getActivity(),categoryItem,CartCount+1);
-                                            ((MainActivity) getActivity()).setCountText(CartCount+1);
+                                            Common.AddCart(getActivity(),categoryItem,count+1);
+                                           // ((MainActivity) getActivity()).setCountText();
                                         }
                                         if (card_plus_minus==0){
-                                            if (CartCount-1==0){
+                                            if (count-1==0){
                                                 // TODO: 12/1/19  delete cart call API
                                             }else {
-                                                Common.AddCart(getActivity(), categoryItem, CartCount - 1);
-                                                ((MainActivity) getActivity()).setCountText(CartCount - 1);
+                                                Common.AddCart(getActivity(), categoryItem, count - 1);
+                                               // ((MainActivity) getActivity()).setCountText();
                                             }
                                         }
 
@@ -252,7 +259,7 @@ public class FragmentCategoryList extends Fragment {
                     }
             ){
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type","application/json");
                     headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));

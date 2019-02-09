@@ -9,7 +9,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.models.CategoryItem;
+import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.SharedPrefUtil;
@@ -34,12 +36,12 @@ public class Common {
                     UrlConstants.CreateCart,
                     new JSONObject(params),
                     new Response.Listener<JSONObject>() {
-
                         @Override
                         public void onResponse(JSONObject response) {
+                            MainActivity.cartCount=MainActivity.cartCount+1;
+                            ((MainActivity) Objects.requireNonNull(context)).setCountText();
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
-
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -54,7 +56,6 @@ public class Common {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type","application/json");
                     headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(context));
-
                     return headers;
                 }
             };
@@ -65,7 +66,7 @@ public class Common {
             MyCustomProgressDialog.showAlertDialogMessage(context, context.getString(R.string.network_title), context.getString(R.string.network_message));
         }
     }
-    public static void UpdateCart(final Context context, String cartId, int CartCount){
+    public static void UpdateCart(final Context context, String cartId, int CartCount, final int card_plus_minus){
         if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(context))) {
             MyCustomProgressDialog.showDialog(context, context.getString(R.string.please_wait));
             Map<String, String> params = new HashMap<>();
@@ -81,6 +82,14 @@ public class Common {
                         public void onResponse(JSONObject response) {
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
+                            if (card_plus_minus==Constant.CARD_PLUS){
+                                MainActivity.cartCount=MainActivity.cartCount+1;
+                                ((MainActivity) Objects.requireNonNull(context)).setCountText();
+                            }
+                            if (card_plus_minus==Constant.CARD_MINUS){
+                                MainActivity.cartCount=MainActivity.cartCount-1;
+                                ((MainActivity) Objects.requireNonNull(context)).setCountText();
+                            }
 
                         }
                     }, new Response.ErrorListener() {
@@ -120,6 +129,8 @@ public class Common {
                         public void onResponse(JSONObject response) {
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
+                            MainActivity.cartCount=MainActivity.cartCount-1;
+                            ((MainActivity) Objects.requireNonNull(context)).setCountText();
 
                         }
                     }, new Response.ErrorListener() {

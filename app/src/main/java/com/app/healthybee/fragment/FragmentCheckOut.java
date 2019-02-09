@@ -56,6 +56,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -466,23 +467,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     }
 
     private void RetrieveCarts() {
-//        CartModule cart=new CartModule();
-//        String requestBody= new GsonBuilder().create().toJson(cart);
-//        GsonRequest<CartModule> cartGsonRequest=GsonRequest.getGsonRequest(getActivity(), GsonRequest.REQ_TYPE.RETRIEVE_CARTS, requestBody, CartModule.class,
-//                new Response.Listener<CartModule>() {
-//                    @Override
-//                    public void onResponse(CartModule response) {
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-//        MyApplication.getWebServiceProvider().addToRequestQueue(cartGsonRequest);
         HashMap<String, String> hashMap = new HashMap<>();
-
         NetworkConstants.getWebservice(true, getActivity(), Request.Method.GET, UrlConstants.RetrieveCart, hashMap, new VolleyResponseListener<CartModule>() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -500,30 +485,23 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                         @Override
                         public void OnAddItemToCart(int position, CartModule categoryItem, int i1, int card_plus_minus) {
                             Log.d("TAG", "add to cart" + categoryItem.getId());
-                            if (card_plus_minus == -1) {
+                            if (card_plus_minus == -1) {// -1 for deletion
                                 Common.DeleteCart(getActivity(),categoryItem.getId());
-
-                                // dbHelper.deleteCartRow(categoryItem.getName());
-                                //((MainActivity) getActivity()).setCountText(0);
+                               // ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
                                 if (!data.isEmpty()) {
                                     data.remove(position);
                                     adapter.notifyDataSetChanged();
                                 }
-                                // data.addAll(dbHelper.getCartList());
-                                recyclerViewItemsList.setAdapter(adapter);
+                                //recyclerViewItemsList.setAdapter(adapter);
                                 // calculateTotalPrice(data);
                                 tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
                             } else {
-                                Common.UpdateCart(getActivity(),categoryItem.getId(),categoryItem.getQuantity());
-
-                                // dbHelper.insertUpdateCart(categoryItem);
-//                                ((MainActivity) getActivity()).setCountText(0);
+                                Common.UpdateCart(getActivity(),categoryItem.getId(),categoryItem.getQuantity(),card_plus_minus);
+                                //((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
 
                                 if (!data.isEmpty()) {
                                     adapter.notifyDataSetChanged();
                                 }
-                                // data.addAll(dbHelper.getCartList());
-                                //recyclerViewItemsList.setAdapter(adapter);
                                  //calculateTotalPrice(data);
                                 tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
                             }

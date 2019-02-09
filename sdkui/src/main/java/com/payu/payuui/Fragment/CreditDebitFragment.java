@@ -95,8 +95,8 @@ public class CreditDebitFragment extends Fragment implements GetOfferStatusApiLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentBundle = getArguments();
-        valueAddedHashMap = (HashMap<String, CardStatus>) fragmentBundle.getSerializable(SdkUIConstants.VALUE_ADDED);
-        fragmentPosition = fragmentBundle.getInt(SdkUIConstants.POSITION);
+      //  valueAddedHashMap = (HashMap<String, CardStatus>) fragmentBundle.getSerializable(SdkUIConstants.VALUE_ADDED);
+       // fragmentPosition = fragmentBundle.getInt(SdkUIConstants.POSITION);
     }
 
     @Override

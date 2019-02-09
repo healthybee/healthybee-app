@@ -73,8 +73,8 @@ public class SavedCardsFragment extends Fragment implements View.OnClickListener
         super.onCreate(savedInstanceState);
         Bundle fragmentBundle = getArguments();
         mStoreCards = fragmentBundle.getParcelableArrayList(PayuConstants.STORED_CARD);
-        valueAddedHashMap = (HashMap<String, CardStatus>) fragmentBundle.getSerializable(SdkUIConstants.VALUE_ADDED);
-        oneClickCardTokens = (HashMap<String, String>) fragmentBundle.getSerializable(PayuConstants.ONE_CLICK_CARD_TOKENS);
+        //valueAddedHashMap = (HashMap<String, CardStatus>) fragmentBundle.getSerializable(SdkUIConstants.VALUE_ADDED);
+        //oneClickCardTokens = (HashMap<String, String>) fragmentBundle.getSerializable(PayuConstants.ONE_CLICK_CARD_TOKENS);
 
     }
 

@@ -26,9 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.healthybee.testcode.ApiInterface;
-import com.app.healthybee.testcode.CallbackRecent;
-import com.app.healthybee.testcode.RestAdapter;
+
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.R;
 import com.app.healthybee.adapter.AdapterSearch;

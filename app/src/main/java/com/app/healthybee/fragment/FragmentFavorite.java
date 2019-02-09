@@ -8,11 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +27,9 @@ import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.adapter.AdapterFavourite;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.listeners.VolleyResponseListener;
+import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.models.FavouriteModel;
+import com.app.healthybee.models.ResultFavorite;
 import com.app.healthybee.utils.ListPaddingDecoration;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.UrlConstants;
@@ -35,9 +37,11 @@ import com.app.healthybee.utils.UrlConstants;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class FragmentFavorite extends Fragment {
+
     private ArrayList<FavouriteModel> list;
     private View root_view;
     private RecyclerView recyclerView;
@@ -93,24 +97,6 @@ public class FragmentFavorite extends Fragment {
         super.onStop();
     }
 
-//    @Override
-//    public void onResume() {
-//        showNoItemView(true);
-//        if(RealmController.with(this).getNewsSize() > 0){
-//            displayData(RealmController.with(this).getNews());
-//        } else {
-//            showNoItemView(true);
-//        }
-//        super.onResume();
-//    }
-
-//    private void displayData(final List<News> posts) {
-//        mAdapter.resetListData();
-//        mAdapter.insertData(posts);
-//        if (posts.size() == 0) {
-//            showNoItemView(true);
-//        }
-//    }
 
     private void showNoItemView(boolean show) {
         View lyt_no_item = root_view.findViewById(R.id.lyt_no_item_later);
@@ -138,6 +124,34 @@ public class FragmentFavorite extends Fragment {
                         public void onItemClick(View v, int position) {
                             Log.d("TAG", "clicked position:" + position);
                             String id = list.get(position).getId();
+                            List<ResultFavorite> result =list.get(position).getResult();
+                            ResultFavorite resultFavorite=result.get(0);
+                            CategoryItem categoryItem =new CategoryItem();
+
+                            categoryItem.setId(resultFavorite.getId());
+                            categoryItem.setAdd_on(resultFavorite.getAddOn());
+                            categoryItem.setAdd_on_price(String.valueOf(resultFavorite.getAddOnPrice()));
+                            categoryItem.setCategory(resultFavorite.getCategory());
+                            categoryItem.setDescription(resultFavorite.getDescription());
+                            categoryItem.setFood_type(resultFavorite.getFoodType());
+                            categoryItem.setImage_url(resultFavorite.getImageUrl());
+                            categoryItem.setName(resultFavorite.getName());
+                            categoryItem.setNutrition(resultFavorite.getNutrition());
+                            categoryItem.setOld_price(String.valueOf(resultFavorite.getOldPrice()));
+                            categoryItem.setPrice(String.valueOf(resultFavorite.getPrice()));
+                            categoryItem.setCreatedAt(resultFavorite.getCreatedAt());
+                            categoryItem.setUpdatedAt(resultFavorite.getUpdatedAt());
+                           // categoryItem.setCount(resultFavorite.getId());
+
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("itemDetails", categoryItem);
+                            bundle.putParcelableArrayList("itemList", null);
+                            Fragment fragment = new FragmentItemDetails();
+                            FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+                            fragment.setArguments(bundle);
+                            transaction.replace(R.id.container, fragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
                         }
                     });
                   //  tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));

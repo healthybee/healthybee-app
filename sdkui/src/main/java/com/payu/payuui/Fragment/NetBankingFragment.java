@@ -211,6 +211,6 @@ public class NetBankingFragment extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         netBankingList = getArguments().getParcelableArrayList(PayuConstants.NETBANKING);
-        valueAddedHashMap = (HashMap<String, Integer>) getArguments().getSerializable(SdkUIConstants.VALUE_ADDED);
+        //valueAddedHashMap = (HashMap<String, Integer>) getArguments().getSerializable(SdkUIConstants.VALUE_ADDED);
     }
 }
