@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.app.healthybee.listeners.CustomItemClickListener;
 
-import com.app.healthybee.listeners.UpdateCart;
+import com.app.healthybee.listeners.UpdateCartCategoryItem;
 import com.app.healthybee.adapter.AdapterItemsList;
 import com.app.healthybee.R;
 import com.app.healthybee.dboperation.DbHelper;
@@ -98,14 +98,14 @@ public class ActivityItemDetails extends AppCompatActivity {
 
                 // do what ever you want to do with it
             }
-        }, new UpdateCart() {
+        }, new UpdateCartCategoryItem() {
             @Override
-            public void OnAddItemToCart(CategoryItem categoryItem, int i1, int card_plus_minus) {
+            public void OnAddItemToCart(CategoryItem categoryItem, int i1, int card_plus_minus,int position) {
                 Log.d("TAG", "add to cart" + categoryItem.getName());
                 if (card_plus_minus==-1){
                     dbHelper.deleteCartRow(categoryItem.getName());
                 }else {
-                    dbHelper.insertUpdateCart(categoryItem);
+                  //  dbHelper.insertUpdateCart(categoryItem);
                 }
             }
         });

@@ -19,27 +19,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.app.healthybee.Common;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.MyApplication;
 import com.app.healthybee.activities.MainActivity;
+import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.listeners.CustomItemClickListener;
-import com.app.healthybee.models.CartModule;
+import com.app.healthybee.models.CartLocal;
 import com.app.healthybee.utils.GridSpacingItemDecoration;
 import com.app.healthybee.utils.ListPaddingDecoration;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.R;
-import com.app.healthybee.listeners.UpdateCart;
+import com.app.healthybee.listeners.UpdateCartCategoryItem;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
 import com.app.healthybee.adapter.AdapterCategoryItem;
 import com.app.healthybee.models.CategoryItem;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,12 +56,11 @@ public class FragmentCategoryList extends Fragment {
     private AdapterCategoryItem adapter;
     private ArrayList<CategoryItem> categoryItemList;
     private String category = "";
-    //private DbHelper dbHelper;
+    private DbHelper dbHelper;
     private SwipeRefreshLayout swipe_refresh;
     private ImageView imageViewGrid, imageViewList;
-    private ArrayList<CartModule> cartModuleArrayList;
 
-    private  MainActivity mainActivity;
+
     public FragmentCategoryList() {
         // Required empty public constructor
     }
@@ -72,16 +76,11 @@ public class FragmentCategoryList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.system_app_list, container, false);
-        recyclerView =  rootView.findViewById(R.id.recycler_view);
-        swipe_refresh =  rootView.findViewById(R.id.swipe_refresh_layout);
+        recyclerView = rootView.findViewById(R.id.recycler_view);
+        swipe_refresh = rootView.findViewById(R.id.swipe_refresh_layout);
         swipe_refresh.setColorSchemeResources(R.color.colorOrange, R.color.colorGreyDark, R.color.colorBlue, R.color.colorRed);
-        imageViewGrid =  rootView.findViewById(R.id.imageViewGrid);
-        imageViewList =  rootView.findViewById(R.id.imageViewList);
-        ///////////
-        mainActivity=new MainActivity();
-        cartModuleArrayList=new ArrayList<>();
-        cartModuleArrayList=mainActivity.getCartModuleArrayList();
-        ///////////////////
+        imageViewGrid = rootView.findViewById(R.id.imageViewGrid);
+        imageViewList = rootView.findViewById(R.id.imageViewList);
 
         if (MainActivity.mFlagDisplayList) {
             imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
@@ -110,7 +109,7 @@ public class FragmentCategoryList extends Fragment {
             }
         });
 
-        //dbHelper = new DbHelper(getActivity());
+        dbHelper = new DbHelper(getActivity());
         categoryItemList = new ArrayList<>();
 
         Bundle bundle = this.getArguments();
@@ -169,18 +168,17 @@ public class FragmentCategoryList extends Fragment {
         if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
             Log.e("4343", UrlConstants.getCategoryItemList + category);
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                    (UrlConstants.getCategoryItemList + category+"&page=1&limit=10").replace(" ", "%20"),
+                    (UrlConstants.getCategoryItemList + category + "&page=1&limit=10").replace(" ", "%20"),
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
-
+                            Log.d("4343", response.toString());
                             int length = response.length();
                             if (length == 0) {
                                 showNoItemView(true);
                                 swipe_refresh.setRefreshing(false);
                             } else {
                                 showNoItemView(false);
-                             //   dbHelper.openDB();
                                 for (int i = 0; i < length; i++) {
                                     try {
                                         JSONObject jsonObject = (JSONObject) response.get(i);
@@ -199,17 +197,16 @@ public class FragmentCategoryList extends Fragment {
                                         categoryItem.setCreatedAt(jsonObject.optString("createdAt"));
                                         categoryItem.setUpdatedAt(jsonObject.optString("updatedAt"));
                                         //  13/11/18
-                                      //  categoryItem.setCount(dbHelper.getCartCount(jsonObject.optString("name")));
+
+                                        categoryItem.setCount(dbHelper.getCartCount(jsonObject.optString("id")));
 
                                         categoryItemList.add(categoryItem);
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                                        //dbHelper.closeDB();
                                     }
 
                                 }
-                               // dbHelper.closeDB();
                                 adapter = new AdapterCategoryItem(getActivity(), categoryItemList, new CustomItemClickListener() {
                                     @Override
                                     public void onItemClick(View v, int position) {
@@ -225,22 +222,62 @@ public class FragmentCategoryList extends Fragment {
                                         transaction.addToBackStack(null);
                                         transaction.commit();
                                     }
-                                }, new UpdateCart() {
+                                }, new UpdateCartCategoryItem() {
                                     @Override
-                                    public void OnAddItemToCart(CategoryItem categoryItem, int count, int card_plus_minus) {
+                                    public void OnAddItemToCart(final CategoryItem categoryItem, final int count, int card_plus_minus, final int position) {
                                         Log.d("TAG", "add to cart" + categoryItem.getName());
-                                       // dbHelper.insertUpdateCart(categoryItem);
-                                        //int CartCount=((MainActivity) getActivity()).getCount();
-                                        if (card_plus_minus==1){
-                                            Common.AddCart(getActivity(),categoryItem,count+1);
-                                           // ((MainActivity) getActivity()).setCountText();
-                                        }
-                                        if (card_plus_minus==0){
-                                            if (count-1==0){
-                                                // TODO: 12/1/19  delete cart call API
-                                            }else {
-                                                Common.AddCart(getActivity(), categoryItem, count - 1);
-                                               // ((MainActivity) getActivity()).setCountText();
+                                        if (count == 0) {
+                                            if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
+                                                MyCustomProgressDialog.showDialog(getActivity(), getActivity().getString(R.string.please_wait));
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("productId", categoryItem.getId());
+                                                params.put("quantity", (count + 1) + "");
+                                                Log.d("4343", new JSONObject(params).toString());
+                                                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                                                        Request.Method.POST,
+                                                        UrlConstants.CreateCart,
+                                                        new JSONObject(params),
+                                                        new Response.Listener<JSONObject>() {
+                                                            @Override
+                                                            public void onResponse(JSONObject response) {
+                                                                dbHelper.insertUpdateCart(new CartLocal(response.optString("productId"), response.optInt("quantity"), response.optString("id")));
+                                                                categoryItemList.get(position).setCount(response.optInt("quantity"));
+                                                                adapter.notifyDataSetChanged();
+                                                                ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
+                                                                MyCustomProgressDialog.dismissDialog();
+                                                            }
+                                                        }, new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        Log.e("4343", "Site Info Error: " + error.getMessage());
+                                                        MyCustomProgressDialog.dismissDialog();
+                                                    }
+                                                }) {
+
+                                                    @Override
+                                                    public Map<String, String> getHeaders() {
+                                                        Map<String, String> headers = new HashMap<>();
+                                                        headers.put("Content-Type", "application/json");
+                                                        headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+                                                        return headers;
+                                                    }
+                                                };
+                                                Log.d("4343", jsonObjectRequest.toString());
+                                                MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
+
+                                            } else {
+                                                MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getActivity().getString(R.string.network_title), getActivity().getString(R.string.network_message));
+                                            }
+                                        } else {
+                                            // update cart
+                                            if (card_plus_minus == 1) {
+                                                UpdateCart(position, dbHelper.getCartId(categoryItem.getId()), (count + 1));
+                                            }
+                                            if (card_plus_minus == 0) {
+                                                UpdateCart(position, dbHelper.getCartId(categoryItem.getId()), (count - 1));
+                                            }
+                                            if (card_plus_minus == -1) {
+                                                DeleteCart(position, dbHelper.getCartId(categoryItem.getId()));
                                             }
                                         }
 
@@ -257,11 +294,11 @@ public class FragmentCategoryList extends Fragment {
 
                         }
                     }
-            ){
+            ) {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
-                    headers.put("Content-Type","application/json");
+                    headers.put("Content-Type", "application/json");
                     headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
                     return headers;
                 }
@@ -323,6 +360,96 @@ public class FragmentCategoryList extends Fragment {
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             lyt_no_item.setVisibility(View.GONE);
+        }
+    }
+
+
+    private void UpdateCart(final int position, final String cartId, final int CartCount) {
+        if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
+            MyCustomProgressDialog.showDialog(getActivity(), getActivity().getString(R.string.please_wait));
+            Map<String, String> params = new HashMap<>();
+            params.put("quantity", CartCount + "");
+            Log.d("4343", new JSONObject(params).toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.PUT,
+                    UrlConstants.UpdateCart + cartId,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            dbHelper.insertUpdateCart(new CartLocal(response.optString("productId"), response.optInt("quantity"), response.optString("id")));
+                            categoryItemList.get(position).setCount(response.optInt("quantity"));
+                            adapter.notifyDataSetChanged();
+                            ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
+                            MyCustomProgressDialog.dismissDialog();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getActivity().getString(R.string.network_title), getActivity().getString(R.string.network_message));
+        }
+    }
+
+    private void DeleteCart(final int position, final String cartId) {
+        if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
+            MyCustomProgressDialog.showDialog(getActivity(), getActivity().getString(R.string.please_wait));
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.DELETE,
+                    UrlConstants.DeleteCart + cartId,
+                    null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            dbHelper.deleteCartRow(cartId);
+                            categoryItemList.get(position).setCount(0);
+                            adapter.notifyDataSetChanged();
+                            ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
+                            MyCustomProgressDialog.dismissDialog();
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getActivity().getString(R.string.network_title), getActivity().getString(R.string.network_message));
         }
     }
 }

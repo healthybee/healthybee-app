@@ -38,7 +38,6 @@ public class Common {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            MainActivity.cartCount=MainActivity.cartCount+1;
                             ((MainActivity) Objects.requireNonNull(context)).setCountText();
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
@@ -65,6 +64,7 @@ public class Common {
         } else {
             MyCustomProgressDialog.showAlertDialogMessage(context, context.getString(R.string.network_title), context.getString(R.string.network_message));
         }
+
     }
     public static void UpdateCart(final Context context, String cartId, int CartCount, final int card_plus_minus){
         if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(context))) {
@@ -83,11 +83,11 @@ public class Common {
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
                             if (card_plus_minus==Constant.CARD_PLUS){
-                                MainActivity.cartCount=MainActivity.cartCount+1;
+
                                 ((MainActivity) Objects.requireNonNull(context)).setCountText();
                             }
                             if (card_plus_minus==Constant.CARD_MINUS){
-                                MainActivity.cartCount=MainActivity.cartCount-1;
+
                                 ((MainActivity) Objects.requireNonNull(context)).setCountText();
                             }
 
@@ -129,7 +129,7 @@ public class Common {
                         public void onResponse(JSONObject response) {
                             Log.d("4343", response.toString());
                             MyCustomProgressDialog.dismissDialog();
-                            MainActivity.cartCount=MainActivity.cartCount-1;
+
                             ((MainActivity) Objects.requireNonNull(context)).setCountText();
 
                         }

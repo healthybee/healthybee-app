@@ -42,7 +42,7 @@ import java.util.Objects;
 
 public class FragmentFavorite extends Fragment {
 
-    private ArrayList<FavouriteModel> list;
+    private ArrayList<FavouriteModel> favouriteModelArrayList;
     private View root_view;
     private RecyclerView recyclerView;
     private AdapterFavourite mAdapter;
@@ -64,7 +64,7 @@ public class FragmentFavorite extends Fragment {
         root_view = inflater.inflate(R.layout.fragment_favorite, null);
         Toolbar toolbar = root_view.findViewById(R.id.toolbarFavorite);
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
-        list = new ArrayList<>();
+        favouriteModelArrayList = new ArrayList<>();
         recyclerView = root_view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new ListPaddingDecoration(getActivity()));
@@ -118,13 +118,13 @@ public class FragmentFavorite extends Fragment {
             public void onResponse(FavouriteModel[] object, String message) {
                 //swipe_refresh.setRefreshing(false);
                 if (object[0] != null) {
-                    list.addAll(Arrays.asList(object));
-                    mAdapter = new AdapterFavourite(getActivity(), list, new CustomItemClickListener() {
+                    favouriteModelArrayList.addAll(Arrays.asList(object));
+                    mAdapter = new AdapterFavourite(getActivity(), favouriteModelArrayList, new CustomItemClickListener() {
                         @Override
                         public void onItemClick(View v, int position) {
                             Log.d("TAG", "clicked position:" + position);
-                            String id = list.get(position).getId();
-                            List<ResultFavorite> result =list.get(position).getResult();
+                            String id = favouriteModelArrayList.get(position).getId();
+                            List<ResultFavorite> result =favouriteModelArrayList.get(position).getResult();
                             ResultFavorite resultFavorite=result.get(0);
                             CategoryItem categoryItem =new CategoryItem();
 

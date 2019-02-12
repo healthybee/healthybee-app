@@ -27,8 +27,6 @@ import com.app.healthybee.adapter.AdapterItemsList;
 import com.app.healthybee.R;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.dboperation.DbHelper;
-import com.app.healthybee.listeners.CustomItemClickListener;
-import com.app.healthybee.listeners.UpdateCart;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
@@ -109,7 +107,7 @@ public class FragmentItemDetails extends Fragment {
 //
 //                // do what ever you want to do with it
 //            }
-//        }, new UpdateCart() {
+//        }, new UpdateCartCategoryItem() {
 //            @Override
 //            public void OnAddItemToCart(CategoryItem categoryItem, int i1, int card_plus_minus) {
 //                Log.d("TAG", "add to cart" + categoryItem.getName());

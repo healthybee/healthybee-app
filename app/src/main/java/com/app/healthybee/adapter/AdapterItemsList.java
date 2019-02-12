@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
-import com.app.healthybee.listeners.UpdateCart;
+import com.app.healthybee.listeners.UpdateCartCategoryItem;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Constant;
 
@@ -24,12 +24,12 @@ public class AdapterItemsList extends RecyclerView.Adapter<AdapterItemsList.View
 
     Context mContext;
     CustomItemClickListener listener;
-    private UpdateCart updateCart;
-    public AdapterItemsList(Context context, ArrayList<CategoryItem> data1, CustomItemClickListener listener1, UpdateCart updateCart1) {
+    private UpdateCartCategoryItem updateCartCategoryItem;
+    public AdapterItemsList(Context context, ArrayList<CategoryItem> data1, CustomItemClickListener listener1, UpdateCartCategoryItem updateCartCategoryItem) {
         this.data = data1;
         this.mContext = context;
         this.listener = listener1;
-        this.updateCart=updateCart1;
+        this.updateCartCategoryItem = updateCartCategoryItem;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class AdapterItemsList extends RecyclerView.Adapter<AdapterItemsList.View
             public void onClick(View view) {
                 itemListSingleItem.setCount(itemListSingleItem.getCount()+1);
                 holder.tvCount.setText(Html.fromHtml(itemListSingleItem.getCount()+""));
-                updateCart.OnAddItemToCart(data.get(position), itemListSingleItem.getCount() + 1,Constant.CARD_PLUS);
+                updateCartCategoryItem.OnAddItemToCart(data.get(position), itemListSingleItem.getCount() + 1,Constant.CARD_PLUS,position);
             }
         });
         holder.tvMinus.setOnClickListener(new View.OnClickListener() {
@@ -77,11 +77,11 @@ public class AdapterItemsList extends RecyclerView.Adapter<AdapterItemsList.View
                     itemListSingleItem.setCount(itemListSingleItem.getCount() - 1);
                 if (!(itemListSingleItem.getCount()==0)) {
                     holder.tvCount.setText(Html.fromHtml(itemListSingleItem.getCount()+""));
-                    updateCart.OnAddItemToCart(data.get(position), itemListSingleItem.getCount() + 1,Constant.CARD_MINUS);
+                    updateCartCategoryItem.OnAddItemToCart(data.get(position), itemListSingleItem.getCount() + 1,Constant.CARD_MINUS,position);
                 }else {
                     holder.tvAddItem.setVisibility(View.VISIBLE);
                     holder.llAddRemove.setVisibility(View.GONE);
-                    updateCart.OnAddItemToCart(data.get(position), itemListSingleItem.getCount() + 1,Constant.CARD_DELETE);
+                    updateCartCategoryItem.OnAddItemToCart(data.get(position), itemListSingleItem.getCount() + 1,Constant.CARD_DELETE,position);
                 }
             }
         });
@@ -92,7 +92,7 @@ public class AdapterItemsList extends RecyclerView.Adapter<AdapterItemsList.View
                 holder.tvAddItem.setVisibility(View.GONE);
                 holder.llAddRemove.setVisibility(View.VISIBLE);
                 holder.tvCount.setText(Html.fromHtml(itemListSingleItem.getCount()+""));
-                updateCart.OnAddItemToCart(data.get(position), itemListSingleItem.getCount() + 1,Constant.CARD_PLUS);
+                updateCartCategoryItem.OnAddItemToCart(data.get(position), itemListSingleItem.getCount() + 1,Constant.CARD_PLUS,position);
                 notifyDataSetChanged();
             }
         });

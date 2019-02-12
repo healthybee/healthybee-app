@@ -28,29 +28,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.healthybee.Api;
 import com.app.healthybee.Checksum;
-import com.app.healthybee.Common;
 import com.app.healthybee.Constants;
+import com.app.healthybee.MyApplication;
 import com.app.healthybee.Paytm;
 import com.app.healthybee.activities.ActivityCheckOut;
 import com.app.healthybee.activities.MainActivity;
 import com.app.healthybee.adapter.AdapterTimeSlot;
-import com.app.healthybee.listeners.UpdateCart1;
+import com.app.healthybee.dboperation.DbHelper;
+import com.app.healthybee.listeners.UpdateCartCartModule;
 import com.app.healthybee.listeners.VolleyResponseListener;
+import com.app.healthybee.models.CartLocal;
 import com.app.healthybee.models.CartModule;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.adapter.AdapterCheckOut;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
 import com.app.healthybee.models.TimeSlot;
+import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.Tools;
 import com.app.healthybee.utils.UrlConstants;
 import com.paytm.pgsdk.PaytmMerchant;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -96,7 +106,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
 
     ArrayList<String> mSpinnerData;
     Calendar cal;
-
+    private DbHelper dbHelper;
 
     public FragmentCheckOut() {
         // Required empty public constructor
@@ -113,7 +123,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_check_out, container, false);
         cal = Calendar.getInstance();
-
+        dbHelper = new DbHelper(getActivity());
         toolbar = view.findViewById(R.id.toolbarCheckout);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         data = new ArrayList<>();
@@ -481,30 +491,40 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                             Log.d("TAG", "clicked position:" + position);
                             String id = data.get(position).getId();
                         }
-                    }, new UpdateCart1() {
+                    }, new UpdateCartCartModule() {
                         @Override
-                        public void OnAddItemToCart(int position, CartModule categoryItem, int i1, int card_plus_minus) {
-                            Log.d("TAG", "add to cart" + categoryItem.getId());
-                            if (card_plus_minus == -1) {// -1 for deletion
-                                Common.DeleteCart(getActivity(),categoryItem.getId());
-                               // ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
-                                if (!data.isEmpty()) {
-                                    data.remove(position);
-                                    adapter.notifyDataSetChanged();
-                                }
-                                //recyclerViewItemsList.setAdapter(adapter);
-                                // calculateTotalPrice(data);
-                                tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
-                            } else {
-                                Common.UpdateCart(getActivity(),categoryItem.getId(),categoryItem.getQuantity(),card_plus_minus);
-                                //((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
-
-                                if (!data.isEmpty()) {
-                                    adapter.notifyDataSetChanged();
-                                }
-                                 //calculateTotalPrice(data);
-                                tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
+                        public void OnAddItemToCart(int position, CartModule cartModule, int count, int card_plus_minus) {
+                            Log.d("TAG", "add to cart" + cartModule.getId());
+                            if (card_plus_minus == 1) {
+                                UpdateCart(position,cartModule.getId(),count+1);
                             }
+                            if (card_plus_minus == 0) {
+                                UpdateCart(position,cartModule.getId(),count-1);
+                            }
+                            if (card_plus_minus == -1) {
+                                DeleteCart(position,cartModule.getId());
+                            }
+
+//                            if (card_plus_minus == -1) {
+//                                Common.DeleteCart(getActivity(),categoryItem.getId());
+//                               // ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
+//                                if (!data.isEmpty()) {
+//                                    data.remove(position);
+//                                    adapter.notifyDataSetChanged();
+//                                }
+//                                //recyclerViewItemsList.setAdapter(adapter);
+//                                // calculateTotalPrice(data);
+//                                tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
+//                            } else {
+//                                Common.UpdateCartCategoryItem(getActivity(),categoryItem.getId(),categoryItem.getQuantity(),card_plus_minus);
+//                                //((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
+//
+//                                if (!data.isEmpty()) {
+//                                    adapter.notifyDataSetChanged();
+//                                }
+//                                 //calculateTotalPrice(data);
+//                                tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
+//                            }
 
                         }
                     });
@@ -520,4 +540,93 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             }
         }, CartModule[].class);
     }
+
+    private void UpdateCart(final int position, final String cartId, final int CartCount){
+        if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
+            MyCustomProgressDialog.showDialog(getActivity(), getActivity().getString(R.string.please_wait));
+            Map<String, String> params = new HashMap<>();
+            params.put("quantity", CartCount+"");
+            Log.d("4343", new JSONObject(params).toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.PUT,
+                    UrlConstants.UpdateCart+cartId,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            dbHelper.insertUpdateCart(new CartLocal(response.optString("productId"),response.optInt("quantity"),response.optString("id")));
+                            data.get(position).setQuantity(response.optInt("quantity"));
+                            adapter.notifyDataSetChanged();
+                            ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
+                            MyCustomProgressDialog.dismissDialog();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type","application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getActivity().getString(R.string.network_title), getActivity().getString(R.string.network_message));
+        }
+    }
+    private void DeleteCart(final int position, final String cartId){
+        if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
+            MyCustomProgressDialog.showDialog(getActivity(), getActivity().getString(R.string.please_wait));
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.DELETE,
+                    UrlConstants.DeleteCart+cartId,
+                    null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("4343", response.toString());
+                            dbHelper.deleteCartRow(cartId);
+                            data.get(position).setQuantity(0);
+                            adapter.notifyDataSetChanged();
+                            ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
+                            MyCustomProgressDialog.dismissDialog();
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("4343", "Site Info Error: " + error.getMessage());
+                    MyCustomProgressDialog.dismissDialog();
+                }
+            }) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type","application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+
+                    return headers;
+                }
+            };
+            Log.d("4343", jsonObjectRequest.toString());
+            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getActivity().getString(R.string.network_title), getActivity().getString(R.string.network_message));
+        }
+    }
+
 }

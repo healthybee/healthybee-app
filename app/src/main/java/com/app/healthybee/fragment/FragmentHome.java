@@ -40,7 +40,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class FragmentHome extends Fragment {
-
     private View rootView;
     private ImageView ivSearch;
     private TabLayout tabLayout;

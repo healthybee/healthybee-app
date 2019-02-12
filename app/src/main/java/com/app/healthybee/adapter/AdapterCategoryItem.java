@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.app.healthybee.RoundedCornersTransformation;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
-import com.app.healthybee.listeners.UpdateCart;
+import com.app.healthybee.listeners.UpdateCartCategoryItem;
 import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.utils.Constant;
 import com.bumptech.glide.Glide;
@@ -37,13 +37,13 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
     private Context mContext;
     private List<CategoryItem> categoryItemList;
     private CustomItemClickListener listener;
-    private UpdateCart updateCart;
+    private UpdateCartCategoryItem updateCartCategoryItem;
 
-    public AdapterCategoryItem(Context mContext, List<CategoryItem> categoryItemList1, CustomItemClickListener listener1, UpdateCart updateCart) {
+    public AdapterCategoryItem(Context mContext, List<CategoryItem> categoryItemList1, CustomItemClickListener listener1, UpdateCartCategoryItem updateCartCategoryItem) {
         this.mContext = mContext;
         this.categoryItemList = categoryItemList1;
         this.listener = listener1;
-        this.updateCart = updateCart;
+        this.updateCartCategoryItem = updateCartCategoryItem;
     }
 
 
@@ -129,50 +129,35 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
         });
 
 
-//        if (categoryItem.getCount() == 0) {
-        holder.tvAddItem.setVisibility(View.VISIBLE);
-        holder.llAddRemove.setVisibility(View.GONE);
-//        } else {
-//            holder.tvAddItem.setVisibility(View.GONE);
-//            holder.llAddRemove.setVisibility(View.VISIBLE);
-//        }
-//        holder.tvCount.setText(Html.fromHtml(categoryItem.getCount() + ""));
+        if (categoryItem.getCount() == 0) {
+            holder.tvAddItem.setVisibility(View.VISIBLE);
+            holder.llAddRemove.setVisibility(View.GONE);
+        } else {
+            holder.tvAddItem.setVisibility(View.GONE);
+            holder.llAddRemove.setVisibility(View.VISIBLE);
+        }
+        holder.tvCount.setText(Html.fromHtml(categoryItem.getCount() + ""));
 
-//        holder.tvPlus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                categoryItem.setCount(categoryItem.getCount() + 1);
-//                holder.tvCount.setText(Html.fromHtml(categoryItem.getCount() + ""));
-//                updateCart.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount() + 1,Constant.CARD_PLUS);
-//            }
-//        });
-//        holder.tvMinus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (categoryItem.getCount() != 0) {
-//                    categoryItem.setCount(categoryItem.getCount() - 1);
-//                }
-//                if (!(categoryItem.getCount() == 0)) {
-//                    holder.tvCount.setText(Html.fromHtml(categoryItem.getCount() + ""));
-//                    updateCart.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount() - 1,Constant.CARD_MINUS);
-//                } else {
-//                    dbHelper=new DbHelper(mContext);
-//                    dbHelper.deleteCartRow(categoryItem.getName());
-//                    ((MainActivity) mContext).setCountText();
-//                    holder.tvAddItem.setVisibility(View.VISIBLE);
-//                    holder.llAddRemove.setVisibility(View.GONE);
-//                }
-//            }
-//        });
+        holder.tvPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_PLUS,position);
+            }
+        });
+        holder.tvMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (categoryItem.getCount()> 1) {
+                    updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_MINUS,position);
+                }else {
+                    updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_DELETE,position);
+                }
+            }
+        });
         holder.tvAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                categoryItem.setCount(categoryItem.getCount() + 1);
-//                holder.tvAddItem.setVisibility(View.GONE);
-//                holder.llAddRemove.setVisibility(View.VISIBLE);
-//                holder.tvCount.setText(Html.fromHtml(categoryItem.getCount() + ""));
-                updateCart.OnAddItemToCart(categoryItem, categoryItem.getCount() + 1, Constant.CARD_PLUS);
-                // notifyDataSetChanged();
+                updateCartCategoryItem.OnAddItemToCart(categoryItem, categoryItem.getCount() , Constant.CARD_PLUS,position);
             }
         });
 

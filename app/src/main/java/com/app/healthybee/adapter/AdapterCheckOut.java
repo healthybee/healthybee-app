@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.app.healthybee.listeners.UpdateCart1;
+import com.app.healthybee.listeners.UpdateCartCartModule;
 import com.app.healthybee.models.CartModule;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
@@ -34,14 +34,14 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
     private List<CartModule> categoryItemList;
     private ArrayList<String> mSpinnerDataList;
     private CustomItemClickListener listener;
-    private UpdateCart1 updateCart;
+    private UpdateCartCartModule updateCart;
 
-    public AdapterCheckOut(Context context, ArrayList<CartModule> data, ArrayList<String> mSpinnerData, CustomItemClickListener tag, UpdateCart1 updateCart1) {
+    public AdapterCheckOut(Context context, ArrayList<CartModule> data, ArrayList<String> mSpinnerData, CustomItemClickListener tag, UpdateCartCartModule updateCartCartModule) {
         this.mContext = context;
         this.categoryItemList = data;
         this.mSpinnerDataList=mSpinnerData;
         this.listener=tag;
-        this.updateCart=updateCart1;
+        this.updateCart= updateCartCartModule;
     }
 
 
@@ -109,6 +109,7 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
 
             }
         });
+
         if (cart.getQuantity()==0){
             holder.tvAddItem.setVisibility(View.VISIBLE);
             holder.llAddRemove.setVisibility(View.GONE);
@@ -120,39 +121,23 @@ public class AdapterCheckOut extends RecyclerView.Adapter<AdapterCheckOut.MyView
         holder.tvPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 31/1/19 web call
-                cart.setQuantity(cart.getQuantity()+1);
-                holder.tvCount.setText(Html.fromHtml(cart.getQuantity()+""));
-                updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity() + 1,Constant.CARD_PLUS);
+                updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity(),Constant.CARD_PLUS);
             }
         });
         holder.tvMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (cart.getQuantity()!=0) {
-                    // TODO: 31/1/19 web call
-                    cart.setQuantity(cart.getQuantity() - 1);
-                }
-                if (!(cart.getQuantity()==0)) {
-                    holder.tvCount.setText(Html.fromHtml(cart.getQuantity()+""));
-                    updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity() + 1,Constant.CARD_MINUS);
+                if (cart.getQuantity()>0) {
+                    updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity(),Constant.CARD_MINUS);
                 }else {
-                    holder.tvAddItem.setVisibility(View.VISIBLE);
-                    holder.llAddRemove.setVisibility(View.GONE);
-                    updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity() + 1,Constant.CARD_DELETE);
+                    updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity(),Constant.CARD_DELETE);
                 }
             }
         });
         holder.tvAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 31/1/19 web call
-                cart.setQuantity(cart.getQuantity()+1);
-                holder.tvAddItem.setVisibility(View.GONE);
-                holder.llAddRemove.setVisibility(View.VISIBLE);
-                holder.tvCount.setText(Html.fromHtml(cart.getQuantity()+""));
-                updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity() + 1,Constant.CARD_PLUS);
-                notifyDataSetChanged();
+                updateCart.OnAddItemToCart(position,categoryItemList.get(position), cart.getQuantity(),Constant.CARD_PLUS);
             }
         });
 

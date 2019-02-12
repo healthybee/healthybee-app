@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.app.healthybee.R;
+import com.app.healthybee.dboperation.DbHelper;
 import com.app.healthybee.fragment.FragmentCheckOut;
 import com.app.healthybee.fragment.FragmentFavorite;
 import com.app.healthybee.fragment.FragmentHome;
@@ -23,6 +24,7 @@ import com.app.healthybee.fragment.FragmentMyOrder;
 import com.app.healthybee.fragment.FragmentProfile;
 import com.app.healthybee.listeners.VolleyResponseListener;
 import com.app.healthybee.models.AddressModule;
+import com.app.healthybee.models.CartLocal;
 import com.app.healthybee.models.CartModule;
 import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.NetworkConstants;
@@ -47,16 +49,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvNotification;
     private long exitTime = 0;
     public static boolean mFlagDisplayList = false;
-    public static int cartCount = 0;
 
     public static AddressModule address;
 
     //    private Fragment mContent;
-    private ArrayList<CartModule> cartModuleArrayList;
-
-    public ArrayList<CartModule> getCartModuleArrayList() {
-        return cartModuleArrayList;
-    }
+    public ArrayList<CartModule> cartModuleArrayList ;
+    private DbHelper dbHelper;
 
 
     @Override
@@ -64,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = MainActivity.this;
-        cartModuleArrayList = new ArrayList<>();
         mFlagDisplayList = false;
+        cartModuleArrayList =new ArrayList<>();
+        dbHelper=new DbHelper(activity);
         address = new AddressModule();
         setBottomNavigation();
         strToken = SharedPrefUtil.getToken(MainActivity.this);
@@ -97,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
         tvProfile.setTextColor(Color.parseColor("#C2C2C2"));
         tvMenu.setTextColor(Color.parseColor("#FF9900"));
 
-        Fragment fragment = new FragmentHome();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.container, fragment, "FragmentHome");
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        Fragment fragment = new FragmentHome();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.add(R.id.container, fragment, "FragmentHome");
+//        transaction.addToBackStack(null);
+//        transaction.commit();
 
         rlMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,18 +239,19 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void setCountText() {
-//        list = new ArrayList<>();
-//        list.addAll(dbHelper.getCartList());
-//        if (!list.isEmpty()) {
-//            count = 0;
-//            for (int i = 0; i < list.size(); i++) {
-//                CategoryItem categoryItem = list.get(i);
-//                count = count + categoryItem.getCount();
-//            }
-//        } else {
-//            count = 0;
-//        }
-        tvCart.setText("" + cartCount);
+        int count = 0;
+        ArrayList<CartLocal> list = new ArrayList<>();
+        list.addAll(dbHelper.getCartList());
+        if (!list.isEmpty()) {
+             count = 0;
+            for (int i = 0; i < list.size(); i++) {
+                CartLocal cartLocal = list.get(i);
+                count = count + cartLocal.getCount();
+            }
+        } else {
+            count = 0;
+        }
+        tvCart.setText("" + count);
     }
 
     public int getCount() {
@@ -264,21 +264,28 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(CartModule[] object, String message) {
-                cartCount=0;
                 if (object[0] != null) {
                     cartModuleArrayList.addAll(Arrays.asList(object));
                     for (int i = 0; i < cartModuleArrayList.size(); i++) {
                         CartModule cartModule = cartModuleArrayList.get(i);
-                        cartCount = cartCount + cartModule.getQuantity();
+                        dbHelper.insertUpdateCart(new CartLocal(cartModule.getProductId(),cartModule.getQuantity(),cartModule.getId()));
                     }
-
-                    tvCart.setText("" + cartCount);
+                    Fragment fragment = new FragmentHome();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.add(R.id.container, fragment, "FragmentHome");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             }
 
             @Override
             public void onError(String message) {
-                cartCount = 0;
+                //cartCount = 0;
+                Fragment fragment = new FragmentHome();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.container, fragment, "FragmentHome");
+                transaction.addToBackStack(null);
+                transaction.commit();
                 Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
             }
         }, CartModule[].class);
