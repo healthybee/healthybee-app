@@ -141,23 +141,23 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
         holder.tvPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_PLUS,position);
+                updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_PLUS, position);
             }
         });
         holder.tvMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (categoryItem.getCount()> 1) {
-                    updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_MINUS,position);
-                }else {
-                    updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_DELETE,position);
+                if (categoryItem.getCount() > 1) {
+                    updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_MINUS, position);
+                } else {
+                    updateCartCategoryItem.OnAddItemToCart(categoryItemList.get(position), categoryItem.getCount(), Constant.CARD_DELETE, position);
                 }
             }
         });
         holder.tvAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateCartCategoryItem.OnAddItemToCart(categoryItem, categoryItem.getCount() , Constant.CARD_PLUS,position);
+                updateCartCategoryItem.OnAddItemToCart(categoryItem, categoryItem.getCount(), Constant.CARD_PLUS, position);
             }
         });
 
