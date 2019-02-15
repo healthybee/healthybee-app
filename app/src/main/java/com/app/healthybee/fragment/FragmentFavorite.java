@@ -319,7 +319,7 @@ public class FragmentFavorite extends Fragment {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d("4343", response.toString());
-                            dbHelper.deleteCartRow(cartId);
+                            dbHelper.deleteCartRow(response.optString("productId"));
                             categoryItemArrayList.get(position).setCount(0);
                             mAdapter.notifyDataSetChanged();
                             ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();

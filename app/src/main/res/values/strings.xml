@@ -273,6 +273,16 @@
     <string name="username">UserName</string>
     <string name="why_healthybee">WHY HEALTHYBEE</string>
     <string name="resend_otp">Resend OTP ?</string>
+    <string name="address">Address</string>
+    <string name="select_address">Select address</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_delivery_slot">Select Delivery Slot</string>
+    <string name="basic_price">Basic Price</string>
+    <string name="cgst_sgst_12">CGST+SGST@12%</string>
+    <string name="delivery_charge">Delivery Charge</string>
+    <string name="total">Total</string>
+    <string name="add_more_item">Add More Item</string>
+    <string name="pay">Pay</string>
 
 
 </resources>

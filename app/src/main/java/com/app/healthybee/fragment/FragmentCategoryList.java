@@ -395,7 +395,7 @@ public class FragmentCategoryList extends Fragment {
 
                 @Override
                 public Map<String, String> getHeaders() {
-                    Map<String, String> headers = new HashMap<>();
+                    Map<String, String> headers = new HashMap<String, String>();
                     headers.put("Content-Type", "application/json");
                     headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
                     return headers;
@@ -421,7 +421,7 @@ public class FragmentCategoryList extends Fragment {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d("4343", response.toString());
-                            dbHelper.deleteCartRow(cartId);
+                            dbHelper.deleteCartRow(response.optString("productId"));
                             categoryItemList.get(position).setCount(0);
                             adapter.notifyDataSetChanged();
                             ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();

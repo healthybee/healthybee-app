@@ -31,6 +31,9 @@ public class CartModule {
     @SerializedName("result")
     @Expose
     private List<Result> result = null;
+    @SerializedName("subscriptionType")
+    @Expose
+    private String subscriptionType;
 
     public CartModule() {
     }
@@ -99,4 +102,11 @@ public class CartModule {
         this.result = result;
     }
 
+    public String getSubscriptionType() {
+        return subscriptionType;
+    }
+
+    public void setSubscriptionType(String subscriptionType) {
+        this.subscriptionType = subscriptionType;
+    }
 }

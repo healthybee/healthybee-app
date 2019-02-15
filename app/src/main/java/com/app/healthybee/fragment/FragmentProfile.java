@@ -48,7 +48,9 @@ import java.util.List;
 public class FragmentProfile extends Fragment {
 
     private View root_view;
-    private TextView txtUserEmail,txtUserMobile,txtUserName;
+    private TextView txtUserEmail;
+    private TextView txtUserMobile;
+    private TextView txtUserName;
     private ImageView imageViewLogout;
     private ImageView ivEditProfile;
     private ProgressDialog progressDialog;

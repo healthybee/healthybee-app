@@ -3,14 +3,18 @@ package com.app.healthybee.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,19 +31,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.app.healthybee.Api;
 import com.app.healthybee.Checksum;
 import com.app.healthybee.Constants;
 import com.app.healthybee.MyApplication;
 import com.app.healthybee.Paytm;
 import com.app.healthybee.activities.ActivityCheckOut;
+import com.app.healthybee.activities.ActivityUserLogin;
 import com.app.healthybee.activities.MainActivity;
+import com.app.healthybee.adapter.AdapterDeliverySupport;
 import com.app.healthybee.adapter.AdapterTimeSlot;
 import com.app.healthybee.dboperation.DbHelper;
+import com.app.healthybee.listeners.PriceUpdaterListener;
 import com.app.healthybee.listeners.UpdateCartCartModule;
 import com.app.healthybee.listeners.VolleyResponseListener;
 import com.app.healthybee.models.CartLocal;
@@ -48,23 +58,31 @@ import com.app.healthybee.models.CategoryItem;
 import com.app.healthybee.adapter.AdapterCheckOut;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
+import com.app.healthybee.models.ModelDeliverySupport;
+import com.app.healthybee.models.Result;
 import com.app.healthybee.models.TimeSlot;
+import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.MyCustomProgressDialog;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.Tools;
 import com.app.healthybee.utils.UrlConstants;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.paytm.pgsdk.PaytmMerchant;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -86,10 +104,11 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     private ArrayList<CartModule> data;
     private ArrayList<TimeSlot> timeSlotArrayList;
 
-    private SwipeRefreshLayout swipe_refresh;
+    //private SwipeRefreshLayout swipe_refresh;
     private String selectedDate;
     private TextView tv_date;
-    private RelativeLayout rlDate, rlAddress;
+    private RelativeLayout rlDate;
+    private RelativeLayout rlAddress;
     private ImageView ivBack;
     private RecyclerView recyclerViewTimeSlot;
     private RecyclerView.LayoutManager mLayoutManagerTimeSlot;
@@ -100,13 +119,15 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
     private TextView tvGstSgst;
     private TextView tvDeliveryCharge;
     private TextView tvTotal;
-    private TextView tvAddMoreItem, tv_checkout;
+    private TextView tvAddMoreItem;
+    private TextView tv_checkout;
     private TextView tvAddress;
     private Toolbar toolbar;
 
-    ArrayList<String> mSpinnerData;
-    Calendar cal;
+    private ArrayList<String> mSpinnerData;
+    private Calendar cal;
     private DbHelper dbHelper;
+    private ProgressDialog progressDialog;
 
     public FragmentCheckOut() {
         // Required empty public constructor
@@ -118,21 +139,21 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
 
     @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_check_out, container, false);
         cal = Calendar.getInstance();
         dbHelper = new DbHelper(getActivity());
         toolbar = view.findViewById(R.id.toolbarCheckout);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
         data = new ArrayList<>();
         mSpinnerData = new ArrayList<>();
         mSpinnerData.add("Monthly Subscription");
         mSpinnerData.add("Weakly Subscription");
         timeSlotArrayList = new ArrayList<>();
-        swipe_refresh = view.findViewById(R.id.swipe_refresh_layout_home);
-        swipe_refresh.setColorSchemeResources(R.color.colorOrange, R.color.colorGreen, R.color.colorBlue, R.color.colorRed);
+//        swipe_refresh = view.findViewById(R.id.swipe_refresh_layout_home);
+//        swipe_refresh.setColorSchemeResources(R.color.colorOrange, R.color.colorGreen, R.color.colorBlue, R.color.colorRed);
         tv_date = view.findViewById(R.id.tv_date);
         rlDate = view.findViewById(R.id.rlDate);
         rlAddress = view.findViewById(R.id.rlAddress);
@@ -146,6 +167,13 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         tvAddMoreItem = view.findViewById(R.id.tvAddMoreItem);
         tv_checkout = view.findViewById(R.id.tv_checkout);
         tvAddress = view.findViewById(R.id.tvAddress);
+
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle(getResources().getString(R.string.title_please_wait));
+        progressDialog.setMessage(getResources().getString(R.string.logout_process));
+        progressDialog.setCancelable(false);
+
 
 
         if (null != MainActivity.address.getAddressType()) {
@@ -227,21 +255,17 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         });
         recyclerViewTimeSlot.setAdapter(adapterTimeSlot);
 
-        swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (!data.isEmpty()) {
-                    data.clear();
-                }
-                RetrieveCarts();
-//                tvNoOfItemInCart.setText(Html.fromHtml(data.size()+" Item in cart"));
-//                recyclerViewItemsList.setAdapter(adapter);
-//                calculateTotalPrice(data);
-//                swipe_refresh.setRefreshing(false);
-            }
-        });
+//        swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                if (!data.isEmpty()) {
+//                    data.clear();
+//                }
+//                RetrieveCarts();
+//            }
+//        });
 
-//        tvNoOfItemInCart.setText(Html.fromHtml(data.size()+" Item in cart"));
+        //tvNoOfItemInCart.setText(Html.fromHtml(data.size()+" Item in cart"));
 //        calculateTotalPrice(data);
 
 
@@ -250,6 +274,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             public void onClick(View view) {
                 Fragment fragment;
                 fragment = new FragmentHome();
+                assert getFragmentManager() != null;
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.container, fragment);
                 transaction.addToBackStack(null);
@@ -264,6 +289,50 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                 //calling the method generateCheckSum() which will generate the paytm checksum for payment
                 // generateCheckSum();
                 if (null != MainActivity.address.getAddressType()) {
+                    if (validateFields()){
+
+                        Map<String, String> params = new HashMap<String, String>();
+                        JSONObject JObject=new JSONObject();
+                        try {
+                            JObject.put("orderName", "first order");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        JSONArray jsonArray=new JSONArray();
+                        for (int i=0;i<3;i++){
+                            JSONObject jsonObject=new JSONObject();
+                            try {
+                                jsonObject.put("old_price","100");
+                                jsonObject.put("nutrition","681Cal | 21g | 16g | 100g");
+                                jsonObject.put("name","Panner mayo Grilled sandwhich");
+                                jsonObject.put("category","Sandwhiches");
+                                jsonObject.put("price","110");
+                                jsonObject.put("add_on","Cheese");
+                                jsonObject.put("description","A food with a sharp taste. Often used to refer to tart or sour foods as well");
+                                jsonObject.put("image_url","https://image.ibb.co/c15Rcf/SHR00678.jpg");
+                                jsonObject.put("add_on_price","10");
+                                jsonObject.put("food_type","veg");
+                                jsonArray.put(jsonObject);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        try {
+                            JObject.put("products", jsonArray);
+                            JObject.put("productId", "123456");
+                            JObject.put("quantity", "2");
+                            JObject.put("isActive", "true");
+                            JObject.put("deliverySlot", "8:00 am to 10:00 am");
+                            JObject.put("total", "620");
+                            JObject.put("startDate", "2019/02/14");
+                            JObject.put("payment", "no");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        System.out.println("4343 " + JObject.toString());
+                    }
+
                     Intent intent = new Intent(getActivity(), ActivityCheckOut.class);
                     startActivity(intent);
                 } else {
@@ -279,8 +348,13 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         selectedDate = Tools.formatDateForDisplay(cal.getTime(), "yyyy-MMM-dd");
         tv_date.setText(Html.fromHtml(Tools.convertDateyyyymmddToddmmyyyy(selectedDate)));
 
-        RetrieveCarts();
+        RetrieveCarts1();
         return view;
+    }
+
+    private boolean validateFields() {
+
+        return true;
     }
 
     @Override
@@ -313,24 +387,24 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         dlg.show();
     }
 
-    @SuppressLint({"SetTextI18n", "DefaultLocale"})
-    private void calculateTotalPrice(ArrayList<CategoryItem> dataList) {
-        double basicPrice = 0;
-
-        for (int i = 0; i < dataList.size(); i++) {
-            CategoryItem categoryItem = dataList.get(i);
-            double price = Double.parseDouble(categoryItem.getPrice());
-            double cartCount = categoryItem.getCount();
-            basicPrice = basicPrice + (price * cartCount);
-        }
-        double gst = (basicPrice * 12) / 100;
-
-        tvBasicPrice.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", basicPrice)));
-        tvTotal.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", basicPrice + gst)));
-        tvGstSgst.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", gst)));
-        tvDeliveryCharge.setText(Html.fromHtml(getResources().getString(R.string.rs) + " 0.00"));
-
-    }
+//    @SuppressLint({"SetTextI18n", "DefaultLocale"})
+//    private void calculateTotalPrice(ArrayList<CategoryItem> dataList) {
+//        double basicPrice = 0;
+//
+//        for (int i = 0; i < dataList.size(); i++) {
+//            CategoryItem categoryItem = dataList.get(i);
+//            double price = Double.parseDouble(categoryItem.getPrice());
+//            double cartCount = categoryItem.getCount();
+//            basicPrice = basicPrice + (price * cartCount);
+//        }
+//        double gst = (basicPrice * 12) / 100;
+//
+//        tvBasicPrice.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", basicPrice)));
+//        tvTotal.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", basicPrice + gst)));
+//        tvGstSgst.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", gst)));
+//        tvDeliveryCharge.setText(Html.fromHtml(getResources().getString(R.string.rs) + " 0.00"));
+//
+//    }
 
 
     @Override
@@ -475,71 +549,151 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                 + r.nextInt(10000);
 
     }
-
-    private void RetrieveCarts() {
-        HashMap<String, String> hashMap = new HashMap<>();
-        NetworkConstants.getWebservice(true, getActivity(), Request.Method.GET, UrlConstants.RetrieveCart, hashMap, new VolleyResponseListener<CartModule>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(CartModule[] object, String message) {
-                swipe_refresh.setRefreshing(false);
-                if (object[0] != null) {
-                    data.addAll(Arrays.asList(object));
-                    adapter = new AdapterCheckOut(getActivity(), data, mSpinnerData, new CustomItemClickListener() {
+    private void RetrieveCarts1() {
+        if (NetworkConstants.isConnectingToInternet(getActivity())) {
+            MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(UrlConstants.RetrieveCart,
+                    new Response.Listener<JSONArray>() {
                         @Override
-                        public void onItemClick(View v, int position) {
-                            Log.d("TAG", "clicked position:" + position);
-                            String id = data.get(position).getId();
+                        public void onResponse(JSONArray jsonArray) {
+                            MyCustomProgressDialog.dismissDialog();
+                            for (int i=0;i<jsonArray.length();i++){
+                                try {
+                                    JSONObject jsonObject=jsonArray.getJSONObject(i);
+                                    CartModule cartModule=new CartModule();
+                                    cartModule.setId(jsonObject.optString("_id"));
+                                    cartModule.setQuantity(jsonObject.optInt("quantity"));
+                                    cartModule.setProductId(jsonObject.optString("productId"));
+                                    cartModule.setUser(jsonObject.optString("user"));
+                                    cartModule.setCreatedAt(jsonObject.optString("createdAt"));
+                                    cartModule.setUpdatedAt(jsonObject.optString("updatedAt"));
+
+                                    JSONArray jsonArray1=jsonObject.optJSONArray("result");
+                                    JSONObject jsonObject1=jsonArray1.optJSONObject(0); //it contains only one object
+                                    List<Result> resultList = new ArrayList<>();
+                                    Result result=new Result();
+                                    result.setId(jsonObject1.optString("_id"));
+                                    result.setPrice(jsonObject1.optInt("price"));
+                                    result.setAddOn(jsonObject1.optString("add_on"));
+                                    result.setDescription(jsonObject1.optString("description"));
+                                    result.setImageUrl(jsonObject1.optString("image_url"));
+                                    result.setAddOnPrice(jsonObject1.optInt("add_on_price"));
+                                    result.setFoodType(jsonObject1.optString("food_type"));
+                                    result.setOldPrice(jsonObject1.optInt("old_price"));
+                                    result.setNutrition(jsonObject1.optString("nutrition"));
+                                    result.setName(jsonObject1.optString("name"));
+                                    result.setCategory(jsonObject1.optString("category"));
+                                    result.setCreatedAt(jsonObject1.optString("createdAt"));
+                                    result.setUpdatedAt(jsonObject1.optString("updatedAt"));
+                                    resultList.add(result);
+                                    cartModule.setResult(resultList);
+                                    cartModule.setSubscriptionType("M");
+                                    data.add(cartModule);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            adapter = new AdapterCheckOut(getActivity(), data, mSpinnerData, new PriceUpdaterListener() {
+                                @SuppressLint("DefaultLocale")
+                                @Override
+                                public void onUpdatePrice(double basicPrice) {
+                                    Log.d("TAG", "Basic Price:" + basicPrice);
+                                    double gst = (basicPrice * 12) / 100;
+                                    tvBasicPrice.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", basicPrice)));
+                                    tvTotal.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", basicPrice + gst)));
+                                    tvGstSgst.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", gst)));
+                                    tvDeliveryCharge.setText(Html.fromHtml(getResources().getString(R.string.rs) + " 0.00"));
+                                }
+                            }, new UpdateCartCartModule() {
+                                @Override
+                                public void OnAddItemToCart(int position, CartModule cartModule, int count, int card_plus_minus) {
+                                    Log.d("TAG", "add to cart" + cartModule.getId());
+                                    if (card_plus_minus == 1) {
+                                        UpdateCart(position,cartModule.getId(),count+1);
+                                    }
+                                    if (card_plus_minus == 0) {
+                                        UpdateCart(position,cartModule.getId(),count-1);
+                                    }
+                                    if (card_plus_minus == -1) {
+                                        DeleteCart(position,cartModule.getId());
+                                    }
+                                }
+                            });
+                            tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
+                            recyclerViewItemsList.setAdapter(adapter);
+
                         }
-                    }, new UpdateCartCartModule() {
+                    },
+                    new Response.ErrorListener() {
                         @Override
-                        public void OnAddItemToCart(int position, CartModule cartModule, int count, int card_plus_minus) {
-                            Log.d("TAG", "add to cart" + cartModule.getId());
-                            if (card_plus_minus == 1) {
-                                UpdateCart(position,cartModule.getId(),count+1);
-                            }
-                            if (card_plus_minus == 0) {
-                                UpdateCart(position,cartModule.getId(),count-1);
-                            }
-                            if (card_plus_minus == -1) {
-                                DeleteCart(position,cartModule.getId());
-                            }
-
-//                            if (card_plus_minus == -1) {
-//                                Common.DeleteCart(getActivity(),categoryItem.getId());
-//                               // ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
-//                                if (!data.isEmpty()) {
-//                                    data.remove(position);
-//                                    adapter.notifyDataSetChanged();
-//                                }
-//                                //recyclerViewItemsList.setAdapter(adapter);
-//                                // calculateTotalPrice(data);
-//                                tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
-//                            } else {
-//                                Common.UpdateCartCategoryItem(getActivity(),categoryItem.getId(),categoryItem.getQuantity(),card_plus_minus);
-//                                //((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
-//
-//                                if (!data.isEmpty()) {
-//                                    adapter.notifyDataSetChanged();
-//                                }
-//                                 //calculateTotalPrice(data);
-//                                tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
-//                            }
-
+                        public void onErrorResponse(VolleyError volleyError) {
+                            MyCustomProgressDialog.dismissDialog();
                         }
-                    });
-                    tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
-                    recyclerViewItemsList.setAdapter(adapter);
+                    }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
+
+                    return headers;
                 }
-            }
+            };
 
-            @Override
-            public void onError(String message) {
-                swipe_refresh.setRefreshing(false);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-            }
-        }, CartModule[].class);
+            MyApplication.getInstance().addToRequestQueue(jsonArrayRequest);
+
+
+        } else {
+            MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getString(R.string.network_title), getString(R.string.network_message));
+        }
     }
+//    private void RetrieveCarts() {
+//        HashMap<String, String> hashMap = new HashMap<>();
+//        NetworkConstants.getWebservice(true, getActivity(), Request.Method.GET, UrlConstants.RetrieveCart, hashMap, new VolleyResponseListener<CartModule>() {
+//            @SuppressLint("SetTextI18n")
+//            @Override
+//            public void onResponse(CartModule[] object, String message) {
+////                swipe_refresh.setRefreshing(false);
+//                if (object[0] != null) {
+//                    data.addAll(Arrays.asList(object));
+//                    adapter = new AdapterCheckOut(getActivity(), data, mSpinnerData, new PriceUpdaterListener() {
+//                        @SuppressLint("DefaultLocale")
+//                        @Override
+//                        public void onUpdatePrice(double basicPrice) {
+//                            Log.d("TAG", "Basic Price:" + basicPrice);
+//                            double gst = (basicPrice * 12) / 100;
+//                            tvBasicPrice.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", basicPrice)));
+//                            tvTotal.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", basicPrice + gst)));
+//                            tvGstSgst.setText(Html.fromHtml(getResources().getString(R.string.rs) + " " + String.format("%.2f", gst)));
+//                            tvDeliveryCharge.setText(Html.fromHtml(getResources().getString(R.string.rs) + " 0.00"));
+//                        }
+//                    }, new UpdateCartCartModule() {
+//                        @Override
+//                        public void OnAddItemToCart(int position, CartModule cartModule, int count, int card_plus_minus) {
+//                            Log.d("TAG", "add to cart" + cartModule.getId());
+//                            if (card_plus_minus == 1) {
+//                                UpdateCart(position,cartModule.getId(),count+1);
+//                            }
+//                            if (card_plus_minus == 0) {
+//                                UpdateCart(position,cartModule.getId(),count-1);
+//                            }
+//                            if (card_plus_minus == -1) {
+//                                DeleteCart(position,cartModule.getId());
+//                            }
+//                        }
+//                    });
+//                    tvNoOfItemInCart.setText(Html.fromHtml(data.size() + " Item in cart"));
+//                    recyclerViewItemsList.setAdapter(adapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onError(String message) {
+////                swipe_refresh.setRefreshing(false);
+//                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+//            }
+//        }, CartModule[].class);
+//    }
 
     private void UpdateCart(final int position, final String cartId, final int CartCount){
         if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
@@ -593,16 +747,30 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
                     UrlConstants.DeleteCart+cartId,
                     null,
                     new Response.Listener<JSONObject>() {
-
                         @Override
                         public void onResponse(JSONObject response) {
+                            MyCustomProgressDialog.dismissDialog();
                             Log.d("4343", response.toString());
-                            dbHelper.deleteCartRow(cartId);
-                            data.get(position).setQuantity(0);
+                            dbHelper.deleteCartRow(response.optString("productId"));
+                            data.remove(position);
                             adapter.notifyDataSetChanged();
                             ((MainActivity) Objects.requireNonNull(getActivity())).setCountText();
-                            MyCustomProgressDialog.dismissDialog();
+                            if (data.size()>0){
+                                tvNoOfItemInCart.setText(Html.fromHtml(data.size()+" Item in cart"));
+                            }else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setMessage("Oops no item in cart tap OK to add item in cart");
+                                builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        ((MainActivity) getActivity()).exitApp();
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+                                builder.setCancelable(false);
+                                builder.show();
 
+                            }
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -628,5 +796,4 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
             MyCustomProgressDialog.showAlertDialogMessage(getActivity(), getActivity().getString(R.string.network_title), getActivity().getString(R.string.network_message));
         }
     }
-
 }

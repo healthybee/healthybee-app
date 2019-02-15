@@ -239,9 +239,8 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void setCountText() {
-        int count = 0;
-        ArrayList<CartLocal> list = new ArrayList<>();
-        list.addAll(dbHelper.getCartList());
+        int count ;
+        ArrayList<CartLocal> list = new ArrayList<>(dbHelper.getCartList());
         if (!list.isEmpty()) {
              count = 0;
             for (int i = 0; i < list.size(); i++) {
@@ -280,13 +279,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(String message) {
-                //cartCount = 0;
                 Fragment fragment = new FragmentHome();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.container, fragment, "FragmentHome");
                 transaction.addToBackStack(null);
                 transaction.commit();
-                Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+                //Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
             }
         }, CartModule[].class);
     }
