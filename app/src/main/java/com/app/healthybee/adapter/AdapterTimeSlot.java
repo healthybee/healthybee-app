@@ -64,7 +64,7 @@ public class AdapterTimeSlot extends RecyclerView.Adapter<AdapterTimeSlot.MyView
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull final AdapterTimeSlot.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdapterTimeSlot.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final TimeSlot timeSlot = timeSlots.get(position);
         if (timeSlot.isSelected()){
             holder.tvTimeSlot.setBackgroundResource(R.drawable.button_background_orange);
@@ -75,8 +75,6 @@ public class AdapterTimeSlot extends RecyclerView.Adapter<AdapterTimeSlot.MyView
             holder.tvTimeSlot.setText(Html.fromHtml(timeSlot.getTimeSlot()));
             holder.tvTimeSlot.setTextColor(Color.parseColor("#797979"));
         }
-
-
 
         holder.tvTimeSlot.setOnClickListener(new View.OnClickListener() {
             @Override

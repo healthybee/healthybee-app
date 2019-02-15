@@ -232,7 +232,7 @@ public class FragmentCheckOut extends Fragment implements PaytmPaymentTransactio
         mLayoutManagerTimeSlot = new GridLayoutManager(getActivity(), 2);
         recyclerViewTimeSlot.setLayoutManager(mLayoutManagerTimeSlot);
 
-        timeSlotArrayList.add(new TimeSlot("8:00 to 9:00 AM", false));
+        timeSlotArrayList.add(new TimeSlot("8:00 to 9:00 AM", true));
         timeSlotArrayList.add(new TimeSlot("11:00 to 12:00 AM", false));
         timeSlotArrayList.add(new TimeSlot("6:00 to 7:00 PM", false));
         timeSlotArrayList.add(new TimeSlot("8:00 to 9:00 PM", false));
