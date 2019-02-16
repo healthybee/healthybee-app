@@ -12,6 +12,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -141,6 +142,11 @@ public class FragmentHome extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ActivitySearch.class);
                 startActivity(intent);
+//                        Fragment fragment = new FragmentHome();
+//        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.container, FragmentSearch.newInstance("",""), "FragmentHome");
+//        transaction.addToBackStack(null);
+//        transaction.commit();
             }
         });
         getCategory();

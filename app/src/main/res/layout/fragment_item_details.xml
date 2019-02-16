@@ -41,6 +41,7 @@
             android:padding="10dp"
             android:src="@drawable/ic_drawer_favorite"
             android:tint="@color/whiteNew" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -53,8 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="10dp"
-                android:textColor="@color/color_dark"
                 android:text="Veg Grill Sandwich with cheese"
+                android:textColor="@color/color_dark"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -82,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:focusable="true"
-                android:text="Nutrition"
+                android:text="@string/nutrition"
                 android:textColor="@color/color_dark"
                 android:textStyle="bold" />
 
@@ -199,6 +200,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -238,12 +240,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Monthly"
+                            android:text="@string/monthly"
                             android:textColor="@color/colorPrimary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvmPrice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -252,6 +255,7 @@
                             android:textSize="@dimen/text_size_12" />
 
                         <TextView
+                            android:id="@+id/tvMonthlyPrice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -269,22 +273,23 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:text="Weekends"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:text="@string/weekends"
                                 android:textSize="@dimen/text_size_12" />
 
                             <CheckBox
                                 android:id="@+id/checkm"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
                                 android:layout_margin="5dp"
                                 android:button="@drawable/custom_checkbox" />
 
@@ -295,11 +300,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:background="@drawable/button_background_orange"
+                            android:background="@drawable/button_shap_orange_transparent"
                             android:gravity="center"
-                            android:text="Subscribe"
-                            android:padding="10dp"
-                            android:textColor="@color/colorWhite"
+                            android:text="@string/subscribe"
+                            android:textColor="@color/colorOrange"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
@@ -331,12 +335,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Weekly"
+                            android:text="@string/weekly"
                             android:textColor="@color/colorPrimary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvwPrice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -345,6 +350,7 @@
                             android:textSize="@dimen/text_size_12" />
 
                         <TextView
+                            android:id="@+id/tvWeeklyPrice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -362,22 +368,23 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:text="Weekends"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:text="@string/weekends"
                                 android:textSize="@dimen/text_size_12" />
 
                             <CheckBox
                                 android:id="@+id/checkw"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
                                 android:layout_margin="5dp"
                                 android:button="@drawable/custom_checkbox" />
 
@@ -388,11 +395,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:background="@drawable/button_background_orange"
+                            android:background="@drawable/button_shap_orange_transparent"
                             android:gravity="center"
-                            android:text="Subscribe"
-                            android:padding="10dp"
-                            android:textColor="@color/colorWhite"
+                            android:text="@string/subscribe"
+                            android:textColor="@color/colorOrange"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
 
@@ -402,7 +408,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Offers Applied"
+                android:text="@string/offers_applied"
                 android:textColor="@color/color_dark"
                 android:textStyle="bold" />
 
@@ -410,9 +416,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/offer_applied_menu_screen"
-                android:drawableLeft="@drawable/offer_applied_menu_screen"
-                android:gravity="center_vertical"
                 android:drawablePadding="10dp"
+                android:gravity="center_vertical"
                 android:text="Saved upto Rs. 1050 on your subscription  T&amp;C"
                 android:textSize="@dimen/text_size_12" />
 
@@ -421,16 +426,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/offer_applied_menu_screen"
-                android:drawableLeft="@drawable/offer_applied_menu_screen"
-                android:gravity="center_vertical"
                 android:drawablePadding="10dp"
+                android:gravity="center_vertical"
                 android:text="Apply coupon code HEALTHYBEE and get 10% discount T&amp;C"
                 android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suggesting Meals"
+                android:text="@string/suggesting_meals"
                 android:textColor="@color/color_dark"
                 android:textStyle="bold" />
 

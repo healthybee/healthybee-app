@@ -283,6 +283,13 @@
     <string name="total">Total</string>
     <string name="add_more_item">Add More Item</string>
     <string name="pay">Pay</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="weekends">Weekends</string>
+    <string name="suggesting_meals">Suggesting Meals</string>
+    <string name="offers_applied">Offers Applied</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="nutrition">Nutrition</string>
 
 
 </resources>

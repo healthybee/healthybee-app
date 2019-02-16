@@ -3,6 +3,7 @@ package com.app.healthybee.activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +23,7 @@ import com.app.healthybee.fragment.FragmentFavorite;
 import com.app.healthybee.fragment.FragmentHome;
 import com.app.healthybee.fragment.FragmentMyOrder;
 import com.app.healthybee.fragment.FragmentProfile;
+import com.app.healthybee.fragment.FragmentSearch;
 import com.app.healthybee.listeners.VolleyResponseListener;
 import com.app.healthybee.models.AddressModule;
 import com.app.healthybee.models.CartLocal;
@@ -35,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentSearch.OnFragmentInteractionListener {
     private Activity activity;
     public static String strToken;
     private ImageView ivMenu;
@@ -208,7 +210,13 @@ public class MainActivity extends AppCompatActivity {
 //    }
     @Override
     public void onBackPressed() {
-        exitApp();
+//        exitApp();
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
 
     }
 
@@ -287,5 +295,10 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
             }
         }, CartModule[].class);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

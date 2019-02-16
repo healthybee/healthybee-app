@@ -1,6 +1,7 @@
 package com.app.healthybee.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,15 +64,31 @@ public class FragmentItemDetails extends Fragment {
     private TextView tvFat;
     private TextView tvCarbs;
     private ImageView IvBack;
+    private TextView tvDescription;
+
+    private TextView tvMonthlyPrice;
+    private TextView tvmPrice;
+
+    private TextView tvWeeklyPrice;
+    private TextView tvwPrice;
+
+    private CheckBox checkw, checkm;
+    private TextView tv_subscribe_monthly;
+    private TextView tv_subscribe_weakly;
+
+
     private DbHelper dbHelper;
+
     public FragmentItemDetails() {
         // Required empty public constructor
     }
+
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_item_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_item_details, container, false);
         sv = view.findViewById(R.id.sv);
         sv.post(new Runnable() {
             @Override
@@ -78,16 +97,16 @@ public class FragmentItemDetails extends Fragment {
             }
         });
 
-        dbHelper=new DbHelper(getActivity());
-        my_image=  view.findViewById(R.id.my_image);
-        tvCalories=  view.findViewById(R.id.tvCalories);
-        tv_itemTitle= view. findViewById(R.id.tv_itemTitle);
-        tvProtein=  view.findViewById(R.id.tvProtein);
-        tvFat=  view.findViewById(R.id.tvFat);
-        tvCarbs=  view.findViewById(R.id.tvCarbs);
-        IvBack=  view.findViewById(R.id.IvBack);
-        IvFavorite=  view.findViewById(R.id.IvFavorite);
-        itemsList =  view.findViewById(R.id.recycler_view);
+        dbHelper = new DbHelper(getActivity());
+        my_image = view.findViewById(R.id.my_image);
+        tvCalories = view.findViewById(R.id.tvCalories);
+        tv_itemTitle = view.findViewById(R.id.tv_itemTitle);
+        tvProtein = view.findViewById(R.id.tvProtein);
+        tvFat = view.findViewById(R.id.tvFat);
+        tvCarbs = view.findViewById(R.id.tvCarbs);
+        IvBack = view.findViewById(R.id.IvBack);
+        IvFavorite = view.findViewById(R.id.IvFavorite);
+        itemsList = view.findViewById(R.id.recycler_view);
         itemsList.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         itemsList.setLayoutManager(mLinearLayoutManager);
@@ -95,7 +114,7 @@ public class FragmentItemDetails extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             itemDetails = bundle.getParcelable("itemDetails");
-          //  data.addAll(Objects.requireNonNull(bundle.<CategoryItem>getParcelableArrayList("itemList")));
+            //  data.addAll(Objects.requireNonNull(bundle.<CategoryItem>getParcelableArrayList("itemList")));
         }
 
 //        adapter = new AdapterItemsList(getActivity(), data, new CustomItemClickListener() {
@@ -144,17 +163,99 @@ public class FragmentItemDetails extends Fragment {
                 .into(my_image);
 
         itemsList.setAdapter(adapter);
-        String nutrition=itemDetails.getNutrition().replace(" ", "").trim();
-        nutrition=nutrition.replace("|", ":").trim();
+        String nutrition = itemDetails.getNutrition().replace(" ", "").trim();
+        nutrition = nutrition.replace("|", ":").trim();
         String[] separated = nutrition.split(":");
-        String Calories=separated[0];
+        String Calories = separated[0];
         tvCalories.setText(Html.fromHtml(Calories));
-        String Protein=separated[1];
+        String Protein = separated[1];
         tvProtein.setText(Html.fromHtml(Protein));
-        String Fat=separated[2];
+        String Fat = separated[2];
         tvFat.setText(Html.fromHtml(Fat));
-        String Carbs=separated[3];
+        String Carbs = separated[3];
         tvCarbs.setText(Html.fromHtml(Carbs));
+
+
+        /*Description*/
+        tvDescription = view.findViewById(R.id.tvDescription);
+        tvDescription.setText(Html.fromHtml(itemDetails.getDescription()));
+
+        /*Price*/
+        tvmPrice = view.findViewById(R.id.tvmPrice);
+        tvmPrice.setText(Html.fromHtml(getActivity().getResources().getString(R.string.rs) + " " + itemDetails.getPrice() + "/Meal"));
+
+        /*MonthlyPrice*/
+        tvMonthlyPrice = view.findViewById(R.id.tvMonthlyPrice);
+        double price = Double.valueOf(itemDetails.getPrice());
+        double itemTotalPrice = price * 30;
+        tvMonthlyPrice.setText(Html.fromHtml("(" + getActivity().getResources().getString(R.string.rs) + " " + String.valueOf(itemTotalPrice) + "/Month)"));
+
+        /*Price weekly*/
+        tvwPrice = view.findViewById(R.id.tvwPrice);
+        tvwPrice.setText(Html.fromHtml(getActivity().getResources().getString(R.string.rs) + " " + itemDetails.getPrice() + "/Meal"));
+
+        /*weeklyPrice*/
+        tvWeeklyPrice = view.findViewById(R.id.tvWeeklyPrice);
+        double priceW = Double.valueOf(itemDetails.getPrice());
+        double itemTotalPriceW = priceW * 7;
+        tvWeeklyPrice.setText(Html.fromHtml("(" + getActivity().getResources().getString(R.string.rs) + " " + String.valueOf(itemTotalPriceW) + "/Week)"));
+
+
+        tv_subscribe_monthly= view.findViewById(R.id.tv_subscribe_monthly);
+        tv_subscribe_weakly= view.findViewById(R.id.tv_subscribe_weakly);
+        /*check box monthly*/
+        checkm = view.findViewById(R.id.checkm);
+        checkm.setChecked(true);
+        checkw = view.findViewById(R.id.checkw);
+        checkw.setChecked(false);
+
+//        tv_subscribe_monthly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange));
+//        tv_subscribe_monthly.setTextColor(getResources().getColor(R.color.colorWhite));
+//        tv_subscribe_weakly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange_transparent));
+//        tv_subscribe_weakly.setTextColor(getResources().getColor(R.color.colorOrange));
+
+        checkm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkw.setChecked(false);
+//                    tv_subscribe_monthly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange));
+//                    tv_subscribe_monthly.setTextColor(getResources().getColor(R.color.colorWhite));
+//                    tv_subscribe_weakly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange_transparent));
+//                    tv_subscribe_weakly.setTextColor(getResources().getColor(R.color.colorOrange));
+                }
+//                else {
+//                    checkw.setChecked(true);
+//                    tv_subscribe_weakly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange));
+//                    tv_subscribe_weakly.setTextColor(getResources().getColor(R.color.colorWhite));
+//                    tv_subscribe_monthly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange_transparent));
+//                    tv_subscribe_monthly.setTextColor(getResources().getColor(R.color.colorOrange));
+//                }
+
+            }
+        });
+        checkw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkm.setChecked(false);
+//                    tv_subscribe_weakly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange));
+//                    tv_subscribe_weakly.setTextColor(getResources().getColor(R.color.colorWhite));
+//                    tv_subscribe_monthly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange_transparent));
+//                    tv_subscribe_monthly.setTextColor(getResources().getColor(R.color.colorOrange));
+                }
+//                else {
+//                    checkm.setChecked(true);
+//                    tv_subscribe_monthly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange));
+//                    tv_subscribe_monthly.setTextColor(getResources().getColor(R.color.colorWhite));
+//                    tv_subscribe_weakly.setBackground(getActivity().getDrawable(R.drawable.button_shap_orange_transparent));
+//                    tv_subscribe_weakly.setTextColor(getResources().getColor(R.color.colorOrange));
+//                }
+
+            }
+        });
+
+
         return view;
     }
 
@@ -162,7 +263,7 @@ public class FragmentItemDetails extends Fragment {
         if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
             MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
             Map<String, String> params = new HashMap<>();
-            params.put("productId",itemDetails.getId());
+            params.put("productId", itemDetails.getId());
             Log.d("4343", new JSONObject(params).toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
