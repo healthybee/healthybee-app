@@ -140,6 +140,13 @@ public class DbHelper extends SQLiteOpenHelper {
         closeDB();
         return cartId;
     }
+    public void deleteAll()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from "+ TABLE_CART);
+        db.close();
+    }
+
     public void openDB() {
          db = this.getWritableDatabase();
     }

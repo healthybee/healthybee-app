@@ -266,6 +266,7 @@ public class MainActivity extends AppCompatActivity implements FragmentSearch.On
     }
 
     private void RetrieveCarts() {
+        dbHelper.deleteAll();
         HashMap<String, String> hashMap = new HashMap<>();
         NetworkConstants.getWebservice(false, activity, Request.Method.GET, UrlConstants.RetrieveCart, hashMap, new VolleyResponseListener<CartModule>() {
             @SuppressLint("SetTextI18n")
