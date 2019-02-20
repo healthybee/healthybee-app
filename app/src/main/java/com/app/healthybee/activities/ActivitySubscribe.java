@@ -13,13 +13,13 @@ import com.app.healthybee.RoundedCornersTransformation;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivitySubscribe extends AppCompatActivity {
     private TextView tvUserName;
     private Activity activity;
-    private CircleImageView profile_image;
+    private CircularImageView profile_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

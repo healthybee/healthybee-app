@@ -22,14 +22,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.healthybee.RoundedCornersTransformation;
 import com.app.healthybee.activities.ActivityUserLogin;
 import com.app.healthybee.activities.MainActivity;
-import com.app.healthybee.utils.Config;
 import com.app.healthybee.listeners.CustomItemClickListener;
 import com.app.healthybee.R;
 import com.app.healthybee.adapter.AdapterAbout;

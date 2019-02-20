@@ -277,7 +277,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
                             SharedPrefUtil.setUserPassword(activity, strPassword);
                             // for login session
                             SharedPrefUtil.setIsLogin(activity, true);
-                            Intent intent = new Intent(ActivityUserLogin.this, ActivitySubscribe.class);
+                            Intent intent = new Intent(activity, ActivitySubscribe.class);
                             startActivity(intent);
                             finish();
 

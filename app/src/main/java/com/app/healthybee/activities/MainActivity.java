@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,6 +33,7 @@ import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -268,10 +270,12 @@ public class MainActivity extends AppCompatActivity implements FragmentSearch.On
     private void RetrieveCarts() {
         dbHelper.deleteAll();
         HashMap<String, String> hashMap = new HashMap<>();
+        Log.d("4343", UrlConstants.RetrieveCart+hashMap);
         NetworkConstants.getWebservice(false, activity, Request.Method.GET, UrlConstants.RetrieveCart, hashMap, new VolleyResponseListener<CartModule>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(CartModule[] object, String message) {
+                Log.d("4343", Arrays.toString(object));
                 if (object[0] != null) {
                     cartModuleArrayList.addAll(Arrays.asList(object));
                     for (int i = 0; i < cartModuleArrayList.size(); i++) {
