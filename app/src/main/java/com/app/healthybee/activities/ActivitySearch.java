@@ -333,7 +333,7 @@ public class ActivitySearch extends AppCompatActivity {
                 public void run() {
                     requestSearchApi(query);
                 }
-            }, 10000);
+            }, 3000);
         } else {
             Toast.makeText(this, R.string.msg_search_input, Toast.LENGTH_SHORT).show();
         }

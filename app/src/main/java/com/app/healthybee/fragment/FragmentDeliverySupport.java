@@ -2,6 +2,7 @@ package com.app.healthybee.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class FragmentDeliverySupport extends Fragment {
     private RecyclerView recView;
@@ -42,12 +44,12 @@ public class FragmentDeliverySupport extends Fragment {
     private ImageView ivBack;
     private Toolbar toolbar;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_delivery_support, container, false);
         toolbar = view.findViewById(R.id.toolbarDeliverySupport);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
         list = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity());
         recView = view.findViewById(R.id.recyclerView);
@@ -65,7 +67,7 @@ public class FragmentDeliverySupport extends Fragment {
     }
 
     private void getDeliverySupport() {
-        if (NetworkConstants.isConnectingToInternet(getActivity())) {
+        if (NetworkConstants.isConnectingToInternet(Objects.requireNonNull(getActivity()))) {
             MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(UrlConstants.deliverySupport,
                     new Response.Listener<JSONArray>() {
@@ -88,8 +90,6 @@ public class FragmentDeliverySupport extends Fragment {
                             }
                             adapterDeliverySupport = new AdapterDeliverySupport(getActivity(), list);
                             recView.setAdapter(adapterDeliverySupport);
-                            //adapterDeliverySupport.notifyDataSetChanged();
-
                         }
                     },
                     new Response.ErrorListener() {
