@@ -41,9 +41,7 @@ public class ActivityForgotPassword extends AppCompatActivity {
         setContentView(R.layout.activity_user_forgot);
         activity = ActivityForgotPassword.this;
         if (Config.ENABLE_RTL_MODE) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            }
+            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
         etUserEmail = findViewById(R.id.etUserEmail);

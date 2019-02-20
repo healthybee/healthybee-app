@@ -52,9 +52,6 @@ public class FragmentHome extends Fragment {
     private static int currentPosition = 0;
     private Toolbar toolbar;
 
-    public static FragmentHome newInstance() {
-        return new FragmentHome();
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
@@ -68,45 +65,14 @@ public class FragmentHome extends Fragment {
         categoryList = new ArrayList<>();
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
 
-//        imageViewGrid = (ImageView) rootView.findViewById(R.id.imageViewGrid);
-//        imageViewList = (ImageView) rootView.findViewById(R.id.imageViewList);
-//        if (MainActivity.mFlagDisplayList) {
-//            imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
-//            imageViewList.setImageResource(R.drawable.ic_listview_enable);
-//        } else {
-//            imageViewList.setImageResource(R.drawable.ic_listview_disable);
-//            imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
-//        }
-//        imageViewList.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MainActivity.mFlagDisplayList = true;
-//                imageViewGrid.setImageResource(R.drawable.ic_gridview_disable);
-//                imageViewList.setImageResource(R.drawable.ic_listview_enable);
-//                refreshFragment();
-//            }
-//        });
-//        imageViewGrid.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MainActivity.mFlagDisplayList = false;
-//                imageViewList.setImageResource(R.drawable.ic_listview_disable);
-//                imageViewGrid.setImageResource(R.drawable.ic_gridview_enable);
-//                refreshFragment();
-//
-//            }
-//        });
+
         tabLayout.setupWithViewPager(viewPager);
-        // Attach the page change listener inside the activity
         viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             // This method will be invoked when a new page becomes selected.
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
-//                Toast.makeText(getActivity(),
-//                        "Selected page position: " + position,
-//                        Toast.LENGTH_SHORT).show();
                 if (searchView != null && !searchView.isIconified()) {
                     //searchView.onActionViewExpanded();
                     searchView.setIconified(true);
@@ -119,20 +85,12 @@ public class FragmentHome extends Fragment {
             public void onPageScrolled(int position, float positionOffset,
                                        int positionOffsetPixels) {
                 currentPosition = position;
-                // Code goes here
-//                Toast.makeText(getApplicationContext(),
-//                        "onPageScrolled",
-//                        Toast.LENGTH_SHORT).show();
             }
 
             // Called when the scroll state changes:
             // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
             @Override
             public void onPageScrollStateChanged(int state) {
-                // Code goes here
-//                Toast.makeText(getApplicationContext(),
-//                        "onPageScrollStateChanged",
-//                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -142,11 +100,6 @@ public class FragmentHome extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ActivitySearch.class);
                 startActivity(intent);
-//                        Fragment fragment = new FragmentHome();
-//        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.container, FragmentSearch.newInstance("",""), "FragmentHome");
-//        transaction.addToBackStack(null);
-//        transaction.commit();
             }
         });
         getCategory();
@@ -178,8 +131,6 @@ public class FragmentHome extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //  MyCustomProgressDialog.showDialog(getActivity(),
-            //          getString(R.string.please_wait));
         }
 
         @Override
@@ -192,13 +143,6 @@ public class FragmentHome extends Fragment {
                 bundle.putString("category", categoryList.get(i));
                 fragmentCategoryList.setArguments(bundle);
                 adapter.addFrag(fragmentCategoryList, categoryList.get(i));
-
-//                FragmentRecent fragmentRecent = new FragmentRecent();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("category", categoryList.get(i));
-//                fragmentRecent.setArguments(bundle);
-//                adapter.addFrag(fragmentRecent, categoryList.get(i));
-
             }
             return null;
         }
@@ -207,7 +151,6 @@ public class FragmentHome extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             viewPager.setAdapter(adapter);
-            //MyCustomProgressDialog.dismissDialog();
         }
     }
 

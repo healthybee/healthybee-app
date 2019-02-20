@@ -1,5 +1,6 @@
 package com.app.healthybee.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -41,6 +42,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class FragmentProfile extends Fragment {
@@ -54,21 +56,17 @@ public class FragmentProfile extends Fragment {
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
     private AdapterAbout adapterAbout;
-   // private LinearLayout lyt_root;
-    //private ImageView ivPauseNextDay;
     private CircularImageView civProfileImage;
     private Toolbar toolbar;
     private ImageView ivBack;
-    public static FragmentProfile newInstance() {
-        return new FragmentProfile();
-    }
+
+    @SuppressLint("InflateParams")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root_view = inflater.inflate(R.layout.raw_pro, null);
-       // lyt_root = root_view.findViewById(R.id.root_layout);
         toolbar = root_view.findViewById(R.id.toolbarProfile);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
         ivBack = root_view.findViewById(R.id.ivBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,19 +75,17 @@ public class FragmentProfile extends Fragment {
                 //finish();
             }
         });
-       // myApplication = MyApplication.getInstance();
         txtUserEmail= root_view.findViewById(R.id.txtUserEmail);
         civProfileImage= root_view.findViewById(R.id.civProfileImage);
         txtUserMobile= root_view.findViewById(R.id.txtUserMobile);
         txtUserName= root_view.findViewById(R.id.txtUserName);
         imageViewLogout= root_view.findViewById(R.id.imageViewLogout);
         ivEditProfile = root_view.findViewById(R.id.ivEditProfile);
-       // ivPauseNextDay = root_view.findViewById(R.id.ivPauseNextDay);
-
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle(getResources().getString(R.string.title_please_wait));
         progressDialog.setMessage(getResources().getString(R.string.logout_process));
         progressDialog.setCancelable(false);
+
 
         recyclerView = root_view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -97,10 +93,6 @@ public class FragmentProfile extends Fragment {
         recyclerView.setAdapter(adapterAbout);
 
         setProfileData();
-
-//        if (Config.ENABLE_RTL_MODE) {
-//            lyt_root.setRotationY(180);
-//        }
 
         adapterAbout.setOnItemClickListener(new AdapterAbout.OnItemClickListener() {
             @Override
@@ -144,12 +136,6 @@ public class FragmentProfile extends Fragment {
 
             }
         });
-//        ivPauseNextDay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                myOrderDialog();
-//            }
-//        });
 
         ivEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +159,7 @@ public class FragmentProfile extends Fragment {
 
 
     private void setProfileData() {
-        txtUserName.setText(SharedPrefUtil.getUserName(getActivity()));
+        txtUserName.setText(SharedPrefUtil.getUserName(Objects.requireNonNull(getActivity())));
         txtUserEmail.setText(SharedPrefUtil.getUserEmail(getActivity()));
         txtUserMobile.setText(SharedPrefUtil.getUserMobile(getActivity()));
         Glide.with(getActivity())
@@ -250,11 +236,6 @@ public class FragmentProfile extends Fragment {
                "Get Rs. 100.00 FREE"
         ));
 
-//        data.add(new Data(
-//                R.drawable.ic_my_orders,
-//              "My Orders",
-//                ""
-//        ));
         data.add(new Data(
                 R.drawable.ic_delivery_support,
                 "Delivery Support",
@@ -299,15 +280,6 @@ public class FragmentProfile extends Fragment {
         dialog.setContentView(R.layout.custom_dialog_myorder);
         Window window = dialog.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        ((TextView) dialog.findViewById(R.id.tv_pauseForNext))
-//                .setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getActivity());
-//        final View mView = layoutInflaterAndroid.inflate(R.layout.custom_dialog_myorder, null);
         final ArrayList<Pause> pauseArrayList = new ArrayList<>();
         RecyclerView itemsList=dialog.findViewById(R.id.recyclerView_order_dialog);
         TextView bt_pauseForNext=dialog.findViewById(R.id.tv_pauseForNext);
@@ -358,10 +330,6 @@ public class FragmentProfile extends Fragment {
             }
         });
         itemsList.setAdapter(adapter);
-//        final Dialog alert = new Dialog(getActivity());
-//        alert.setView(mView);
-//        alert.setCancelable(false);
-//
         bt_pauseForNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

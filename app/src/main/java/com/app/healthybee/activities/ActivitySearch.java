@@ -65,8 +65,6 @@ public class ActivitySearch extends AppCompatActivity {
 
     private EditText et_search;
 
-    //private LinearLayout lyt_suggestion;
-
     private ImageButton bt_clear;
     private ProgressBar progressBar;
     private Activity activity;
@@ -103,7 +101,6 @@ public class ActivitySearch extends AppCompatActivity {
     }
 
     private void initComponent() {
-       // lyt_suggestion = findViewById(R.id.lyt_suggestion);
         et_search = findViewById(R.id.et_search);
         bt_clear = findViewById(R.id.bt_clear);
         bt_clear.setVisibility(View.GONE);
@@ -111,29 +108,6 @@ public class ActivitySearch extends AppCompatActivity {
 
         et_search.addTextChangedListener(textWatcher);
 
-        //set data and list adapter
-//        mAdapter = new AdapterNews(this, recyclerView, new ArrayList<News>());
-//        recyclerView.setAdapter(mAdapter);
-//        mAdapter.setOnItemClickListener(new AdapterNews.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View v, News obj, int position) {
-//                ActivityNewsDetail.navigate(ActivitySearch.this, v.findViewById(R.id.image), obj);
-//            }
-//        });
-
-        //set data and list adapter suggestion
-
-
-        //showSuggestionSearch();
-//        mAdapterSuggestion.setOnItemClickListener(new AdapterSearch.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, String viewModel, int pos) {
-//                et_search.setText(viewModel);
-//                lyt_suggestion.setVisibility(View.GONE);
-//                hideKeyboard();
-//                searchAction();
-//            }
-//        });
 
         bt_clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,15 +126,6 @@ public class ActivitySearch extends AppCompatActivity {
                 return false;
             }
         });
-
-//        et_search.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                showSuggestionSearch();
-//                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-//                return false;
-//            }
-//        });
 
     }
 
