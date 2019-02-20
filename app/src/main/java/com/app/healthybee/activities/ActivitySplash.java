@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ProgressBar;
+
 import com.app.healthybee.R;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.utils.SharedPrefUtil;
@@ -16,7 +17,6 @@ public class ActivitySplash extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -33,7 +33,6 @@ public class ActivitySplash extends Activity {
                 startActivity(intent);
                 finish();
             }
-
             @Override
             public void onTick(long millisUntilFinished) {
 
