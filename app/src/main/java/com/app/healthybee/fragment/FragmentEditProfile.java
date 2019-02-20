@@ -64,7 +64,7 @@ public class FragmentEditProfile extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root_view = inflater.inflate(R.layout.activity_edit_profile, null);
+        root_view = inflater.inflate(R.layout.edit_profile_fragment, null);
         toolbar = root_view.findViewById(R.id.toolbarEditProfile);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ivBack = root_view.findViewById(R.id.ivBack);

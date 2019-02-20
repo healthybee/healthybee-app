@@ -52,7 +52,7 @@ public class FragmentAddress extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root_view = inflater.inflate(R.layout.activity_address, null);
+        root_view = inflater.inflate(R.layout.fragment_address, null);
 
         toolbar = root_view.findViewById(R.id.toolbarAddress);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);

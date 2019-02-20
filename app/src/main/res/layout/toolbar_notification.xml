@@ -31,7 +31,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:text="@string/notifications"
-            android:textColor="@color/black"
+            android:textColor="@color/colorText"
             android:visibility="visible"
             tools:ignore="RelativeOverlap" />
 

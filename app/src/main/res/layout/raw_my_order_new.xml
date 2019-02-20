@@ -126,7 +126,7 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="@string/change_my_timing"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorText"
                     android:textStyle="normal" />
 
                 <ImageView
@@ -154,7 +154,7 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Pause"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorText"
                     android:textStyle="normal" />
 
             </LinearLayout>
@@ -167,7 +167,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:alpha="0.5"
-                android:background="@color/black" />
+                android:background="@color/colorText" />
 
         </LinearLayout>
 

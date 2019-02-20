@@ -41,8 +41,8 @@
             android:id="@+id/ivEditAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/two"
-            android:layout_marginStart="@dimen/two"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
             android:padding="@dimen/three"
             android:src="@drawable/ic_edit_grey" />
     </LinearLayout>

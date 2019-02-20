@@ -62,7 +62,7 @@ public class FragmentEditAddress extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root_view = inflater.inflate(R.layout.activity_edit_address, null);
+        root_view = inflater.inflate(R.layout.edit_address_fragment, null);
         toolbar = root_view.findViewById(R.id.toolbarEditAddress);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         initView(root_view);
