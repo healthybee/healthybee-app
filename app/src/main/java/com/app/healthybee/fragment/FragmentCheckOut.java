@@ -106,9 +106,6 @@ public class FragmentCheckOut extends Fragment  {
         // Required empty public constructor
     }
 
-    public static FragmentCheckOut newInstance() {
-        return new FragmentCheckOut();
-    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -319,7 +316,7 @@ public class FragmentCheckOut extends Fragment  {
         selectedDate = Tools.formatDateForDisplay(cal.getTime(), "yyyy-MMM-dd");
         tv_date.setText(Html.fromHtml(Tools.convertDateyyyymmddToddmmyyyy(selectedDate)));
 
-        RetrieveCarts1();
+        RetrieveCarts();
         return view;
     }
 
@@ -358,7 +355,7 @@ public class FragmentCheckOut extends Fragment  {
         dlg.show();
     }
 
-    private void RetrieveCarts1() {
+    private void RetrieveCarts() {
         if (NetworkConstants.isConnectingToInternet(getActivity())) {
             MyCustomProgressDialog.showDialog(getActivity(), getString(R.string.please_wait));
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(UrlConstants.RetrieveCart,

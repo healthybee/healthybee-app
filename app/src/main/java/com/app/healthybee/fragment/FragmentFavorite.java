@@ -138,24 +138,25 @@ public class FragmentFavorite extends Fragment {
                     int size = favouriteModelArrayList.size();
                     for (int i = 0; i < size; i++) {
                         List<ResultFavorite> result = favouriteModelArrayList.get(i).getResult();
-                        ResultFavorite resultFavorite = result.get(0);
-                        CategoryItem categoryItem = new CategoryItem();
-
-                        categoryItem.setId(resultFavorite.getId());
-                        categoryItem.setAdd_on(resultFavorite.getAddOn());
-                        categoryItem.setAdd_on_price(String.valueOf(resultFavorite.getAddOnPrice()));
-                        categoryItem.setCategory(resultFavorite.getCategory());
-                        categoryItem.setDescription(resultFavorite.getDescription());
-                        categoryItem.setFood_type(resultFavorite.getFoodType());
-                        categoryItem.setImage_url(resultFavorite.getImageUrl());
-                        categoryItem.setName(resultFavorite.getName());
-                        categoryItem.setNutrition(resultFavorite.getNutrition());
-                        categoryItem.setOld_price(String.valueOf(resultFavorite.getOldPrice()));
-                        categoryItem.setPrice(String.valueOf(resultFavorite.getPrice()));
-                        categoryItem.setCreatedAt(resultFavorite.getCreatedAt());
-                        categoryItem.setUpdatedAt(resultFavorite.getUpdatedAt());
-                        categoryItem.setCount(dbHelper.getCartCount(resultFavorite.getId()));
-                        categoryItemArrayList.add(categoryItem);
+                        if (result.size() > 0) {
+                            ResultFavorite resultFavorite = result.get(0);
+                            CategoryItem categoryItem = new CategoryItem();
+                            categoryItem.setId(resultFavorite.getId());
+                            categoryItem.setAdd_on(resultFavorite.getAddOn());
+                            categoryItem.setAdd_on_price(String.valueOf(resultFavorite.getAddOnPrice()));
+                            categoryItem.setCategory(resultFavorite.getCategory());
+                            categoryItem.setDescription(resultFavorite.getDescription());
+                            categoryItem.setFood_type(resultFavorite.getFoodType());
+                            categoryItem.setImage_url(resultFavorite.getImageUrl());
+                            categoryItem.setName(resultFavorite.getName());
+                            categoryItem.setNutrition(resultFavorite.getNutrition());
+                            categoryItem.setOld_price(String.valueOf(resultFavorite.getOldPrice()));
+                            categoryItem.setPrice(String.valueOf(resultFavorite.getPrice()));
+                            categoryItem.setCreatedAt(resultFavorite.getCreatedAt());
+                            categoryItem.setUpdatedAt(resultFavorite.getUpdatedAt());
+                            categoryItem.setCount(dbHelper.getCartCount(resultFavorite.getId()));
+                            categoryItemArrayList.add(categoryItem);
+                        }
                     }
                     mAdapter = new AdapterFavourite(getActivity(), categoryItemArrayList, new CustomItemClickListener() {
                         @Override
