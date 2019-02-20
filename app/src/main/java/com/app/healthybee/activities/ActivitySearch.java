@@ -46,7 +46,6 @@ import com.app.healthybee.utils.Config;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.GridSpacingItemDecoration;
 import com.app.healthybee.utils.MyCustomProgressDialog;
-import com.app.healthybee.utils.NetworkCheck;
 import com.app.healthybee.utils.NetworkConstants;
 import com.app.healthybee.utils.SharedPrefUtil;
 import com.app.healthybee.utils.UrlConstants;
@@ -312,7 +311,7 @@ public class ActivitySearch extends AppCompatActivity {
     }
 
     private void onFailRequest() {
-        if (NetworkCheck.isConnect(this)) {
+        if (NetworkConstants.isConnectedToNetwork(this)) {
             showFailedView(true, getString(R.string.msg_no_network));
         } else {
             showFailedView(true, getString(R.string.msg_offline));
