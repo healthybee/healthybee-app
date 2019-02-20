@@ -1,16 +1,16 @@
 package com.app.healthybee.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import com.app.healthybee.R;
 import com.app.healthybee.utils.Config;
 import com.app.healthybee.utils.SharedPrefUtil;
 
-public class ActivitySplash extends AppCompatActivity {
+public class ActivitySplash extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

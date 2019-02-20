@@ -1,74 +1,17 @@
 <resources>
 
-    <style name="AppMaterialTheme" parent="BaseTheme"/>
+    <style name="AppMaterialTheme" parent="BaseTheme" />
 
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item> 
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item> 
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:typeface">monospace</item>
-
-        <!--<item name="android:editTextStyle">@style/EditTextStyle</item>-->
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:typeface">monospace</item>
         <item name="colorControlNormal">@android:color/white</item>
-    </style>
-    <!--<style name="EditTextStyle" parent="Widget.AppCompat.EditText">-->
-        <!--<item name="colorControlNormal">#c5c5c5</item>-->
-        <!--<item name="colorControlActivated">@color/colorGreyDark</item>-->
-        <!--<item name="colorControlHighlight">@color/colorGreyMedium</item>-->
-    <!--</style>-->
-
-    <style name="ErrorText" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">#f00000</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:typeface">monospace</item>
-
-    </style>
-
-    <style name="HintText" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:typeface">monospace</item>
-
-    </style>
-
-    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
-        <!-- reference our hint & error styles -->
-        <item name="hintTextAppearance">@style/HintText</item>
-        <item name="errorTextAppearance">@style/ErrorText</item>
-        <item name="android:textColor">#f000</item>
-        <item name="android:textColorHint">#96989A</item>
-        <item name="colorControlNormal">#BDBFC1</item>
-        <item name="android:typeface">monospace</item>
-        <item name="colorControlActivated">#797979</item>
-        <item name="colorControlHighlight">#797979</item>
-    </style>
-
-    <style name="customTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/colorOrange</item>
-        <item name="tabIndicatorHeight">2dp</item>
-        <item name="tabPaddingStart">12dp</item>
-        <item name="tabPaddingEnd">12dp</item>
-        <item name="textAllCaps">true</item>
-        <item name="android:dividerPadding">2dp</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
-        <item name="android:textColor">@android:color/darker_gray</item>
-        <item name="android:divider">@android:color/holo_orange_dark</item>
-        <item name="tabSelectedTextColor">@android:color/holo_orange_dark</item>
-    </style>
-    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabMaxWidth">@dimen/tab_max_width</item>
-        <item name="tabIndicatorColor">@color/colorOrange</item>
-        <item name="tabIndicatorHeight">4dp</item>
-        <item name="tabPaddingStart">6dp</item>
-        <item name="tabPaddingEnd">6dp</item>
-        <item name="tabBackground">?attr/selectableItemBackground</item>
-        <item name="tabTextAppearance">@style/TextAppearance.AppCompat.Small</item>
-        <item name="tabSelectedTextColor">@color/colorOrange</item>
     </style>
 
     <!-- for text -->
@@ -76,5 +19,13 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/tabTextColor</item>
         <item name="textAllCaps">true</item>
+    </style>
+    <!-- for splash screen -->
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 </resources>

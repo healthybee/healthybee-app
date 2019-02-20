@@ -334,13 +334,11 @@ public class FragmentFavorite extends Fragment {
                     MyCustomProgressDialog.dismissDialog();
                 }
             }) {
-
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json");
                     headers.put("Authorization", "Bearer " + SharedPrefUtil.getToken(getActivity()));
-
                     return headers;
                 }
             };

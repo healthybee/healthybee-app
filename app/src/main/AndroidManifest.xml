@@ -21,7 +21,8 @@
         tools:replace="android:theme">
         <activity
             android:name=".activities.ActivitySplash"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.Transparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

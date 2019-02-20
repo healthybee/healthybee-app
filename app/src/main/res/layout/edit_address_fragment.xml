@@ -1,189 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/tab_appbar_layout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbarEditAddress"
-            layout="@layout/toolbar_edit_address"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/tab_appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-    </android.support.design.widget.AppBarLayout>
+            <include
+                android:id="@+id/toolbarEditAddress"
+                layout="@layout/toolbar_edit_address"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways" />
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        </android.support.design.widget.AppBarLayout>
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/tools"
-            android:id="@+id/parent_card"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:padding="5dp"
-            app:cardBackgroundColor="@color/colorWhite"
-            app:cardCornerRadius="8dp"
-            card_view:cardElevation="8sp"
-            card_view:cardPreventCornerOverlap="false"
-            card_view:cardUseCompatPadding="true">
+            android:layout_height="match_parent">
 
-
-            <LinearLayout
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/tools"
+                android:id="@+id/parent_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:layout_margin="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="5dp"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="8dp"
+                card_view:cardElevation="8sp"
+                card_view:cardPreventCornerOverlap="false"
+                card_view:cardUseCompatPadding="true">
 
-                <android.support.design.widget.TextInputLayout
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextInputLayoutAppearance">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/etAddressType"
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etAddressType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/address_type"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLength="30"
+                            android:text=""
+                            android:textColor="@color/color_dark"
+                            android:textSize="@dimen/text_size_16" />
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etAddressLine1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/address_line_1_star"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:text=""
+                            android:textColor="@color/color_dark"
+                            android:textSize="@dimen/text_size_16" />
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etAddressLine2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/address_line_2_star"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:text=""
+                            android:textColor="@color/color_dark"
+                            android:textSize="@dimen/text_size_16" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/address_type"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/city_star"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/etAddressCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawableRight="@drawable/ic_arrow_down"
+                        android:hint="@string/city_star"
                         android:imeOptions="actionNext"
                         android:inputType="text"
-                        android:maxLength="30"
-                        android:textSize="@dimen/text_size_16"
-                        android:text=""
-                        android:textColor="@color/color_dark" />
-                </android.support.design.widget.TextInputLayout>
+                        android:textSize="@dimen/text_size_16" />
 
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextInputLayoutAppearance">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/etAddressLine1"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/address_line_1_star"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/state_star"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <EditText
+                        android:id="@+id/etAddressState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawableRight="@drawable/ic_arrow_down"
+                        android:hint="@string/state"
                         android:imeOptions="actionNext"
                         android:inputType="text"
-                        android:textSize="@dimen/text_size_16"
-                        android:text=""
-                        android:textColor="@color/color_dark" />
-                </android.support.design.widget.TextInputLayout>
+                        android:textSize="@dimen/text_size_16" />
 
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextInputLayoutAppearance">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/etAddressLine2"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/address_line_2_star"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:textSize="@dimen/text_size_16"
-                        android:text=""
-                        android:textColor="@color/color_dark" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/city_star"
-                    android:textSize="@dimen/text_size_16" />
-
-                <EditText
-                    android:id="@+id/etAddressCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:drawableRight="@drawable/ic_arrow_down"
-                    android:hint="@string/city_star"
-                    android:inputType="text"
-                    android:textSize="@dimen/text_size_16"
-                    android:drawableEnd="@drawable/ic_arrow_down" />
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etAddressZipCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/zipcode_star"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="6"
+                            android:text=""
+                            android:textColor="@color/color_dark"
+                            android:textSize="@dimen/text_size_16" />
+                    </android.support.design.widget.TextInputLayout>
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/state_star"
-                    android:textSize="@dimen/text_size_16" />
-
-                <EditText
-                    android:id="@+id/etAddressState"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:drawableRight="@drawable/ic_arrow_down"
-                    android:hint="@string/state"
-                    android:inputType="text"
-                    android:textSize="@dimen/text_size_16"
-                    android:drawableEnd="@drawable/ic_arrow_down" />
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextInputLayoutAppearance">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/etAddressZipCode"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/zipcode_star"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_16"
-                        android:maxLength="6"
-                        android:text=""
-                        android:textColor="@color/color_dark" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_height="wrap_content">
 
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etAddressLandmark"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/landmark_nearby_star"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:text=""
+                            android:textColor="@color/color_dark"
+                            android:textSize="@dimen/text_size_16" />
+                    </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextInputLayoutAppearance">
+                </LinearLayout>
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/etAddressLandmark"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/landmark_nearby_star"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:textSize="@dimen/text_size_16"
-                        android:text=""
-                        android:textColor="@color/color_dark" />
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-    </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+            </android.support.v7.widget.CardView>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
