@@ -44,6 +44,7 @@ public class AdapterCategoryItem extends RecyclerView.Adapter<AdapterCategoryIte
         this.categoryItemList = categoryItemList1;
         this.listener = listener1;
         this.updateCartCategoryItem = updateCartCategoryItem;
+
     }
 
 
