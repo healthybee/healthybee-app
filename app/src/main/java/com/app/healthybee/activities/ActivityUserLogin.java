@@ -1,8 +1,10 @@
 package com.app.healthybee.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -14,21 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.app.healthybee.MyApplication;
+import com.app.healthybee.AuthUser;
 import com.app.healthybee.R;
-import com.app.healthybee.utils.MyCustomProgressDialog;
-import com.app.healthybee.utils.NetworkConstants;
+import com.app.healthybee.RetrofitClient;
+import com.app.healthybee.User;
+import com.app.healthybee.utils.Constant;
 import com.app.healthybee.utils.SharedPrefUtil;
-import com.app.healthybee.utils.UrlConstants;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ActivityUserLogin extends AppCompatActivity implements View.OnClickListener {
@@ -52,8 +48,6 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generate_otp);
         activity = ActivityUserLogin.this;
-
-
         init();
     }
 
@@ -82,10 +76,8 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         bt_password.setBackground(getDrawable(R.drawable.button_shap_left_round_selected));
         bt_otp.setTextColor(getResources().getColor(R.color.colorWhite));
         bt_password.setTextColor(getResources().getColor(R.color.background_color));
-
         iv_google = findViewById(R.id.iv_google);
         iv_google.setOnClickListener(this);
-
     }
 
 
@@ -94,7 +86,7 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.btn_login:
                 if (ValidateUser() == 1) {
-                    AuthUser();
+                    AuthUser1();
                 }
                 break;
             case R.id.tv_newUser:
@@ -171,89 +163,55 @@ public class ActivityUserLogin extends AppCompatActivity implements View.OnClick
         return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
-    private void AuthUser() {
-        if (NetworkConstants.isConnectingToInternet(activity)) {
-            MyCustomProgressDialog.showDialog(activity, getString(R.string.please_wait));
-            Map<String, String> params = new HashMap<>();
-            params.put("email", strLoginId);
-            params.put("password", strPassword);
-            Log.d("4343", new JSONObject(params).toString());
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.POST,
-                    UrlConstants.authUser,
-                    new JSONObject(params),
-                    new Response.Listener<JSONObject>() {
+    private void AuthUser1() {
+        final ProgressDialog progressDialog = new ProgressDialog(ActivityUserLogin.this);
+        progressDialog.setTitle(getResources().getString(R.string.title_please_wait));
+        progressDialog.setMessage(getResources().getString(R.string.login_process));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        String credentials = strLoginId + ":" + strPassword;
+        String basic_auth = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+        Call<AuthUser> call =RetrofitClient.getInstance().getApi().AuthUser(basic_auth,strLoginId,strPassword);
+        call.enqueue(new Callback<AuthUser>() {
+            @Override
+            public void onResponse(Call<AuthUser> call, Response<AuthUser> response) {
+                if (response.code() == 201) {
+                    Log.d("4343", response.toString());
+                    AuthUser authUser = response.body();
+                    assert authUser != null;
+                    SharedPrefUtil.setToken(activity, authUser.getToken());
+                    User user=authUser.getUser();
+                    SharedPrefUtil.setUserId(activity, user.getId());
+                    SharedPrefUtil.setUserName(activity, user.getName());
+                    SharedPrefUtil.setUserPicture(activity, user.getPicture());
+                    SharedPrefUtil.setUserEmail(activity, user.getEmail());
+                    SharedPrefUtil.setUserMobile(activity, user.getMobile());
+                    SharedPrefUtil.setCreatedAt(activity, user.getCreatedAt());
+                    // for login session set from local
+                    SharedPrefUtil.setUserPassword(activity, strPassword);
+                    SharedPrefUtil.setIsLogin(activity, true);
 
+                    new Handler().postDelayed(new Runnable() {
                         @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("4343", response.toString());
-                            MyCustomProgressDialog.dismissDialog();
-
-                            if (response.has("token")) {
-                                SharedPrefUtil.setToken(activity, response.optString("token"));
-                                Log.d("4343", response.optString("token"));
+                        public void run() {
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
                             }
-                            if (response.has("user")) {
-                                JSONObject jsonObject = response.optJSONObject("user");
-                                if (jsonObject.has("id")) {
-                                    SharedPrefUtil.setUserId(activity, jsonObject.optString("id"));
-                                }
-                                if (jsonObject.has("name")) {
-                                    SharedPrefUtil.setUserName(activity, jsonObject.optString("name"));
-                                }
-                                if (jsonObject.has("picture")) {
-                                    SharedPrefUtil.setUserPicture(activity, jsonObject.optString("picture"));
-                                }
-                                if (jsonObject.has("email")) {
-                                    SharedPrefUtil.setUserEmail(activity, jsonObject.optString("email"));
-                                }
-                                if (jsonObject.has("mobile")) {
-                                    SharedPrefUtil.setUserMobile(activity, jsonObject.optString("mobile"));
-                                }
-                                if (jsonObject.has("createdAt")) {
-                                    SharedPrefUtil.setCreatedAt(activity, jsonObject.optString("createdAt"));
-                                }
-                            }
-                            SharedPrefUtil.setUserPassword(activity, strPassword);
-                            // for login session
-                            SharedPrefUtil.setIsLogin(activity, true);
                             Intent intent = new Intent(activity, ActivitySubscribe.class);
                             startActivity(intent);
                             finish();
-
-                            //  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMjM1NzZiNzNhN2FhMDAxN2RkNjY2ZSIsImlhdCI6MTU0NTgyMjcwMX0.ekBniz5xdlYHjDy3rKV4AUWIA3Lupek1Jn3LcHxWGPo",
-                            // "user":{"id":"5c23576b73a7aa0017dd666e",
-                            // "name":"amod2android",
-                            // "picture":"https:\/\/gravatar.com\/avatar\/e0ced4403e76e8bc5cdea71754834388?d=identicon",
-                            // "email":"amod2android@gmail.com",
-                            // "mobile":"9284326399",
-                            // "createdAt":"2018-12-26T10:26:51.868Z"}}
-
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("4343", "Site Info Error: " + error.getMessage());
-                    MyCustomProgressDialog.dismissDialog();
+                    }, Constant.DELAY_PROGRESS_DIALOG);
+
+                } else if (response.code() == 401) {
+                    Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
                 }
-            }) {
+            }
 
-                @Override
-                public Map<String, String> getHeaders() {
-                    Map<String, String> headers = new HashMap<>();
-                    String credentials = edt_email_id.getText().toString().trim() + ":" + edt_login_password.getText().toString().trim();
-                    String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-                    headers.put("Content-Type", "application/json");
-                    headers.put("Authorization", "Basic " + base64EncodedCredentials);
-
-                    return headers;
-                }
-            };
-            Log.d("4343", jsonObjectRequest.toString());
-            MyApplication.getInstance().addToRequestQueue(jsonObjectRequest);
-
-        } else {
-            MyCustomProgressDialog.showAlertDialogMessage(activity, getString(R.string.network_title), getString(R.string.network_message));
-        }
+            @Override
+            public void onFailure(Call<AuthUser> call, Throwable t) {
+                Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

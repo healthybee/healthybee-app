@@ -13,7 +13,6 @@
         android:background="@color/colorWhite"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-
         <include
             android:id="@+id/toolbarHome"
             layout="@layout/toolbar_home"
@@ -27,7 +26,9 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             app:tabGravity="center"
+            app:tabIndicatorColor="@color/colorOrange"
             app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorOrange"
             app:tabTextAppearance="@style/AppTabTextAppearance" />
     </android.support.design.widget.AppBarLayout>
 
